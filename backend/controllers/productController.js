@@ -16,6 +16,24 @@ const AddNewProduct = async (req, res) => {
     }
 }
 
+// Get All the data --- USER --- ADMIN 
+const getAllProducts = async (req, res) => {
+    try {
+        const products = await ProductSchema.find({});
+        res.status(200).json({
+            success: true,
+            data: products,
+        });
+    } catch (error) {
+        console.log("Error in getAllProducts function: ", error.message);
+        res.status(500).json({
+            success: false,
+            message: "Something went wrong, Product is not fetched",
+            error: error.message
+        });
+    }
+}
 module.exports = {
     AddNewProduct,
+    getAllProducts
 }

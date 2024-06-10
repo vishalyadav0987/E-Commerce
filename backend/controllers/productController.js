@@ -20,9 +20,11 @@ const AddNewProduct = async (req, res) => {
 // Get All the data --- USER --- ADMIN 
 const getAllProducts = async (req, res) => {
     try {
-        const apiFeatures = new ApiFeatures(ProductSchema.find(), req.query).search(); 
+        const apiFeatures = new ApiFeatures(ProductSchema.find(), req.query)
+            .search()
+            .filter();
         // search  from ApiFeature
-        const products  = await apiFeatures.query;
+        const products = await apiFeatures.query;
         // const products = await ProductSchema.find({});
         res.status(200).json({
             success: true,

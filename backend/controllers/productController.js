@@ -1,3 +1,4 @@
+const ApiFeatures = require('../Utils/ApiFeatures');
 const ProductSchema = require('../modals/ProductSchema');
 
 
@@ -19,7 +20,10 @@ const AddNewProduct = async (req, res) => {
 // Get All the data --- USER --- ADMIN 
 const getAllProducts = async (req, res) => {
     try {
-        const products = await ProductSchema.find({});
+        const apiFeatures = new ApiFeatures(ProductSchema.find(), req.query).search(); 
+        // search  from ApiFeature
+        const products  = await apiFeatures.query;
+        // const products = await ProductSchema.find({});
         res.status(200).json({
             success: true,
             data: products,
@@ -39,19 +43,19 @@ const updateProduct = async (req, res) => {
     const { id } = req.params;
     try {
         const productExsist = await ProductSchema.findById(id);
-        if(!productExsist){
+        if (!productExsist) {
             return res.status(400).json({
                 success: false,
                 message: "Product not found!",
             });
         }
-        const product = await ProductSchema.findByIdAndUpdate(id,req.body,{
-            new:true,
-            runValidators:true,
+        const product = await ProductSchema.findByIdAndUpdate(id, req.body, {
+            new: true,
+            runValidators: true,
         });
         res.status(200).json({
             success: true,
-            message:"Product is succesfully updated!"
+            message: "Product is succesfully updated!"
         });
     } catch (error) {
         console.log("Error in updateProduct function: ", error.message);
@@ -64,11 +68,11 @@ const updateProduct = async (req, res) => {
 }
 
 // ADMIN --- Controller --- Admin Rights
-const removeProduct = async(req,res)=>{
-    const {id} = req.params;
+const removeProduct = async (req, res) => {
+    const { id } = req.params;
     try {
         const product = await ProductSchema.findById(id);
-        if(!product){
+        if (!product) {
             return res.status(400).json({
                 success: false,
                 message: "Product not found!",

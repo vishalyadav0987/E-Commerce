@@ -3,8 +3,12 @@ const app = express();
 require('dotenv').config();
 const PORT = 3000 || process.env.PORT;
 const connectDB = require('./connectDB/connect');
+const productRoutes = require('./routes/productRoute')
 
 app.use(express.json());
+
+
+app.use('/api/v1/product',productRoutes);
 
 // TEST ENDPOINT
 app.get('/test',(req,res)=>{

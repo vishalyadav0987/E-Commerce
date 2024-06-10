@@ -62,8 +62,36 @@ const updateProduct = async (req, res) => {
         });
     }
 }
+
+// ADMIN --- Controller --- Admin Rights
+const removeProduct = async(req,res)=>{
+    const {id} = req.params;
+    try {
+        const product = await ProductSchema.findById(id);
+        if(!product){
+            return res.status(400).json({
+                success: false,
+                message: "Product not found!",
+            });
+        }
+        // await ProductSchema.findByIdAndDelete(id);
+        await ProductSchema.findByIdAndDelete(id);
+        return res.status(400).json({
+            success: false,
+            message: "Product Succesfully removed!",
+        });
+    } catch (error) {
+        console.log("Error in removeProduct function: ", error.message);
+        res.status(500).json({
+            success: false,
+            message: "Something went wrong, Product is not removed!",
+            error: error.message
+        });
+    }
+}
 module.exports = {
     AddNewProduct,
     getAllProducts,
-    updateProduct
+    updateProduct,
+    removeProduct,
 }

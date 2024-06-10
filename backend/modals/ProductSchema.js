@@ -18,17 +18,19 @@ const ProductSchema = new mongoose.Schema({
         type: Number,
         default: 0,
     },
-    images: {
+    images: [
         // id jha pe image ko upload karenge
-        public_id: {
-            type: String,
-            required: true,
-        },
-        url: {
-            type: String,
-            required: true,
+        {
+            public_id: {
+                type: String,
+                required: true,
+            },
+            url: {
+                type: String,
+                required: true,
+            }
         }
-    },
+    ],
     category: {
         type: String,
         required: [8, "Please Enter product category"],

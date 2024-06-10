@@ -20,15 +20,19 @@ const AddNewProduct = async (req, res) => {
 // Get All the data --- USER --- ADMIN 
 const getAllProducts = async (req, res) => {
     try {
+        let resultPerPage = 5;
+        const productCount = await ProductSchema.countDocuments(); // inbuilt function
         const apiFeatures = new ApiFeatures(ProductSchema.find(), req.query)
             .search()
-            .filter();
+            .filter()
+            .pagination(resultPerPage);
         // search  from ApiFeature
         const products = await apiFeatures.query;
         // const products = await ProductSchema.find({});
         res.status(200).json({
             success: true,
             data: products,
+            count:productCount,
         });
     } catch (error) {
         console.log("Error in getAllProducts function: ", error.message);

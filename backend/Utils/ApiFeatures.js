@@ -44,6 +44,20 @@ class ApiFeatures {
         return this;
         
     }
+
+    pagination(resultPerPage){
+        const currentPage = Number(this.queryStr.page)||1;
+
+        const skip = resultPerPage * (currentPage - 1);
+        // it means [5 * (1 - 1)] it means 0 items skip karne hai it [page == 1]
+        // it means [5 * (2 - 1)] it means 10 items skip karne hai it [page == 2]
+        // it means [5 * (3 - 1)] it means 10 items skip karne hai it [page == 3]
+        // it means [5 * (4 - 1)] it means 10 items skip karne hai it [page == 4]
+
+        this.query = this.query.limit(resultPerPage).skip(skip);
+
+        return this;
+    }
 }
 
 module.exports = ApiFeatures;

@@ -1,5 +1,6 @@
 const UserSchema = require('../modals/UserSchema');
-const bcrypt = require('bcryptjs')
+const bcrypt = require('bcryptjs');
+const sendTokenInCookie = require('../Utils/SetTokenInCookie')
 
 const Register = async (req, res) => {
     const { name, email, password } = req.body;
@@ -33,8 +34,11 @@ const Register = async (req, res) => {
         // 1st way to generate token using create function
         // const token = await generateToken(id);
 
-        const token = user.generateToken();
-        res.json({ success: true, message: "User Succesfully registered!", token });
+        // const token = user.generateToken(); 
+
+
+        // another way to do : this way also store token in cookie
+        sendTokenInCookie(user, 201, res,"User Succesfully registered!");
 
     } catch (error) {
         console.log("Error in Register function: ", error.message);
@@ -69,8 +73,11 @@ const Login = async (req, res) => {
             return res.status(401).json({ success: false, message: "Invalid credentials!" });
         }
 
-        const token = user.generateToken();
-        res.status(200).json({ success: true, message: "User successfully logged in!", token });
+        // const token = user.generateToken();
+
+        // another way to do : this way also store token in cookie
+        sendTokenInCookie(user, 201, res,"User successfully logged in!" );
+
     } catch (error) {
         console.error("Error in Login function: ", error.message);
         res.status(500).json({

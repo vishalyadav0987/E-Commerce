@@ -5,6 +5,7 @@ const ProductSchema = require('../modals/ProductSchema');
 // ADMIN --- Controller --- Admin Rights
 const AddNewProduct = async (req, res) => {
     try {
+        req.body.user = req.user.id;
         const newProduct = await ProductSchema.create(req.body);
         res.status(200).json({ success: true, data: newProduct, message: "Product succesfully Added!" });
     } catch (error) {

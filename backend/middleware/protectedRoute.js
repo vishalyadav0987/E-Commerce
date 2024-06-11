@@ -24,4 +24,20 @@ const protecteRoute = async (req, res, next) => {
     }
 }
 
-module.exports = protecteRoute;
+const authorizeRole = (...roles) => {
+    return (req, res, next) => {
+        if (!roles.includes(req.user.role)) {
+            return next(
+                res.status(403).json({
+                    success: true,
+                    message: `Role ${req.user.role} is not allowed to access this resource`
+                })
+            )
+        }
+    next();
+    }
+}
+module.exports = {
+    protecteRoute,
+    authorizeRole
+};

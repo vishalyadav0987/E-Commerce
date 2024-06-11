@@ -32,7 +32,7 @@ const getAllProducts = async (req, res) => {
         res.status(200).json({
             success: true,
             data: products,
-            count:productCount,
+            count: productCount,
         });
     } catch (error) {
         console.log("Error in getAllProducts function: ", error.message);
@@ -99,9 +99,35 @@ const removeProduct = async (req, res) => {
         });
     }
 }
+
+// Get All the data --- USER --- ADMIN 
+const getSingleProduct = async (req, res) => {
+    const { id } = req.params;
+    try {
+        const singleProduct = await ProductSchema.findById(id);
+
+        if (!singleProduct) {
+            return res.json({ success: true, message: "Product not found" });
+        }
+
+        res.json({ success: true, data: singleProduct });
+    } catch (error) {
+        console.log("Error in getSingleProduct function: ", error.message);
+        res.status(500).json({
+            success: false,
+            message: "Something went wrong, Product is not fetched",
+            error: error.message
+        });
+    }
+}
+
+
+
+
 module.exports = {
     AddNewProduct,
     getAllProducts,
     updateProduct,
     removeProduct,
+    getSingleProduct,
 }

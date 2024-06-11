@@ -89,7 +89,29 @@ const Login = async (req, res) => {
 }
 
 
+// LOGOUT FUNCTION
+const Logout = async(req,res)=>{
+    try {
+        res.cookie("token",null,{
+            expires:new Date(Date.now()),
+            httpOnly:true
+        });
+        res.status(200).json({
+            success:true,
+            message:"User Succesfully logged out",
+        });
+    } catch (error) {
+        console.error("Error in Logout function: ", error.message);
+        res.status(500).json({
+            success: false,
+            message: "Something went wrong, user not logged in!",
+            error: error.message
+        });
+    }
+}
+
 module.exports = {
     Register,
-    Login
+    Login,
+    Logout,
 }

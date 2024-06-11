@@ -9,7 +9,7 @@ const protecteRoute = async (req, res, next) => {
         }
         const decode_token = jwt.verify(token, process.env.JWT_SECERET);
         // req.userId = await decode_token._id;
-        req.user = await UserSchema.findById(decode_token._id);
+        req.user = await UserSchema.findById(decode_token.id);
         // save the all info in req.user
         // console.log(decode_token);
 

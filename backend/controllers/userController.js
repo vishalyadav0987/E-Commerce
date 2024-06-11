@@ -50,6 +50,39 @@ const Register = async (req, res) => {
     }
 }
 
+
+const Login = async (req, res) => {
+    const { email, password } = req.body;
+
+    try {
+        if (!email || !password) {
+            return res.status(400).json({ success: false, message: "Please enter all the details!" });
+        }
+        const user = await UserSchema.findOne({ email }).select("+password");
+        if (!user) {
+            return res.status(401).json({ success: false, message: "Invalid credentials!" });
+        }
+
+        const isMatch = await user.comparePassword(password);
+
+        if (!isMatch) {
+            return res.status(401).json({ success: false, message: "Invalid credentials!" });
+        }
+
+        const token = user.generateToken();
+        res.status(200).json({ success: true, message: "User successfully logged in!", token });
+    } catch (error) {
+        console.error("Error in Login function: ", error.message);
+        res.status(500).json({
+            success: false,
+            message: "Something went wrong, user not logged in!",
+            error: error.message
+        });
+    }
+}
+
+
 module.exports = {
     Register,
+    Login
 }

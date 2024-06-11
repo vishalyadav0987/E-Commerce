@@ -46,7 +46,7 @@ UserSchema.pre("save", async function (next) {
     if (!this.isModified()) { // This cond check if password phle se hash toh dubara hash nh karega
         next();
     }
-    this.password = bcrypt.hash(this.password, 10);
+    this.password = await bcrypt.hash(this.password, 10);
 });
 
 
@@ -55,6 +55,11 @@ UserSchema.methods.generateToken = function(){
     return jwt.sign({id:this._id},process.env.JWT_SECERET,{
         expiresIn:process.env.JWT_LIFETIME,
     })
+}
+
+//compare password
+UserSchema.methods.comparePassword = async function(enterPassword){
+    return await bcrypt.compare(enterPassword,this.password);
 }
 
 module.exports = mongoose.models.user || mongoose.model("user", UserSchema);

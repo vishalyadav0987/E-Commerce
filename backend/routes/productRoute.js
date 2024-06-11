@@ -5,9 +5,10 @@ const { AddNewProduct,
     updateProduct,
     removeProduct,
     getSingleProduct } = require('../controllers/productController');
+const protecteRoute = require('../middleware/protectedRoute');
 
 router.route('/new').post(AddNewProduct);
-router.route('/products').get(getAllProducts);
+router.route('/products').get(protecteRoute,getAllProducts);
 router.route('/:id').put(updateProduct).delete(removeProduct).get(getSingleProduct);
 
 module.exports = router;

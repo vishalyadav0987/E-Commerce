@@ -1,6 +1,8 @@
 const UserSchema = require('../modals/UserSchema');
 const bcrypt = require('bcryptjs');
-const sendTokenInCookie = require('../Utils/SetTokenInCookie')
+const sendTokenInCookie = require('../Utils/SetTokenInCookie');
+const sendEmail = require('../Utils/sendEmail');
+const crypto = require('crypto');
 
 const Register = async (req, res) => {
     const { name, email, password } = req.body;
@@ -38,7 +40,7 @@ const Register = async (req, res) => {
 
 
         // another way to do : this way also store token in cookie
-        sendTokenInCookie(user, 201, res,"User Succesfully registered!");
+        sendTokenInCookie(user, 201, res, "User Succesfully registered!");
 
     } catch (error) {
         console.log("Error in Register function: ", error.message);
@@ -76,7 +78,7 @@ const Login = async (req, res) => {
         // const token = user.generateToken();
 
         // another way to do : this way also store token in cookie
-        sendTokenInCookie(user, 201, res,"User successfully logged in!" );
+        sendTokenInCookie(user, 201, res, "User successfully logged in!");
 
     } catch (error) {
         console.error("Error in Login function: ", error.message);
@@ -90,15 +92,15 @@ const Login = async (req, res) => {
 
 
 // LOGOUT FUNCTION
-const Logout = async(req,res)=>{
+const Logout = async (req, res) => {
     try {
-        res.cookie("token",null,{
-            expires:new Date(Date.now()),
-            httpOnly:true
+        res.cookie("token", null, {
+            expires: new Date(Date.now()),
+            httpOnly: true
         });
         res.status(200).json({
-            success:true,
-            message:"User Succesfully logged out",
+            success: true,
+            message: "User Succesfully logged out",
         });
     } catch (error) {
         console.error("Error in Logout function: ", error.message);
@@ -110,8 +112,129 @@ const Logout = async(req,res)=>{
     }
 }
 
+
+
+const forgetPassword = async (req, res) => {
+    const { email } = req.body;
+    console.log(email);
+
+    if (!email) {
+        return res.status(400).json({
+            success: false,
+            message: "Email is required"
+        });
+    }
+
+    try {
+        const user = await UserSchema.findOne({ email: req.body.email });
+        console.log(user);
+
+        if (!user) {
+            return res.json({ success: true, message: "User doesn't exist!" });
+        }
+
+        // Get reset token
+        const resetToken = user.getResetPasswordToken();
+
+        try {
+            await user.save({ validateBeforeSave: false })
+            console.log(user);
+
+            res.json({ sucess: true });
+        } catch (error) {
+            console.log("Erroro here:", error.message);
+            res.json({ sucess: false });
+
+        }
+
+
+
+        const resetPasswordUrl = `${req.protocol}://${req.get("host")}/api/v1/password/reset/${resetToken}`;
+        console.log(resetPasswordUrl);
+
+
+        const message = `Your password reset token is:\n\n${resetPasswordUrl}\n\nIf you have not requested this email then, please ignore it.`;
+
+
+
+        try {
+            const options =
+            {
+                email: user.email,
+                subject: `E-Commerce password recovery link.`,
+                message,
+            }
+
+            await sendEmail(options);
+
+            res.status(200).json({
+                success: true,
+                message: `Email sent to ${user.email} successfully!`
+            });
+        } catch (error) {
+            console.error("Error sending email: ", error.message);
+
+            // Reset the token and expiration fields if there is an error
+            user.resetPasswordToken = undefined;
+            user.resetPasswordExpire = undefined;
+
+            await user.save({ validateBeforeSave: false });
+
+            res.status(500).json({
+                success: false,
+                message: "Something went wrong while sending the email, try again later!",
+                error: error.message
+            });
+        }
+    } catch (error) {
+        console.error("Error in forgetPassword function: ", error.message);
+
+        res.status(500).json({
+            success: false,
+            message: "Something went wrong, try again later!",
+            error: error.message
+        });
+    }
+};// not working
+
+const resetPassword = async (req, res) => {
+    try {
+        const resetPasswordToken = crypto.createHash("sha256").update(resetToken).digest("hex");
+        const user = await UserSchema.findOne({
+            resetPasswordToken,
+            resetPasswordExpire: { $gt: Date.now() }
+        });
+        if (!user) {
+            return res.json({ success: true, message: "Reset token has been expired" });
+        }
+        if (req.body.password != req.body.confirmPassword) {
+            return res.json({ success: true, message: "Password doesn't match" });
+        }
+
+        user.password = req.body.password;
+        user.resetPasswordToken = undefined;
+        user.resetPasswordExpire = undefined;
+
+        await user.save();
+        sendTokenInCookie(user,200,res);
+
+    } catch (error) {
+        console.error("Error in reset function: ", error.message);
+        res.status(500).json({
+            success: false,
+            message: "Something went wrong, user not logged in!",
+            error: error.message
+        });
+    }
+}
+
+
+
+
 module.exports = {
     Register,
     Login,
     Logout,
+    forgetPassword,
+    resetPassword
 }

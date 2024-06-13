@@ -9,7 +9,8 @@ const { Register,
     updatePassword,
     updateProfile,
     fetchAllUser,
-    getSingleUser
+    getSingleUser,
+    updateUserRole
 } = require('../controllers/userController');
 const { protecteRoute, authorizeRole } = require('../middleware/protectedRoute')
 
@@ -23,6 +24,7 @@ router.route('/password/update').put(protecteRoute, updatePassword);
 router.route('/me/profile/update').put(protecteRoute, updateProfile);
 router.route('/users').get(protecteRoute, authorizeRole("admin"), fetchAllUser);
 router.route('/:id').get(protecteRoute, authorizeRole("admin"), getSingleUser);
+router.route('/role/:id').put(protecteRoute, authorizeRole("admin"), updateUserRole);
 router.route('/logout').get(Logout);
 
 module.exports = router;

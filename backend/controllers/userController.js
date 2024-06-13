@@ -103,7 +103,7 @@ const Logout = async (req, res) => {
             message: "User Succesfully logged out",
         });
     } catch (error) {
-       
+
     }
 }
 
@@ -211,7 +211,7 @@ const resetPassword = async (req, res) => {
         user.resetPasswordExpire = undefined;
 
         await user.save();
-        sendTokenInCookie(user,200,res);
+        sendTokenInCookie(user, 200, res, "Password succesfully reset");
 
     } catch (error) {
         console.error("Error in reset function: ", error.message);
@@ -225,13 +225,45 @@ const resetPassword = async (req, res) => {
 
 
 // getUserOwnDetails - Get user own profile
-const getUserOwnDetails = async(req,res)=>{
+const getUserOwnDetails = async (req, res) => {
     try {
-        const {id} = req.user;
+        const { id } = req.user;
         const userMe = await UserSchema.findById(id);
-        res.json({success:true,data:userMe});
+        res.json({ success: true, data: userMe });
     } catch (error) {
         console.error("Error in getUserOwnDetails function: ", error.message);
+        res.status(500).json({
+            success: false,
+            message: "Something went wrong!!",
+            error: error.message
+        });
+    }
+}
+
+
+const updatePassword = async (req, res) => {
+    try {
+        const userMe = await UserSchema.findById(req.user.id).select("+password");
+        if (!userMe) {
+            return res.json({ success: false, messgae: "User not found!" });
+        }
+
+        const isMatch = await userMe.comparePassword(req.body.oldPassword);
+
+        if (!isMatch) {
+            return res.status(401).json({ success: false, message: "Old password is incorrect!" });
+        }
+
+        if (req.body.newPassword != req.body.confirmPassword) {
+            return res.status(401).json({ success: false, message: "password doesn't match" });
+        }
+
+        userMe.password = req.body.newPassword;
+        await userMe.save();
+        sendTokenInCookie(userMe, 200, res, "Password successfully updated!");
+
+    } catch (error) {
+        console.error("Error in updatePassword function: ", error.message);
         res.status(500).json({
             success: false,
             message: "Something went wrong!!",
@@ -250,4 +282,5 @@ module.exports = {
     forgetPassword,
     resetPassword,
     getUserOwnDetails,
+    updatePassword,
 }

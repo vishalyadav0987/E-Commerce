@@ -333,6 +333,7 @@ const getSingleUser = async (req, res) => {
     }
 }
 
+// Get single user --- ADMIN rights
 const updateUserRole = async (req, res) => {
     try {
         const { id } = req.params;
@@ -358,6 +359,31 @@ const updateUserRole = async (req, res) => {
 }
 
 
+// Get single user --- ADMIN rights
+const deleteUser = async (req, res) => {
+    const { id } = req.params;
+    try {
+        let user = await UserSchema.findById(id);
+
+        // remove cloudnary later
+
+        if (!user) {
+            return res.json({ success: false, message: `User doesn't exists with this id:${id}` });
+        }
+
+        user = await UserSchema.findByIdAndDelete(id);
+        res.json({ success: true, message: "User successfully removed!" });
+    } catch (error) {
+        console.error("Error in deleteUser function: ", error.message);
+        res.status(500).json({
+            success: false,
+            message: "Something went wrong!!",
+            error: error.message
+        });
+    }
+}
+
+
 
 
 module.exports = {
@@ -372,4 +398,5 @@ module.exports = {
     fetchAllUser,
     getSingleUser,
     updateUserRole,
+    deleteUser,
 }

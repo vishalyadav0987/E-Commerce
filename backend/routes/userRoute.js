@@ -7,9 +7,10 @@ const { Register,
     resetPassword,
     getUserOwnDetails,
     updatePassword,
-    updateProfile
+    updateProfile,
+    fetchAllUser
 } = require('../controllers/userController');
-const { protecteRoute } = require('../middleware/protectedRoute')
+const { protecteRoute, authorizeRole } = require('../middleware/protectedRoute')
 
 
 router.route('/register').post(Register);
@@ -19,6 +20,7 @@ router.route('/password/reset/:token').put(resetPassword);
 router.route('/me').get(protecteRoute, getUserOwnDetails);
 router.route('/password/update').put(protecteRoute, updatePassword);
 router.route('/me/profile/update').put(protecteRoute, updateProfile);
+router.route('/users').get(protecteRoute, authorizeRole("admin"), fetchAllUser);
 router.route('/logout').get(Logout);
 
 module.exports = router;

@@ -299,6 +299,24 @@ const updateProfile = async (req, res) => {
 }
 
 
+// Fetch all user for admin panel --- ADMIN rights
+const fetchAllUser = async (req, res) => {
+    try {
+        const users = await UserSchema.find({});
+        res.json({ success: true, data: users });
+    } catch (error) {
+        console.error("Error in fetchAllUser function: ", error.message);
+        res.status(500).json({
+            success: false,
+            message: "Something went wrong!!",
+            error: error.message
+        });
+    }
+}
+
+
+
+
 module.exports = {
     Register,
     Login,
@@ -308,4 +326,5 @@ module.exports = {
     getUserOwnDetails,
     updatePassword,
     updateProfile,
+    fetchAllUser,
 }

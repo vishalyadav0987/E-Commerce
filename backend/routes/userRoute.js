@@ -6,7 +6,8 @@ const { Register,
     forgetPassword,
     resetPassword,
     getUserOwnDetails,
-    updatePassword
+    updatePassword,
+    updateProfile
 } = require('../controllers/userController');
 const { protecteRoute } = require('../middleware/protectedRoute')
 
@@ -17,6 +18,7 @@ router.route('/password/forget').post(forgetPassword);
 router.route('/password/reset/:token').put(resetPassword);
 router.route('/me').get(protecteRoute, getUserOwnDetails);
 router.route('/password/update').put(protecteRoute, updatePassword);
+router.route('/me/profile/update').put(protecteRoute, updateProfile);
 router.route('/logout').get(Logout);
 
 module.exports = router;

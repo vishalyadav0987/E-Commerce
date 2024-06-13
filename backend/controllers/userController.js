@@ -273,6 +273,30 @@ const updatePassword = async (req, res) => {
 }
 
 
+const updateProfile = async (req, res) => {
+    try {
+        const { name, email } = req.body;
+        const newData = {
+            name,
+            email,
+        }
+
+        // add cloudnary later
+        const user = await UserSchema.findByIdAndUpdate(req.user.id, newData, {
+            runValidators: true,
+            new: true,
+        });
+
+        res.json({ success: true, message: "Profile succesfully updated!" });
+    } catch (error) {
+        console.error("Error in updateProfile function: ", error.message);
+        res.status(500).json({
+            success: false,
+            message: "Something went wrong!!",
+            error: error.message
+        });
+    }
+}
 
 
 module.exports = {
@@ -283,4 +307,5 @@ module.exports = {
     resetPassword,
     getUserOwnDetails,
     updatePassword,
+    updateProfile,
 }

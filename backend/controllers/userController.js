@@ -314,6 +314,25 @@ const fetchAllUser = async (req, res) => {
     }
 }
 
+// Get single user --- ADMIN rights
+const getSingleUser = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const user = await UserSchema.findById(id);
+        if (!user) {
+            return res.json({ success: false, message: `User not found with this ${id}` });
+        }
+        res.json({ success: true, data: user });
+    } catch (error) {
+        console.error("Error in GetSingleUser function: ", error.message);
+        res.status(500).json({
+            success: false,
+            message: "Something went wrong!!",
+            error: error.message
+        });
+    }
+}
+
 
 
 
@@ -327,4 +346,5 @@ module.exports = {
     updatePassword,
     updateProfile,
     fetchAllUser,
+    getSingleUser,
 }

@@ -103,12 +103,7 @@ const Logout = async (req, res) => {
             message: "User Succesfully logged out",
         });
     } catch (error) {
-        console.error("Error in Logout function: ", error.message);
-        res.status(500).json({
-            success: false,
-            message: "Something went wrong, user not logged in!",
-            error: error.message
-        });
+       
     }
 }
 
@@ -229,6 +224,23 @@ const resetPassword = async (req, res) => {
 }
 
 
+// getUserOwnDetails - Get user own profile
+const getUserOwnDetails = async(req,res)=>{
+    try {
+        const {id} = req.user;
+        const userMe = await UserSchema.findById(id);
+        res.json({success:true,data:userMe});
+    } catch (error) {
+        console.error("Error in getUserOwnDetails function: ", error.message);
+        res.status(500).json({
+            success: false,
+            message: "Something went wrong!!",
+            error: error.message
+        });
+    }
+}
+
+
 
 
 module.exports = {
@@ -236,5 +248,6 @@ module.exports = {
     Login,
     Logout,
     forgetPassword,
-    resetPassword
+    resetPassword,
+    getUserOwnDetails,
 }

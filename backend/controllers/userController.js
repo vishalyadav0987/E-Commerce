@@ -333,6 +333,30 @@ const getSingleUser = async (req, res) => {
     }
 }
 
+const updateUserRole = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { name, email, role } = req.body;
+        const newData = {
+            name, email, role
+        }
+        const user = await UserSchema.findByIdAndUpdate(id, newData, {
+            new: true,
+            runValidators: true,
+            useFindAndModify: false,
+        });
+        res.status(200).json({ success: true, message: "Role successfully updated!" });
+
+    } catch (error) {
+        console.error("Error in updateUserRole function: ", error.message);
+        res.status(500).json({
+            success: false,
+            message: "Something went wrong!!",
+            error: error.message
+        });
+    }
+}
+
 
 
 
@@ -347,4 +371,5 @@ module.exports = {
     updateProfile,
     fetchAllUser,
     getSingleUser,
+    updateUserRole,
 }

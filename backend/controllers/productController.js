@@ -188,6 +188,23 @@ const createProductReview = async (req, res) => {
     }
 }
 
+// Get All Review of a product
+const getReviwesAllProducts = async (req, res) => {
+    try {
+        const product = await ProductSchema.findById(req.query.productId);
+        if (!product) {
+            return res.json({ success: false, message: "Product not found!" });
+        }
+        res.json({ success: true, reviews: product.reviews })
+    } catch (error) {
+        console.log("Error in getAllReviwes function: ", error.message);
+        res.status(500).json({
+            success: false,
+            message: "Something went wrong, Product is not fetched",
+            error: error.message
+        });
+    }
+}
 
 
 
@@ -198,4 +215,5 @@ module.exports = {
     removeProduct,
     getSingleProduct,
     createProductReview,
+    getReviwesAllProducts,
 }

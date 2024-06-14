@@ -154,10 +154,36 @@ const updateStoke = async (productId, quantity) => {
     }
 }
 
+// Admin --- rights
+const deleteOrder = async (req, res) => {
+
+    const { id } = req.params;
+    try {
+        const order = await OrderSchema.findById(id);
+        if (!order) {
+            return res.json({ success: true, message: `Order doesn't found with this id:${id}` });
+        }
+        res.json({
+            success: true,
+            message: "Order succesfully removed!"
+        })
+        await OrderSchema.findByIdAndDelete(id)
+
+    } catch (error) {
+        console.log("Error in deleteOrder function: ", error.message);
+        res.status(500).json({
+            success: false,
+            message: "Something went wrong.",
+            error: error.message
+        });
+    }
+}
+
 module.exports = {
     newOrder,
     getSingleOrderDetail,
     myOrder,
     getAllOrders,
     updateOrderStatus,
+    deleteOrder,
 }

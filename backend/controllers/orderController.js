@@ -136,23 +136,7 @@ const updateOrderStatus = async (req, res) => {
     }
 }
 
-const updateStoke = async (productId, quantity) => {
-    try {
-        const product = await ProductSchema.findById(productId);
-        if (!product) {
-            return res.json({ success: true, message: `product doesn't found with this id:${id}` });
-        }
-        product.Stock -= quantity;
-        await product.save({ validateBeforeSave: false });
-    } catch (error) {
-        console.log("Error in updateStoke function: ", error.message);
-        res.status(500).json({
-            success: false,
-            message: "Something went wrong.",
-            error: error.message
-        });
-    }
-}
+
 
 // Admin --- rights
 const deleteOrder = async (req, res) => {
@@ -179,6 +163,23 @@ const deleteOrder = async (req, res) => {
     }
 }
 
+const updateStoke = async (productId, quantity) => {
+    try {
+        const product = await ProductSchema.findById(productId);
+        if (!product) {
+            return res.json({ success: true, message: `product doesn't found with this id:${id}` });
+        }
+        product.Stock -= quantity;
+        await product.save({ validateBeforeSave: false });
+    } catch (error) {
+        console.log("Error in updateStoke function: ", error.message);
+        res.status(500).json({
+            success: false,
+            message: "Something went wrong.",
+            error: error.message
+        });
+    }
+}
 module.exports = {
     newOrder,
     getSingleOrderDetail,

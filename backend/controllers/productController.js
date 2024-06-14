@@ -206,6 +206,38 @@ const getReviwesAllProducts = async (req, res) => {
     }
 }
 
+// Delete the reviews 
+const deleteProductReview = async (req, res) => {
+    try {
+        const product = await ProductSchema.findById(req.query.productId);
+        if (!product) {
+            return res.json({ success: false, message: "Product not found!" });
+        }
+        const reviews = product.reviews.filter((rev) => rev._id.toString() !== req.query.id);
+        let sum = 0;
+        reviews.forEach((rev) => {
+            sum += rev.rating;
+        });
+        let avg = sum / reviews.length;
+        const numOfReviews = reviews.length;
+        const ratings = avg.toFixed(1);
+        await ProductSchema.findByIdAndUpdate(req.query.productId, {
+            reviews,
+            numOfReviews,
+            ratings
+        }, { new: true, runValidators: true, useFindAndModify: false })
+
+        res.json({ success: true, message: "Review Succesfully deleted!" });
+    } catch (error) {
+        console.log("Error in getAllReviwes function: ", error.message);
+        res.status(500).json({
+            success: false,
+            message: "Something went wrong, Product is not fetched",
+            error: error.message
+        });
+    }
+}
+
 
 
 module.exports = {
@@ -216,4 +248,5 @@ module.exports = {
     getSingleProduct,
     createProductReview,
     getReviwesAllProducts,
+    deleteProductReview,
 }

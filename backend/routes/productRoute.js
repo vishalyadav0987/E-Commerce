@@ -7,6 +7,7 @@ const { AddNewProduct,
     getSingleProduct,
     createProductReview,
     getReviwesAllProducts,
+    deleteProductReview,
 } = require('../controllers/productController');
 const { protecteRoute, authorizeRole } = require('../middleware/protectedRoute');
 
@@ -26,4 +27,5 @@ router.route('/:id').put(
 
 router.route('/review').post(protecteRoute, createProductReview);
 router.route('/review/all').get(getReviwesAllProducts);
+router.route('/review/delete').delete(protecteRoute, deleteProductReview);;
 module.exports = router;

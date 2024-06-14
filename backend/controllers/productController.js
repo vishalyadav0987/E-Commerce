@@ -123,6 +123,72 @@ const getSingleProduct = async (req, res) => {
 }
 
 
+// Create and update review
+const createProductReview = async (req, res) => {
+    try {
+        const { productId, comment, rating } = req.body;
+        const product = await ProductSchema.findById(productId);
+        if (!product) {
+            return res.json({
+                success: false,
+                message: `Product doesn't exist with this id:${productId}`
+            });
+        }
+        const review = {
+            userRevId: req.user.id,
+            name: req.user.name,
+            comment,
+            rating: +rating
+        }
+
+        console.log(review);
+        // console.log(product.reviews[0].userRevId.toString(), req.user.id);
+
+        // Iam not use like the bacause [reviews] parameter is array
+        // const isReviewed = await ProductSchema.find(
+        //     product.reviews.userRevId === req.user.id
+        // );
+
+        // this is find method is array wala method
+        const isReviewed = await product.reviews.find((rev) =>
+            rev.userRevId.toString() === req.user.id
+        );
+        console.log(isReviewed);
+
+        if (isReviewed) {
+            product.reviews.forEach((rev) => {
+                if (rev.userRevId.toString() === req.user.id) {
+                    (rev.rating = rating), (rev.comment = comment) // is updating the review
+                }
+            });
+        }
+        else {
+            product.reviews.push(review);
+            product.numOfReviews = product.reviews.length;
+        }
+
+        let sum = 0;
+        product.reviews.forEach((rev) => {
+            sum += rev.rating;
+        });
+        console.log(sum);
+        let avg = sum / product.reviews.length;
+        console.log(avg);
+        product.ratings = avg;
+        await product.save({ validateBeforeSave: false });
+
+        res.json({ success: true, message: "Review successfully added!" });
+    } catch (error) {
+        console.log("Error in createProductReview function: ", error.message);
+        res.status(500).json({
+            success: false,
+            message: "Something went wrong, Product is not fetched",
+            error: error.message
+        });
+    }
+}
+
+
 
 
 module.exports = {
@@ -131,4 +197,5 @@ module.exports = {
     updateProduct,
     removeProduct,
     getSingleProduct,
+    createProductReview,
 }

@@ -74,8 +74,30 @@ const myOrder = async (req, res) => {
     }
 }
 
+// Admin --- rights
+const getAllOrders = async (req, res) => {
+    try {
+        const orders = await OrderSchema.find({});
+        if (!orders) {
+            return res.json({ success: true, message: `Order cart is empty!` });
+        }
+        res.json({
+            success: true,
+            data: orders
+        })
+    } catch (error) {
+        console.log("Error in getAllOrders function: ", error.message);
+        res.status(500).json({
+            success: false,
+            message: "Something went wrong.",
+            error: error.message
+        });
+    }
+}
+
 module.exports = {
     newOrder,
     getSingleOrderDetail,
     myOrder,
+    getAllOrders,
 }

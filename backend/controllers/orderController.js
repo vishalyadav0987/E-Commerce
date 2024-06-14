@@ -81,8 +81,13 @@ const getAllOrders = async (req, res) => {
         if (!orders) {
             return res.json({ success: true, message: `Order cart is empty!` });
         }
+        let totalAmount = 0;
+        orders.forEach((order) => {
+            totalAmount += order.totalPrice
+        })
         res.json({
             success: true,
+            totalAmount,
             data: orders
         })
     } catch (error) {

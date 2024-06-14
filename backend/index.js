@@ -6,6 +6,7 @@ const PORT = 3000 || process.env.PORT;
 const connectDB = require('./connectDB/connect');
 const productRoutes = require('./routes/productRoute');
 const userRoutes = require('./routes/userRoute');
+const orderRoutes = require('./routes/orderRoute');
 
 
 // Handled uncaught exception
@@ -23,6 +24,7 @@ app.use(cookieParser());
 
 app.use('/api/v1/product', productRoutes);
 app.use('/api/v1/user', userRoutes);
+app.use('/api/v1/order', orderRoutes);
 
 // TEST ENDPOINT
 app.get('/test', (req, res) => {

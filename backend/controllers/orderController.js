@@ -39,7 +39,7 @@ const newOrder = async (req, res) => {
 const getSingleOrderDetail = async (req, res) => {
     const { id } = req.params;
     try {
-        const order = await OrderSchema.findById(id);
+        const order = await OrderSchema.findById(id).populate("userId", "name email");
         if (!order) {
             return res.json({ success: true, message: `Order doesn't found with this id:${id}` });
         }
@@ -57,7 +57,25 @@ const getSingleOrderDetail = async (req, res) => {
     }
 }
 
+const myOrder = async (req, res) => {
+    try {
+        const myOrders = await OrderSchema.find({ userId: req.user.id });
+        res.json({
+            success: true,
+            data: myOrders,
+        })
+    } catch (error) {
+        console.log("Error in myOrder function: ", error.message);
+        res.status(500).json({
+            success: false,
+            message: "Something went wrong.",
+            error: error.message
+        });
+    }
+}
+
 module.exports = {
     newOrder,
     getSingleOrderDetail,
+    myOrder,
 }

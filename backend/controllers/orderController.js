@@ -36,6 +36,28 @@ const newOrder = async (req, res) => {
     }
 }
 
+const getSingleOrderDetail = async (req, res) => {
+    const { id } = req.params;
+    try {
+        const order = await OrderSchema.findById(id);
+        if (!order) {
+            return res.json({ success: true, message: `Order doesn't found with this id:${id}` });
+        }
+        res.json({
+            success: true,
+            data: order,
+        })
+    } catch (error) {
+        console.log("Error in getSingOrderDetail function: ", error.message);
+        res.status(500).json({
+            success: false,
+            message: "Something went wrong, Product is not fetched",
+            error: error.message
+        });
+    }
+}
+
 module.exports = {
     newOrder,
+    getSingleOrderDetail,
 }

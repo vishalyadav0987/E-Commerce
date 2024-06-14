@@ -100,9 +100,64 @@ const getAllOrders = async (req, res) => {
     }
 }
 
+// Admin --- rights
+const updateOrderStatus = async (req, res) => {
+    const { id } = req.params;
+    const { orderStatus } = req.body;
+    try {
+        const order = await OrderSchema.findById(id);
+        if (!order) {
+            return res.json({ success: true, message: `Order doesn't found with this id:${id}` });
+        }
+        if (order.orderStatus === "Delivered") {
+            return res.json({ success: true, message: `You have already delivered this order` });
+        }
+
+        order.OrderItems.forEach(async (order) => {
+            await updateStoke(order.productId, order.quantity);
+        });
+
+        order.orderStatus = orderStatus;
+        if (orderStatus === "Delivered") {
+            order.deliveredAt = Date.now()
+        }
+        await order.save({ validateBeforeSave: false });
+        res.json({
+            success: true,
+            message: "Status Successfully updated!"
+        })
+    } catch (error) {
+        console.log("Error in updateOrderStatus function: ", error.message);
+        res.status(500).json({
+            success: false,
+            message: "Something went wrong.",
+            error: error.message
+        });
+    }
+}
+
+const updateStoke = async (productId, quantity) => {
+    try {
+        const product = await ProductSchema.findById(productId);
+        if (!product) {
+            return res.json({ success: true, message: `product doesn't found with this id:${id}` });
+        }
+        product.Stock -= quantity;
+        await product.save({ validateBeforeSave: false });
+    } catch (error) {
+        console.log("Error in updateStoke function: ", error.message);
+        res.status(500).json({
+            success: false,
+            message: "Something went wrong.",
+            error: error.message
+        });
+    }
+}
+
 module.exports = {
     newOrder,
     getSingleOrderDetail,
     myOrder,
     getAllOrders,
+    updateOrderStatus,
 }

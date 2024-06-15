@@ -1,0 +1,18 @@
+.speedDial {
+    position: fixed;
+    right: 3vmax;
+    top: 3vmax;
+}
+
+.menuBurger{
+    gap: 2px;
+    width: 6vmax;
+    height: 3.5vmax;
+    margin:-10px 0 0 -10px;
+}
+
+.speedDialIcon {
+    width: 56px;
+    height: 56px;
+    border-radius: 100%;
+}

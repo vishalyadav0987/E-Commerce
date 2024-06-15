@@ -10,12 +10,12 @@ const Footer = () => {
             <div id="footer" className="footer">
                 <div className="footer-content">
                     <div className="footer-content-left">
-                        <img src="vite.svg" alt="" />
+                    <img src="https://clipground.com/images/ecommerce-logo-png-19.png" alt=""  style={{width:"12vmax",marginBottom:"10px"}}/>
                         <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Similique natus fuga quidem ullam fugiat hic voluptate molestiae odit, recusandae possimus omnis veritatis reprehenderit explicabo nihil in eaque molestias obcaecati? Repellendus?</p>
                         <div className="footer-social-icon">
-                            <FaLinkedin />
-                            <FaInstagramSquare />
-                            <FaSquareWhatsapp />
+                        <FaLinkedin />
+                        <FaInstagramSquare />
+                        <FaSquareWhatsapp />
                         </div>
                     </div>
                     <div className="footer-content-center">

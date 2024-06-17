@@ -1,0 +1,26 @@
+* {
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+}
+html{
+/* font-size: 10px; */
+/* 10px / 16px = 0.625 = 62.5% */
+/* default 1rem = 16px  */
+/* 10px sahuliyat ke liye */
+font-size: 62.5%;
+overflow-x: hidden;
+scroll-behavior: smooth;
+}
+
+::-webkit-scrollbar{
+    display: none;
+}
+
+li{
+    list-style: none;
+}
+
+body{
+    background-color: #F8F4E1;
+}

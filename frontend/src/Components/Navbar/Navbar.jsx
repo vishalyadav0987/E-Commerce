@@ -4,7 +4,7 @@ import './Navbar.css'
 
 const options = {
     burgerColorHover: "#57A6A1",
-    burgerColor: "#323232",
+    burgerColor: "#fff",
     logo:"https://clipground.com/images/ecommerce-logo-png-19.png",
     logoWidth: "15vmax",
     navColor1: "#240750",

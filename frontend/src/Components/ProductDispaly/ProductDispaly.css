@@ -1,0 +1,35 @@
+.product-section {
+    margin-top: 60px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.product-section .product-container{
+    width: 80%;
+}
+.product-section .product-container .heading {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.product-section .product-container h2 {
+    font-size: clamp(1.6rem, 5vw, 2.8rem);
+    font-weight: 500;
+    font-family: sans-serif;
+    border-bottom: 1px solid #323232;
+    text-align: center;
+    padding: 12px 40px;
+    color: #323232;
+    margin-bottom: 80px;
+}
+
+.product-section .product-container .content {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 30px;
+}

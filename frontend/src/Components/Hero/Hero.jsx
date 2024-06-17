@@ -9,7 +9,7 @@ const Hero = () => {
         <div className="content">
             <p>Welcome to Ecommerce</p>
             <h1>Discover Your Style - Shop the Latest Trends!</h1>
-           <a href="#footer">
+           <a href="#product-section">
            <button>
             Scroll <CgMouse />
            </button>

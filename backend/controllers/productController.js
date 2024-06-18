@@ -21,7 +21,7 @@ const AddNewProduct = async (req, res) => {
 // Get All the data --- USER --- ADMIN 
 const getAllProducts = async (req, res) => {
     try {
-        let resultPerPage = 5;
+        let resultPerPage = 8;
         const productCount = await ProductSchema.countDocuments(); // inbuilt function
         const apiFeatures = new ApiFeatures(ProductSchema.find(), req.query)
             .search()

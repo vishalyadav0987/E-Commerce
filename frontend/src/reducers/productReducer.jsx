@@ -20,7 +20,7 @@ const productReducer = (state = { products: [] }, action) => {
         case ALL_PRODUCT_FAIL:
             return {
                 loading: false,
-                product: action.payload,
+                error: action.payload,
             }
         case CLEAR_ERRORS:
             return {

@@ -24,3 +24,8 @@ li{
 body{
     background-color: #F8F4E1;
 }
+
+a{
+    text-decoration: none;
+    color: inherit;
+}

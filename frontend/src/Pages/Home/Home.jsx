@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
-import Hero from '../Hero/Hero';
-import ProductDisplay from '../ProductDispaly/ProductDisplay';
+import Hero from '../../Components/Hero/Hero';
+import ProductDisplay from '../../Components/ProductDispaly/ProductDisplay';
 import { getAllProducts } from '../../actions/productAction';
 import { useSelector, useDispatch } from 'react-redux';
 import { useAlert } from 'react-alert'

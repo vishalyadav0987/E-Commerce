@@ -16,3 +16,26 @@
     height: 56px;
     border-radius: 100%;
 }
+
+.navbar-section{
+    display: flex;
+    position: relative;
+}
+.nav-links-icons{
+    display: flex;
+    align-items: center;
+    gap: 25px;
+    font-size: 2vmax;
+    position: fixed;
+    top: 2vmax;
+    right: 2vmax;
+    cursor: pointer;
+    color: #323232;
+    z-index: 10;
+}
+
+@media (max-width:400px) {
+    .nav-links-icons{
+        gap: 15px;
+    }
+}

@@ -2,15 +2,18 @@ import React from 'react'
 import ReactStars from 'react-rating-stars-component'
 import './Review.css'
 
-const Review = () => {
+const Review = ({ product }) => {
+    let rate = product.ratings;
+    let rates = Math.round(rate)
     const options = {
         edit: false,
         color: "#e5ddd3",
-        value: 4.1,
+        value: rates,
         activeColor: "tomato",
         size: window.innerWidth < 600 ? 20 : 25,
         isHalf: true,
     }
+
     return (
         <div className='review-container'>
             <div className="container">
@@ -23,7 +26,7 @@ const Review = () => {
                         <h2>Customer reviews</h2>
                         <div className="review-container">
                             <ReactStars {...options} />
-                            <span>({"4.1 out of 5"} Reviews)</span>
+                            <span>({`${rates} out of 5`} Reviews)</span>
                         </div>
                         <div className="review-submit-container">
                             <h2>Review this product</h2>
@@ -44,63 +47,45 @@ const Review = () => {
                         <div className="product-img">
                             <h2>Reviews with images</h2>
                             <div className="product-img-container">
-                                <img src="https://i.ibb.co/DRST11n/1.webp" alt="" />
-                                <img src="https://i.ibb.co/DRST11n/1.webp" alt="" />
-                                <img src="https://i.ibb.co/DRST11n/1.webp" alt="" />
-                                <img src="https://i.ibb.co/DRST11n/1.webp" alt="" />
-                                <img src="https://i.ibb.co/DRST11n/1.webp" alt="" />
+                                {product.images &&
+                                    product.images.map((image, i) => {
+                                        return (
+                                            <img
+                                                src={image.url}
+                                                alt={`${i} Slide`}
+                                                key={image.url}
+                                            />
+                                        )
+                                    })
+                                }
                             </div>
                         </div>
                         <div className="all-review-container">
                             <h3>Top reviews from India</h3>
-                            <div className="single-review">
-                                <div className="header">
-                                    <img
-                                        src="http://www.pngall.com/wp-content/uploads/5/Profile.png"
-                                        alt=""
-                                    />
-                                    <p className="review-holder-name">Placeholder</p>
-                                </div>
-                                <div className="review-container">
-                                    <ReactStars {...options} />
-                                    <span>{"Car Duster Combo"}</span>
-                                </div>
-                                <p className="review-message">
-                                    Looks good. Duster looks very soft,very good for cleaning car windshields mainly to avoid scratches. Duster size is good enough to clean windshields with 2-3 wipes Extendable handle is useful in cleaning Roof. Steel Handle looks sturdy enough. Good buy. Recommendable.
-                                </p>
-                            </div>
-                            <div className="single-review">
-                                <div className="header">
-                                    <img
-                                        src="http://www.pngall.com/wp-content/uploads/5/Profile.png"
-                                        alt=""
-                                    />
-                                    <p className="review-holder-name">Placeholder</p>
-                                </div>
-                                <div className="review-container">
-                                    <ReactStars {...options} />
-                                    <span>{"Car Duster Combo"}</span>
-                                </div>
-                                <p className="review-message">
-                                    Looks good. Duster looks very soft,very good for cleaning car windshields mainly to avoid scratches. Duster size is good enough to clean windshields with 2-3 wipes Extendable handle is useful in cleaning Roof. Steel Handle looks sturdy enough. Good buy. Recommendable.
-                                </p>
-                            </div>
-                            <div className="single-review">
-                                <div className="header">
-                                    <img
-                                        src="http://www.pngall.com/wp-content/uploads/5/Profile.png"
-                                        alt=""
-                                    />
-                                    <p className="review-holder-name">Placeholder</p>
-                                </div>
-                                <div className="review-container">
-                                    <ReactStars {...options} />
-                                    <span>{"Car Duster Combo"}</span>
-                                </div>
-                                <p className="review-message">
-                                    Looks good. Duster looks very soft,very good for cleaning car windshields mainly to avoid scratches. Duster size is good enough to clean windshields with 2-3 wipes Extendable handle is useful in cleaning Roof. Steel Handle looks sturdy enough. Good buy. Recommendable.
-                                </p>
-                            </div>
+                            {
+                                product.reviews && product.reviews[0]
+                                    ? product.reviews && product.reviews.map((review) => {
+                                        return (
+                                            <div className="single-review" key={review._id}>
+                                                <div className="header">
+                                                    <img
+                                                        src="http://www.pngall.com/wp-content/uploads/5/Profile.png"
+                                                        alt=""
+                                                    />
+                                                    <p className="review-holder-name">{review.name}</p>
+                                                </div>
+                                                <div className="review-container">
+                                                    <ReactStars {...options} value={review.rating} />
+                                                    <span style={{ color: "#c5c5c5" }}>{`UserId # ${review.userRevId}`}</span>
+                                                </div>
+                                                <p className="review-message">
+                                                    {review.comment}
+                                                </p>
+                                            </div>
+                                        )
+                                    })
+                                    : <p style={{ fontSize: "24px", color: "#323232" }}>Add your review here</p>
+                            }
                         </div>
                     </div>
                 </div>

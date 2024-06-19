@@ -22,7 +22,7 @@ const SingleProductPage = () => {
         isHalf: true,
     }
 
-    console.log(product)
+   
     useEffect(() => {
         dispatch(getSingleProducts(id))
     }, [dispatch, id]);
@@ -88,7 +88,7 @@ const SingleProductPage = () => {
                         <div className="id-title ok">
                             <p>Review</p>
                         </div>
-                        <Review />
+                        <Review product={product}/>
                     </div>
             }
         </>

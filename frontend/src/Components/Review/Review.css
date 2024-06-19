@@ -1,0 +1,234 @@
+.review-container {
+    width: 100%;
+    font-family: sans-serif;
+    margin-top: 30px;
+    border: 0;
+}
+
+.review-container .container {
+    width: 100%;
+    padding: 0 5%;
+}
+
+.review-container .container .top-box {
+    border-top: 1px solid #c5c5c5;
+    border-bottom: 1px solid #c5c5c5;
+    padding: 24px 0;
+    margin-bottom: 24px;
+}
+
+.review-container .container .top-box h2 {
+    font-size: clamp(1.6rem, 5vw, 2.5rem);
+    margin-bottom: 10px;
+}
+
+.review-container .container .top-box input {
+    width: 70%;
+    padding: 6px 8px;
+    border-radius: 4px;
+    outline-color: #c5c5c5;
+    border: 1px solid #323232;
+}
+
+.bottom-box {
+    display: flex;
+    width: 80vmax;
+    justify-content: space-between;
+
+}
+
+.bottom-box .left-box {
+    width: 20vmax;
+}
+
+.bottom-box .review-container {
+    font-family: sans-serif;
+    margin-top: 0px;
+    border: 0;
+    margin-bottom: 16px;
+}
+
+.bottom-box .left-box h2 {
+    font-size: clamp(1.2rem, 5vw, 2rem);
+}
+
+.bottom-box .left-box .review-container span {
+    font-weight: 500;
+    font-size: 14px;
+    margin-bottom: -2px;
+}
+
+.bottom-box .left-box .review-submit-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    border-top: 1px solid #c5c5c5;
+    border-bottom: 1px solid #c5c5c5;
+    padding: 24px 0;
+}
+
+.bottom-box .left-box .review-submit-container p {
+    font-size: 14px;
+}
+
+.bottom-box .left-box .review-submit-container button {
+    outline: none;
+    padding: 5px 40px;
+    font-size: 12px;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    border: 1px solid #c5c5c5;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.bottom-box .right-box {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    padding: 20px;
+    width: 50vmax;
+}
+
+.bottom-box .right-box .ai-generated {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.bottom-box .right-box .ai-generated h3 {
+    font-size: 16px;
+}
+
+.bottom-box .right-box .ai-generated p {
+    font-size: 14px;
+    color: #323232;
+    line-height: 1.25;
+    letter-spacing: 0.8px;
+}
+
+.bottom-box .right-box .ai-generated .dummy-ai-text {
+    font-size: 13px;
+    color: #a5a6a6;
+}
+
+.bottom-box .right-box .product-img h2,
+.bottom-box .right-box .all-review-container h3 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 16px;
+}
+
+.bottom-box .right-box .product-img {
+    border-bottom: 1px solid #c5c5c5;
+    padding: 30px 0;
+}
+
+.bottom-box .right-box .product-img .product-img-container {
+    display: flex;
+    gap: 8px;
+    overflow: auto;
+}
+
+.bottom-box .right-box .product-img .product-img-container img {
+    width: 180px;
+    border-radius: 6px;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    
+}
+
+.all-review-container .single-review .header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.all-review-container .single-review .header img {
+    width: 40px;
+    border-radius: 50%;
+    background-color: #323232;
+    cursor: pointer;
+}
+
+.all-review-container .single-review .header p {
+    font-size: 14px;
+    color: #323232;
+    line-height: 1.25;
+    letter-spacing: 0.8px;
+    cursor: pointer;
+}
+
+.all-review-container .review-container {
+    display: flex;
+    gap: 6px;
+    align-items: flex-start;
+    flex-direction: column;
+    margin-top: 10px;
+}
+
+.all-review-container .review-container span {
+    margin-bottom: 0px;
+    font-weight: 600;
+}
+
+.all-review-container .single-review {
+    border: 1px solid white;
+    padding: 20px;
+    width: 50vmax;
+}
+
+.all-review-container .single-review p {
+    font-size: 14px;
+    color: #323232;
+    line-height: 1.25;
+    letter-spacing: 0.8px;
+}
+
+.all-review-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+@media (max-width:1276px) {
+    .bottom-box .left-box {
+        width: 25vmax;
+    }
+}
+
+@media (max-width:1015px) {
+    .bottom-box .left-box {
+        width: 30vmax;
+    }
+
+    .bottom-box {
+        width: 90vmax;
+    }
+
+    .bottom-box .right-box {
+        width: 55vmax;
+    }
+}
+
+@media (max-width:864px) {
+
+    .review-container .container{
+        padding: 0;
+    }
+    .bottom-box {
+        width: 100%;
+        flex-direction: column;
+    }
+
+    .bottom-box .left-box,
+    .bottom-box .right-box,
+    .all-review-container .single-review {
+        width: 100%;
+    }
+    .bottom-box .left-box{
+        padding: 16px;
+    }
+    .review-container .container .top-box{
+        padding: 16px;
+    }
+
+}

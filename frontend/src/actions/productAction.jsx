@@ -9,10 +9,14 @@ import {
     CLEAR_ERRORS,
 } from '../constants/productConstants';
 
-const getAllProducts = () => async (dispatch) => {
+const getAllProducts = (keyword="") => async (dispatch) => {
     try {
         dispatch({ type: ALL_PRODUCT_REQUEST });
-        const response = await axios.get('/api/v1/product/products');
+
+
+        let link = `/api/v1/product/products?keyword=${keyword}`
+
+        const response = await axios.get(link);
         dispatch({
             type: ALL_PRODUCT_SUCEESS,
             payload: response.data.data,

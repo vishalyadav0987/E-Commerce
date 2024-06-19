@@ -4,19 +4,24 @@ import { getAllProducts, clearError } from '../../actions/productAction'
 import Loder from '../../Components/Loader/Loder';
 import ProductCard from '../../Components/ProductCard/ProductCard';
 import { useAlert } from 'react-alert'
+import { useParams } from 'react-router-dom';
 
 const AllProduct = () => {
     const alert = useAlert();
     const dispatch = useDispatch();
     const { product, error, loading } = useSelector(state => state.products);
 
+    const { keyword } = useParams();
+
+    console.log(keyword)
+
     useEffect(() => {
         if (error) {
             alert.error(error)
             dispatch(clearError());
         }
-        dispatch(getAllProducts());
-    }, [dispatch]);
+        dispatch(getAllProducts(keyword));
+    }, [dispatch, keyword]);
 
 
     return (

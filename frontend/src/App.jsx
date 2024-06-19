@@ -5,7 +5,7 @@ import webFont from "webfontloader"
 import Footer from './Components/Footer/Footer';
 import Home from './Pages/Home/Home';
 import SingleProductPage from './Pages/SingleProductPage/SingleProductPage';
-import Review from './Components/Review/Review';
+import AllProduct from './Pages/AllProducts/AllProduct';
 
 
 const App = () => {
@@ -24,6 +24,7 @@ const App = () => {
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/product/:id' element={<SingleProductPage />} />
+          <Route path='/products' element={<AllProduct />} />
         </Routes>
         <Footer />
       </Router>

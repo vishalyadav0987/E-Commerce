@@ -6,6 +6,7 @@ import Footer from './Components/Footer/Footer';
 import Home from './Pages/Home/Home';
 import SingleProductPage from './Pages/SingleProductPage/SingleProductPage';
 import AllProduct from './Pages/AllProducts/AllProduct';
+import Search from './Pages/Search/Search';
 
 
 const App = () => {
@@ -25,6 +26,7 @@ const App = () => {
           <Route path='/' element={<Home />} />
           <Route path='/product/:id' element={<SingleProductPage />} />
           <Route path='/products' element={<AllProduct />} />
+          <Route path='/search' element={<Search />} />
         </Routes>
         <Footer />
       </Router>

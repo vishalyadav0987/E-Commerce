@@ -1,0 +1,199 @@
+.single-product-page {
+    width: 100%;
+}
+
+.single-product-page .single-product-container {
+    width: 80%;
+    margin: 0 auto;
+    /* background-color: aqua; */
+    margin-top: 90px;
+    display: flex;
+    border: 1px solid white;
+    border-radius: 4px;
+}
+
+.left-side {
+    width: 50%;
+    border: 1px solid white;
+
+}
+.left-side .carousel{
+    width: 65%;
+    margin:40px auto;
+    
+}
+
+.carousel-img{
+    width: 100%;
+    border-radius: 4px;
+
+}
+
+
+.rght-side {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    padding: 4%;
+    gap:45px;
+    justify-content: start;
+}
+
+.id-title p:first-child {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 600;
+    font-family: sans-serif;
+    text-transform: capitalize;
+}
+
+.id-title p:nth-child(2) {
+    font-size: clamp(1rem, 5vw, 1.4rem);
+    color: #c5c5c5;
+}
+
+.rght-side .review-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding:1rem 0;
+    border-top: 1px solid #c5c5c5;
+    border-bottom: 1px solid #c5c5c5;
+    margin-top: 0px;
+}
+
+.review-container span {
+    font-size: 14px;
+}
+
+.review-container div {
+    margin-bottom: 0px;
+}
+
+.counter {
+    display: flex;
+    gap: 20px;
+}
+
+.counter div {
+    display: flex;
+    align-items: center;
+}
+
+.counter div button,
+.counter div p {
+    outline: none;
+    border: none;
+    border: 1px solid #c5c5c5;
+    padding: 10px 14px;
+    font-size: 16px;
+}
+
+.status{
+    padding:1.6rem 0;
+    border-top: 1px solid #c5c5c5;
+    border-bottom: 1px solid #c5c5c5;
+}
+.counter div button:first-child{
+    padding: 10px 16px;
+}
+.counter div button {
+    cursor: pointer;
+    background-color: #240750;
+    color: white;
+    font-weight: 600;
+    transition: all 0.3s ease;
+
+}
+
+.counter div p {
+    padding: 9.2px 16px;
+    border-left: 0px;
+    border-right:0px ;
+}
+
+.counter .btn,.submit-review.btn {
+    padding: 10px 40px;
+    border-radius: 50px;
+    border: 1px solid #c5c5c5;
+    background-color: #240750;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.counter .btn:active,
+.counter div button:active,
+.submit-review.btn:active {
+    transform: scale(0.95);
+}
+
+.status-text ,.discription-text{
+    font-size: 16px;
+    font-weight: 700;
+    color: black;
+    text-transform: capitalize;
+}
+
+.discription{
+    font-size: 14px;
+    color: #323232;
+}
+
+.submit-review.btn{
+    width: 180px;
+}
+
+.greenColor{
+    color: green;
+}
+.redColor{
+    color: red;
+}
+
+.id-title.ok{
+    margin-top: 40px;
+    margin-bottom: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 18px;
+    font-weight: normal;
+}
+.id-title.ok p{
+    margin-bottom: 0px;
+    font-weight: 500;
+    border-bottom: 1px solid #c5c5c5;
+    padding:0 20px;
+}
+@media (max-width:1000px) {
+    .rght-side {
+        gap: 20px;
+    }
+    .single-product-page .single-product-container{
+        width: 95%;
+    }
+}
+@media (max-width:752px) {
+    .rght-side {
+        gap: 40px;
+        width: 100%;
+    }
+    .left-side{
+        width: 100%;
+        
+    }
+    .single-product-page .single-product-container{
+        width: 95%;
+        flex-direction: column  ;
+        margin-top: 40px;
+    }
+    .left-side .carousel{
+        width: 85%;
+        margin:40px auto;  
+    }
+    .rght-side .id-title{
+        margin-top: 30px;
+    }
+}

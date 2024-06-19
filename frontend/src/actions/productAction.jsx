@@ -49,4 +49,4 @@ const clearError = () => async (dispatch) => {
 }
 
 
-export { getAllProducts, clearError }
+export { getAllProducts, clearError, getSingleProducts }

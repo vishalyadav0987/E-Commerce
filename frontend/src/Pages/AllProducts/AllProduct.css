@@ -1,0 +1,46 @@
+.product-section.ok{
+    flex-direction: column;
+}
+
+.paginationBox{
+    margin-top: 80px;
+}
+.pagination{
+    display: flex;
+    justify-content: center;
+    padding: 0;
+}
+
+.page-item{
+    background-color: white;
+    border: 1px solid rgba(0,0,0,0.2);
+    padding: 1vmax 1.5vmax;
+    transition: all 0.3s;
+    cursor: pointer;
+}
+
+.page-item:first-child{
+    border-radius:4px 0px 0px 4px ;
+}
+.page-item:last-child{
+    border-radius:0px 4px 4px 0px ;
+}
+.page-link{
+    color: #65c3cf;
+    transition: all 0.3s;
+    font-weight: 300;
+    font-size: clamp(8px,4vw,14px);
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.page-item:hover{
+    background-color: rgb(230,230,230);
+}
+.page-item:hover .page-link{
+    color:#65c3cf;
+}
+
+.pageItemActive{
+    background-color: #4118a8;
+    color: #65c3cf;
+}

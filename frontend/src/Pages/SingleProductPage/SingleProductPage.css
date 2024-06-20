@@ -197,3 +197,9 @@
         margin-top: 30px;
     }
 }
+
+@media (max-width:450px) {
+    .product-section .product-container{
+        width: 86%;
+    }
+}

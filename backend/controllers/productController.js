@@ -34,6 +34,7 @@ const getAllProducts = async (req, res) => {
             success: true,
             data: products,
             count: productCount,
+            resultPerPage,
         });
     } catch (error) {
         console.log("Error in getAllProducts function: ", error.message);

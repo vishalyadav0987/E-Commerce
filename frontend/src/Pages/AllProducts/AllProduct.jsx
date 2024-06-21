@@ -8,6 +8,9 @@ import { useParams } from 'react-router-dom';
 import Pagination from 'react-js-pagination'
 import './AllProduct.css'
 import Filteration from '../../Components/Filteration/Filteration';
+import { FaAngleLeft } from "react-icons/fa6";
+import { FaAngleRight } from "react-icons/fa6";
+import { FaInfinity } from "react-icons/fa6";
 
 const AllProduct = () => {
 
@@ -41,8 +44,8 @@ const AllProduct = () => {
             alert.error(error)
             dispatch(clearError());
         }
-        dispatch(getAllProducts(keyword, currentPage, price, category,ratings));
-    }, [dispatch, keyword, currentPage, price, category,ratings]);
+        dispatch(getAllProducts(keyword, currentPage, price, category, ratings));
+    }, [dispatch, keyword, currentPage, price, category, ratings]);
 
 
     return (
@@ -76,10 +79,10 @@ const AllProduct = () => {
                                     itemsCountPerPage={resultPerPage}
                                     totalItemsCount={productsCount}
                                     onChange={setCurrentPageNo}
-                                    nextPageText={"Next"}
-                                    prevPageText={"Prev"}
-                                    firstPageText={"1st"}
-                                    lastPageText={"Last"}
+                                    nextPageText={<FaAngleRight />}
+                                    prevPageText={<FaAngleLeft />}
+                                    firstPageText={<FaInfinity />}
+                                    lastPageText={<FaInfinity />}
                                     itemClass='page-item'
                                     linkClass='page-link'
                                     activeLinkClass='pageLinkActive'

@@ -26,15 +26,23 @@ const getAllProducts = async (req, res) => {
         const apiFeatures = new ApiFeatures(ProductSchema.find(), req.query)
             .search()
             .filter()
-            .pagination(resultPerPage);
+
+        // let products = await apiFeatures.query;
+         // Clone the query object before executing the first query to get filtered products count
+         let queryClone = apiFeatures.query.clone();
+         let products = await queryClone;
+        let filteredProductsCount = products.length;
+
+        apiFeatures.pagination(resultPerPage);
         // search  from ApiFeature
-        const products = await apiFeatures.query;
+        products = await apiFeatures.query;
         // const products = await ProductSchema.find({});
         res.status(200).json({
             success: true,
             data: products,
             count: productCount,
             resultPerPage,
+            filteredProductsCount
         });
     } catch (error) {
         console.log("Error in getAllProducts function: ", error.message);

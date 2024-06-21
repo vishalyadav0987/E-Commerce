@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import './Filteration.css'
 import Slider from '@mui/material/Slider';
 
-const Filteration = ({ price, setPrice }) => {
+const Filteration = ({ price, setPrice, category, setCategory }) => {
 
   const handlePriceChange = (e, newPrice) => {
     setPrice(newPrice);
@@ -26,16 +26,47 @@ const Filteration = ({ price, setPrice }) => {
         <div className="category-filter flex">
           <span className='top-text'>Category</span>
           <ul className='category-list'>
-            <li>Laptop</li>
-            <li>Footwear</li>
-            <li>Bottom</li>
-            <li>Top</li>
-            <li>Pant</li>
-            <li>T-Shirt</li>
-            <li>A.C</li>
-            <li>Refrigrator</li>
-            <li>Camera</li>
-            <li>Cooler</li>
+            <li
+              className={category === "Laptop" ? "bold" : ""}
+              onClick={() => setCategory("Laptop")}
+            >Laptop</li>
+            <li
+              className={category === "Footwear" ? "bold" : ""}
+              onClick={() => setCategory("Footwear")}
+            >Footwear</li>
+            <li
+
+              className={category === "Bottom" ? "bold" : ""}
+              onClick={() => setCategory("Bottom")}
+            >Bottom</li>
+            <li
+              className={category === "Top" ? "bold" : ""}
+              onClick={() => setCategory("Top")}
+            >Top</li>
+            <li
+              className={category === "Pant" ? "bold" : ""}
+              onClick={() => setCategory("Pant")}
+            >Pant</li>
+            <li
+              className={category === "T-Shirt" ? "bold" : ""}
+              onClick={() => setCategory("T-Shirt")}
+            >T-Shirt</li>
+            <li
+              className={category === "A.C" ? "bold" : ""}
+              onClick={() => setCategory("A.C")}
+            >A.C</li>
+            <li
+              className={category === "Refrigrator" ? "bold" : ""}
+              onClick={() => setCategory("Refrigrator")}
+            >Refrigrator</li>
+            <li
+              className={category === "Camera" ? "bold" : ""}
+              onClick={() => setCategory("Camera")}
+            >Camera</li>
+            <li
+              className={category === "Cooler" ? "bold" : ""}
+              onClick={() => setCategory("Cooler")}
+            >Cooler</li>
           </ul>
         </div>
         <div className="review-filter flex">

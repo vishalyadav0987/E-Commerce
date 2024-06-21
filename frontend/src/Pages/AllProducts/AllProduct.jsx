@@ -40,8 +40,8 @@ const AllProduct = () => {
             alert.error(error)
             dispatch(clearError());
         }
-        dispatch(getAllProducts(keyword, currentPage, price));
-    }, [dispatch, keyword, currentPage, price]);
+        dispatch(getAllProducts(keyword, currentPage, price,category));
+    }, [dispatch, keyword, currentPage, price,category]);
 
 
     return (

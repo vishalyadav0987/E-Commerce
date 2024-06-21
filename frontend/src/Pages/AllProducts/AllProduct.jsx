@@ -14,6 +14,7 @@ const AllProduct = () => {
 
     const [price, setPrice] = useState([200, 10000]);
     const [category, setCategory] = useState("");
+    const [ratings, setRatings] = useState(0);
 
     const alert = useAlert();
     const dispatch = useDispatch();
@@ -40,8 +41,8 @@ const AllProduct = () => {
             alert.error(error)
             dispatch(clearError());
         }
-        dispatch(getAllProducts(keyword, currentPage, price,category));
-    }, [dispatch, keyword, currentPage, price,category]);
+        dispatch(getAllProducts(keyword, currentPage, price, category,ratings));
+    }, [dispatch, keyword, currentPage, price, category,ratings]);
 
 
     return (
@@ -89,9 +90,10 @@ const AllProduct = () => {
                     }
                 </div>
                 <div className="filter">
-                    <Filteration 
-                    price={price} setPrice={setPrice} 
-                    category={category} setCategory={setCategory}
+                    <Filteration
+                        price={price} setPrice={setPrice}
+                        category={category} setCategory={setCategory}
+                        ratings={ratings} setRatings={setRatings}
                     />
                 </div>
             </section>

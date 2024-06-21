@@ -15,6 +15,7 @@
 .top-text {
     font-size: 14px;
     font-weight: 700 !important;
+    transition: all 0.3s;
 }
 
 .category-list {
@@ -42,4 +43,7 @@ input[type="range"] {
 .bold{
     font-weight: 700;
     font-size: 16px;
+}
+.marginBottom{
+    margin-bottom: 10px;
 }

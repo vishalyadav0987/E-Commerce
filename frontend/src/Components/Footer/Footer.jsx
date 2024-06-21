@@ -3,6 +3,7 @@ import './Footer.css'
 import { FaLinkedin } from "react-icons/fa";
 import { FaInstagramSquare } from "react-icons/fa";
 import { FaSquareWhatsapp } from "react-icons/fa6";
+import { Link } from 'react-router-dom'
 
 const Footer = () => {
     return (
@@ -10,12 +11,14 @@ const Footer = () => {
             <div id="footer" className="footer">
                 <div className="footer-content">
                     <div className="footer-content-left">
-                    <img src="https://clipground.com/images/ecommerce-logo-png-19.png" alt=""  style={{width:"12vmax",marginBottom:"10px"}}/>
+                        <Link to={'/'}>
+                            <img src="https://clipground.com/images/ecommerce-logo-png-19.png" alt="" style={{ width: "12vmax", marginBottom: "10px" }} />
+                        </Link>
                         <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Similique natus fuga quidem ullam fugiat hic voluptate molestiae odit, recusandae possimus omnis veritatis reprehenderit explicabo nihil in eaque molestias obcaecati? Repellendus?</p>
                         <div className="footer-social-icon">
-                        <FaLinkedin />
-                        <FaInstagramSquare />
-                        <FaSquareWhatsapp />
+                            <FaLinkedin />
+                            <FaInstagramSquare />
+                            <FaSquareWhatsapp />
                         </div>
                     </div>
                     <div className="footer-content-center">

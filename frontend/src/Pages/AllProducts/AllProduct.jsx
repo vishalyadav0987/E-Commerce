@@ -58,7 +58,7 @@ const AllProduct = () => {
                 }
             </div>
             {
-                resultPerPage < productsCount && (
+                product.length > 0 ? (resultPerPage < productsCount) &&  (
                     <div className="paginationBox">
                         <Pagination
                             activePage={currentPage}
@@ -75,7 +75,7 @@ const AllProduct = () => {
                             activeClass='pageItemActive'
                         />
                     </div>
-                )
+                ) : <p style={{ fontSize: "24px", color: "#323232" }}>Product not Found!</p>
             }
         </div>
     )

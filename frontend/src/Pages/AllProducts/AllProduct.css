@@ -1,5 +1,6 @@
 .product-section.ok{
     flex-direction: column;
+    min-height: 30vh;
 }
 
 .paginationBox{

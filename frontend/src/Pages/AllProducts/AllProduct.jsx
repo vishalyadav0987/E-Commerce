@@ -7,6 +7,7 @@ import { useAlert } from 'react-alert'
 import { useParams } from 'react-router-dom';
 import Pagination from 'react-js-pagination'
 import './AllProduct.css'
+import Filteration from '../../Components/Filteration/Filteration';
 
 const AllProduct = () => {
     const alert = useAlert();
@@ -37,47 +38,54 @@ const AllProduct = () => {
 
 
     return (
-        <div className='product-section ok'>
-            <div className="product-container">
-                <div className="heading">
-                    <h2>Products</h2>
+        <>
+            <section className="section-all-product">
+            <div className='product-section ok'>
+                <div className="product-container">
+                    <div className="heading">
+                        <h2>Products</h2>
+                    </div>
+                    {
+                        loading
+                            ? <Loder />
+                            : <div className="content-2">
+                                {
+                                    product && product.map((item) => {
+                                        return (
+                                            <ProductCard item={item} key={item._id} />
+                                        )
+                                    })
+                                }
+
+                            </div>
+                    }
                 </div>
                 {
-                    loading
-                        ? <Loder />
-                        : <div className="content">
-                            {
-                                product && product.map((item) => {
-                                    return (
-                                        <ProductCard item={item} key={item._id} />
-                                    )
-                                })
-                            }
-
+                     (resultPerPage < productsCount) && (
+                        <div className="paginationBox">
+                            <Pagination
+                                activePage={currentPage}
+                                itemsCountPerPage={resultPerPage}
+                                totalItemsCount={productsCount}
+                                onChange={setCurrentPageNo}
+                                nextPageText={"Next"}
+                                prevPageText={"Prev"}
+                                firstPageText={"1st"}
+                                lastPageText={"Last"}
+                                itemClass='page-item'
+                                linkClass='page-link'
+                                activeLinkClass='pageLinkActive'
+                                activeClass='pageItemActive'
+                            />
                         </div>
+                    ) 
                 }
             </div>
-            {
-                product.length > 0 ? (resultPerPage < productsCount) &&  (
-                    <div className="paginationBox">
-                        <Pagination
-                            activePage={currentPage}
-                            itemsCountPerPage={resultPerPage}
-                            totalItemsCount={productsCount}
-                            onChange={setCurrentPageNo}
-                            nextPageText={"Next"}
-                            prevPageText={"Prev"}
-                            firstPageText={"1st"}
-                            lastPageText={"Last"}
-                            itemClass='page-item'
-                            linkClass='page-link'
-                            activeLinkClass='pageLinkActive'
-                            activeClass='pageItemActive'
-                        />
-                    </div>
-                ) : <p style={{ fontSize: "24px", color: "#323232" }}>Product not Found!</p>
-            }
-        </div>
+            <div className="filter">
+                <Filteration />
+            </div>
+            </section>
+        </>
     )
 }
 

@@ -1,6 +1,7 @@
 .product-section.ok{
     flex-direction: column;
     min-height: 30vh;
+    width: 85%;
 }
 
 .paginationBox{
@@ -44,4 +45,22 @@
 .pageItemActive{
     background-color: #4118a8;
     color: #65c3cf;
+}
+
+.section-all-product{
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.filter{
+    padding-left: 30px;
+}
+
+@media (max-width:1100px) {
+    .filter{
+        padding-left: 0px;
+    }
+    .filteration-section .container {
+        width: 100%;
+    }
 }

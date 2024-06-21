@@ -1,0 +1,45 @@
+.flex {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.filteration-section .container {
+    width: 15vmax;
+    font-family: sans-serif;
+    padding:12px 18px;
+    margin-top: 200px;
+}
+
+.top-text {
+    font-size: 14px;
+    font-weight: 700 !important;
+}
+
+.category-list {
+    font-size: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.category-list li {
+    cursor: pointer;
+    width: fit-content;
+    transition: all 0.3s ease;
+    color: #353535;
+}
+
+.category-list li:hover{
+    color: tomato;
+}
+
+input[type="range"] {
+    cursor: pointer;
+}
+
+.bold{
+    font-weight: 700;
+    font-size: 16px;
+}

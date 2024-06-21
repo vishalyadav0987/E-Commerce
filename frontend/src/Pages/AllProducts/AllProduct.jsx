@@ -10,6 +10,11 @@ import './AllProduct.css'
 import Filteration from '../../Components/Filteration/Filteration';
 
 const AllProduct = () => {
+
+
+    const [price, setPrice] = useState([200, 10000]);
+    const [category, setCategory] = useState("");
+
     const alert = useAlert();
     const dispatch = useDispatch();
     const [currentPage, setCurrentPage] = useState(1)
@@ -17,7 +22,9 @@ const AllProduct = () => {
         error,
         loading,
         productsCount,
-        resultPerPage
+        resultPerPage,
+        filteredProductsCount,
+        // ye phle length provide kar de rah hai pagination hone se phle in backend
     } = useSelector(state => state.products);
 
     const { keyword } = useParams();
@@ -33,57 +40,60 @@ const AllProduct = () => {
             alert.error(error)
             dispatch(clearError());
         }
-        dispatch(getAllProducts(keyword, currentPage));
-    }, [dispatch, keyword, currentPage]);
+        dispatch(getAllProducts(keyword, currentPage, price));
+    }, [dispatch, keyword, currentPage, price]);
 
 
     return (
         <>
             <section className="section-all-product">
-            <div className='product-section ok'>
-                <div className="product-container">
-                    <div className="heading">
-                        <h2>Products</h2>
+                <div className='product-section ok'>
+                    <div className="product-container">
+                        <div className="heading">
+                            <h2>Products</h2>
+                        </div>
+                        {
+                            loading
+                                ? <Loder />
+                                : <div className="content-2">
+                                    {
+                                        product && product.map((item) => {
+                                            return (
+                                                <ProductCard item={item} key={item._id} />
+                                            )
+                                        })
+                                    }
+
+                                </div>
+                        }
                     </div>
                     {
-                        loading
-                            ? <Loder />
-                            : <div className="content-2">
-                                {
-                                    product && product.map((item) => {
-                                        return (
-                                            <ProductCard item={item} key={item._id} />
-                                        )
-                                    })
-                                }
-
+                        (resultPerPage < filteredProductsCount) && (
+                            <div className="paginationBox">
+                                <Pagination
+                                    activePage={currentPage}
+                                    itemsCountPerPage={resultPerPage}
+                                    totalItemsCount={productsCount}
+                                    onChange={setCurrentPageNo}
+                                    nextPageText={"Next"}
+                                    prevPageText={"Prev"}
+                                    firstPageText={"1st"}
+                                    lastPageText={"Last"}
+                                    itemClass='page-item'
+                                    linkClass='page-link'
+                                    activeLinkClass='pageLinkActive'
+                                    activeClass='pageItemActive'
+                                />
                             </div>
+                        )
                     }
                 </div>
-                {
-                     (resultPerPage < productsCount) && (
-                        <div className="paginationBox">
-                            <Pagination
-                                activePage={currentPage}
-                                itemsCountPerPage={resultPerPage}
-                                totalItemsCount={productsCount}
-                                onChange={setCurrentPageNo}
-                                nextPageText={"Next"}
-                                prevPageText={"Prev"}
-                                firstPageText={"1st"}
-                                lastPageText={"Last"}
-                                itemClass='page-item'
-                                linkClass='page-link'
-                                activeLinkClass='pageLinkActive'
-                                activeClass='pageItemActive'
-                            />
-                        </div>
-                    ) 
-                }
-            </div>
-            <div className="filter">
-                <Filteration />
-            </div>
+                <div className="filter">
+                    <Filteration 
+                    price={price} setPrice={setPrice} 
+                    category={category} setCategory={setCategory}
+                    />
+                </div>
             </section>
         </>
     )

@@ -28,6 +28,11 @@
     margin-bottom: 80px;
 }
 
+.product-section .product-container .content-2 {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 30px;
+}
 .product-section .product-container .content {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));

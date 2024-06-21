@@ -1,17 +1,31 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './Filteration.css'
+import Slider from '@mui/material/Slider';
 
-const Filteration = () => {
+const Filteration = ({ price, setPrice }) => {
+
+  const handlePriceChange = (e, newPrice) => {
+    setPrice(newPrice);
+  };
+
   return (
-    <div className='filteration-section' style={{minHeight:"40vh"}}>
+    <div className='filteration-section' style={{ minHeight: "40vh" }}>
       <div className="container">
         <div className="price-filter flex">
-            <span className='top-text'>Price</span>
-            <input type="range" />
+          <span className='top-text'>Price</span>
+          <span className='top-text'>&#8377;{price[0]} - &#8377;{price[1]}</span>
+          <Slider
+            value={price}
+            onChange={handlePriceChange}
+            valueLabelDisplay="auto"
+            min={200}
+            max={10000}
+            aria-labelledby='range-slider'
+          />
         </div>
         <div className="category-filter flex">
-        <span className='top-text'>Category</span>
-        <ul className='category-list'>
+          <span className='top-text'>Category</span>
+          <ul className='category-list'>
             <li>Laptop</li>
             <li>Footwear</li>
             <li>Bottom</li>
@@ -22,15 +36,23 @@ const Filteration = () => {
             <li>Refrigrator</li>
             <li>Camera</li>
             <li>Cooler</li>
-        </ul>
+          </ul>
         </div>
         <div className="review-filter flex">
-        <span className='top-text'>Customer Reviews</span>
-        <input type="range" />
+          <span className='top-text'>Customer Reviews</span>
+          <span className='top-text'>&#8377;{price[0]} - &#8377;{price[1]}</span>
+          <Slider
+            value={price}
+            onChange={handlePriceChange}
+            valueLabelDisplay="auto"
+            min={200}
+            max={10000}
+            aria-labelledby='range-slider'
+          />
         </div>
         <div className="discount-filter flex">
-        <span className='top-text'>Discount</span>
-        <ul className='category-list'>
+          <span className='top-text'>Discount</span>
+          <ul className='category-list'>
             <li>10% Off or more</li>
             <li>25% Off or more</li>
             <li>30% Off or more</li>
@@ -40,7 +62,7 @@ const Filteration = () => {
             <li>70% Off or more</li>
             <li>80% Off or more</li>
             <li>90% Off or more</li>
-        </ul>
+          </ul>
         </div>
       </div>
     </div>

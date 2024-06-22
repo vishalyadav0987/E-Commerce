@@ -47,6 +47,9 @@ const AllProduct = () => {
         dispatch(getAllProducts(keyword, currentPage, price, category, ratings));
     }, [dispatch, keyword, currentPage, price, category, ratings]);
 
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
 
     return (
         <>

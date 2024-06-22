@@ -23,9 +23,9 @@ const Navbar = () => {
     }
     useEffect(() => {
         window.addEventListener('scroll', handleScroll);
-        // return () => {
-        //     window.removeEventListener('scroll', handleScroll);
-        // };
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
     }, []);
 
     const options = {
@@ -75,7 +75,7 @@ const Navbar = () => {
             <div className="nav-links-icons" style={{ color: navColor }}>
                 <Link to='/search'><FaSearch /></Link>
                 <Link to={"/"}><FaCartPlus /></Link>
-                <Link to={"/"}> <FaUserCircle /></Link>
+                <Link to={"/login"}> <FaUserCircle /></Link>
             </div>
         </div>
     )

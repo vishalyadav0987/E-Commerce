@@ -1,0 +1,135 @@
+.login-register-container {
+    width: 100%;
+    height: 100vh;
+    background-color: #00000090;
+    display: grid;
+}
+
+.form-container {
+    place-self: center;
+    background-color: #fff;
+    padding: 30px 20px;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.login-text {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.login-text h2 {
+    font-size: clamp(1rem, 5vw, 2rem);
+}
+
+.login-text img {
+    width: 1.5rem;
+    cursor: pointer;
+}
+
+.form-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.form-controls input {
+    padding: 10px;
+    border-radius: 4px;
+    outline: none;
+    border: none;
+    border: 1px solid #c5c5c5;
+}
+
+.login-register-container button {
+    width: 100%;
+    padding: 10px;
+    outline: none;
+    border: none;
+    border: 1px solid tomato;
+    background-color: tomato;
+    border-radius: 4px;
+    color: white;
+    cursor: pointer;
+}
+
+.terms-condition {
+    display: flex;
+    align-items: start;
+    gap: 8px;
+    width: 300px;
+    font-size: 10px;
+    font-family: sans-serif;
+}
+
+.login-register-container p span {
+    color: tomato;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.terms-condition-text {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-size: 10px;
+    font-family: sans-serif;
+}
+
+.forget-password-text {
+    font-size: 10px;
+    font-family: sans-serif;
+    display: flex;
+    justify-content: end;
+    padding: 0 10px;
+    transition: all 0.3s;
+    cursor: pointer;
+}
+
+.forget-password-text:hover {
+    text-decoration: underline;
+}
+
+.form-container .header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.form-container .header img {
+    width: 40px;
+    border-radius: 50%;
+    background-color: #323232;
+    cursor: pointer;
+}
+
+.form-container .header #file{
+    display: none;
+}
+.form-container .header{
+    width: 100%;
+    /* background-color: red; */
+}
+.form-container .header label span{
+
+    border: 1px solid #c5c5c5;
+    width: 242px;
+    font-size: 12px;
+    font-family: sans-serif;
+    display: inline-block;
+    color: #00000090;
+    padding: 8px;
+    text-align: center;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+
+@media (max-width:750px) {
+    .login-register-container {
+        padding: 0 10px;
+    }
+}

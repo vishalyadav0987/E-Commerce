@@ -7,6 +7,7 @@ import Home from './Pages/Home/Home';
 import SingleProductPage from './Pages/SingleProductPage/SingleProductPage';
 import AllProduct from './Pages/AllProducts/AllProduct';
 import Search from './Pages/Search/Search';
+import LoginSignUp from './Pages/LoginSignUp/LoginSignUp';
 
 
 const App = () => {
@@ -28,6 +29,7 @@ const App = () => {
           <Route path='/products/:keyword' element={<AllProduct />} />
           <Route path='/products' element={<AllProduct />} />
           <Route path='/search' element={<Search />} />
+          <Route path='/login' element={<LoginSignUp />} />
         </Routes>
         <Footer />
       </Router>

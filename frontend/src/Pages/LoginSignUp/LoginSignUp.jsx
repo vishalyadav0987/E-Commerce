@@ -2,11 +2,10 @@ import React, { useState, useEffect } from 'react';
 import './LoginSignUp.css';
 import { toast } from 'react-hot-toast';
 import { useDispatch, useSelector } from 'react-redux';
-import { login, clearError } from '../../actions/userAction';
+import { login, clearError, register } from '../../actions/userAction';
 import { useAlert } from 'react-alert'
 import Loader from '../../Components/Loader/Loder';
 import { useNavigate } from 'react-router-dom'
-// import { login, register } from '../../actions/userAction';
 
 const LoginSignUp = () => {
     const navigate = useNavigate();
@@ -35,7 +34,7 @@ const LoginSignUp = () => {
 
             reader.onloadend = () => {
                 setAvatarPreview(reader.result);
-                setAvatar(file);
+                setAvatar(reader.result);
             };
 
             reader.readAsDataURL(file);
@@ -55,9 +54,14 @@ const LoginSignUp = () => {
         formData.append('name', data.name);
         formData.append('email', data.email);
         formData.append('password', data.password);
-        formData.append('avatar', avatar);
+        if (avatar) {
+            formData.append('avatar', avatar);
+        } else {
+            alert.error("Avatar is required for registration");
+            return;
+        }
 
-        // dispatch(register(formData));
+        dispatch(register(formData));
     };
 
     useEffect(() => {
@@ -68,7 +72,7 @@ const LoginSignUp = () => {
         if (isAuthenticate) {
             navigate('/account');
         }
-    }, [dispatch, error, alert])
+    }, [dispatch, error, alert, isAuthenticate, navigate])
 
     useEffect(() => {
         window.scrollTo(0, 0);

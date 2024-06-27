@@ -8,6 +8,10 @@ import SingleProductPage from './Pages/SingleProductPage/SingleProductPage';
 import AllProduct from './Pages/AllProducts/AllProduct';
 import Search from './Pages/Search/Search';
 import LoginSignUp from './Pages/LoginSignUp/LoginSignUp';
+import store from './store';
+import { loadUser } from './actions/userAction';
+
+
 
 
 const App = () => {
@@ -18,6 +22,8 @@ const App = () => {
         families: ["Roboto", "Droid sans", "Chilanka"]
       }
     })
+
+    store.dispatch(loadUser()); // another technique call aur dispatch the function in action
   }, [])
   return (
     <div>

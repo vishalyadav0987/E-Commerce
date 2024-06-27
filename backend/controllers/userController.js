@@ -2,15 +2,29 @@ const UserSchema = require('../modals/UserSchema');
 const bcrypt = require('bcryptjs');
 const sendTokenInCookie = require('../Utils/SetTokenInCookie');
 const sendEmail = require('../Utils/sendEmail');
+const cloudinary = require('cloudinary');
 const crypto = require('crypto');
 
 const Register = async (req, res) => {
-    const { name, email, password } = req.body;
+    const { name, email, password, avatar } = req.body;
+    if (!avatar) {
+        return res.status(400).json({
+            success: false,
+            message: "Avatar is required",
+        });
+    }
     try {
+        const myCloud = await cloudinary.v2.uploader.upload(avatar, {
+            folder: "avatars",
+            width: 150,
+            crop: "scale",
+
+        })
         const userExsist = await UserSchema.findOne({ email });
         if (userExsist) {
             return res.json({ success: true, message: "User Already exsist!" });
         }
+
 
         // 1st way to do
         // const salt = await bcrypt.genSalt(10);
@@ -28,8 +42,8 @@ const Register = async (req, res) => {
             // password: hassedPassword,
             password,
             avatar: {
-                public_id: "This is my id",
-                url: "vishalyadav.com",
+                public_id: myCloud.public_id,
+                url: myCloud.secure_url,
             }
         });
 

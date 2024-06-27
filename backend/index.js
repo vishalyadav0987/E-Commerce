@@ -7,6 +7,9 @@ const connectDB = require('./connectDB/connect');
 const productRoutes = require('./routes/productRoute');
 const userRoutes = require('./routes/userRoute');
 const orderRoutes = require('./routes/orderRoute');
+const cloudinary = require('cloudinary');
+const bodyParser = require('body-parser');
+const fileUpload = require('express-fileupload')
 
 
 // Handled uncaught exception
@@ -20,7 +23,8 @@ process.on("uncaughtException", (err) => {
 
 app.use(express.json());
 app.use(cookieParser());
-
+app.use(bodyParser.urlencoded({extended:true}));
+app.use(fileUpload());
 
 app.use('/api/v1/product', productRoutes);
 app.use('/api/v1/user', userRoutes);
@@ -30,6 +34,12 @@ app.use('/api/v1/order', orderRoutes);
 app.get('/test', (req, res) => {
     res.send("This is E-Kart website.");
 });
+
+cloudinary.config({
+    cloud_name:process.env.CLOUDINARY_NAME,
+    api_key:process.env.CLOUDINARY_API_KEY,
+    api_secret:process.env.CLOUDINARY_SECRET_KEY
+})
 
 const start = async () => {
     try {

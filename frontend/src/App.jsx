@@ -10,6 +10,8 @@ import Search from './Pages/Search/Search';
 import LoginSignUp from './Pages/LoginSignUp/LoginSignUp';
 import store from './store';
 import { loadUser } from './actions/userAction';
+import Profile from './Pages/Profile/Profile';
+import { useSelector } from 'react-redux';
 
 
 
@@ -36,6 +38,7 @@ const App = () => {
           <Route path='/products' element={<AllProduct />} />
           <Route path='/search' element={<Search />} />
           <Route path='/login' element={<LoginSignUp />} />
+          <Route path='/account' element={<Profile />} />
         </Routes>
         <Footer />
       </Router>

@@ -6,12 +6,13 @@ import { FaCartPlus } from "react-icons/fa6";
 import { FaUserCircle } from "react-icons/fa";
 import { Link } from 'react-router-dom'
 import { useSelector } from 'react-redux'
+import UserNavOption from '../UserNavOption/UserNavOption';
 
 
 
 
 const Navbar = () => {
-    const { isAuthenticate,user } = useSelector(state => state.user);
+    const { isAuthenticate, user } = useSelector(state => state.user);
 
     const [navColor, setNavColor] = useState('white');
 
@@ -78,13 +79,15 @@ const Navbar = () => {
             <div className="nav-links-icons" style={{ color: navColor }}>
                 <Link to='/search'><FaSearch /></Link>
                 <Link to={"/"}><FaCartPlus /></Link>
-                <Link to={"/login"}>
-                    {
-                        isAuthenticate
-                            ? <img src={user?.avatar?.url} alt="" className='profile-img'/>
-                            : <FaUserCircle />
-                    }
-                </Link>
+                {isAuthenticate ?
+                    <UserNavOption user={user} /> :
+                    <Link to={"/login"}>
+
+
+                        <FaUserCircle />
+
+                    </Link>
+                }
             </div>
         </div>
     )

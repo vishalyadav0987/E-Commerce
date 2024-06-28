@@ -1,0 +1,21 @@
+#SpeedDialtooltipexample-actions{
+    background: transparent;
+    position: absolute;
+    top: 40px;
+}
+
+.MuiSpeedDial-root .MuiFab-primary {
+    color: #fff;
+    background: transparent;
+    width: 2.5vmax;
+    height: 2.5vmax;
+    margin-bottom: 8px;
+}
+
+.MuiSpeedDial-root .MuiFab-primary:hover{
+    background: transparent;
+}
+
+.MuiSpeedDial-root{
+    font-size: 14px;
+}

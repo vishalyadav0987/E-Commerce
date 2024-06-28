@@ -27,6 +27,6 @@ router.route('/users').get(protecteRoute, authorizeRole("admin"), fetchAllUser);
 router.route('/:id').get(protecteRoute, authorizeRole("admin"), getSingleUser);
 router.route('/role/:id').put(protecteRoute, authorizeRole("admin"), updateUserRole);
 router.route('/delete/:id').delete(protecteRoute, authorizeRole("admin"), deleteUser);
-router.route('/logout').get(Logout);
+router.route('/auth/logout').get(Logout);
 
 module.exports = router;

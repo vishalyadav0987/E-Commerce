@@ -12,6 +12,8 @@ import store from './store';
 import { loadUser } from './actions/userAction';
 import Profile from './Pages/Profile/Profile';
 import { useSelector } from 'react-redux';
+import ProtectedRoute from './Utils/ProtectedRoute';
+import UpdateProfile from './Pages/UpdateProfile/UpdateProfile';
 
 
 
@@ -38,7 +40,12 @@ const App = () => {
           <Route path='/products' element={<AllProduct />} />
           <Route path='/search' element={<Search />} />
           <Route path='/login' element={<LoginSignUp />} />
-          <Route path='/account' element={<Profile />} />
+          <Route element={<ProtectedRoute />}>
+            <Route path='/account' element={<Profile />} />
+          </Route>
+          <Route element={<ProtectedRoute />}>
+            <Route path='/me/update' element={<UpdateProfile />} />
+          </Route>
         </Routes>
         <Footer />
       </Router>

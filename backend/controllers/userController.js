@@ -301,6 +301,24 @@ const updateProfile = async (req, res) => {
         }
 
         // add cloudnary later
+        if (req.body.avatar !== "") {
+            const user = await UserSchema.findById(req.user.id);
+        
+            const imageId = user.avatar.public_id;
+        
+            await cloudinary.v2.uploader.destroy(imageId);
+        
+            const myCloud = await cloudinary.v2.uploader.upload(req.body.avatar, {
+              folder: "avatars",
+              width: 150,
+              crop: "scale",
+            });
+        
+            newData.avatar = {
+              public_id: myCloud.public_id,
+              url: myCloud.secure_url,
+            };
+          }
         const user = await UserSchema.findByIdAndUpdate(req.user.id, newData, {
             runValidators: true,
             new: true,

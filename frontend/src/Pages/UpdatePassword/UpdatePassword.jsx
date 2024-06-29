@@ -38,7 +38,11 @@ const UpdatePassword = () => {
                 type: UPDATE_PASSWORD_RESET,
             })
         }
-    }, [dispatch, error, alert, isUpdated, navigate])
+    }, [dispatch, error, alert, isUpdated, navigate]);
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
+
     return (
         <>
             {

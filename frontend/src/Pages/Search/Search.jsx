@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './Search.css'
 import { useNavigate } from 'react-router-dom';
 
@@ -18,6 +18,10 @@ const Search = ({ history }) => {
             navigate(`/products`);
         }
     }
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
+
     return (
         <>
             <form className="searchBox" onSubmit={submitHandler}>

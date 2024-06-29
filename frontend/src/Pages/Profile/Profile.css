@@ -112,7 +112,6 @@
     border-radius: 4px;
     margin-top: 10px;
     cursor: pointer;
-    margin-bottom: 16px;
     background-color: #240750;
     color: white;
 }
@@ -121,4 +120,17 @@
     display: flex;
     flex-direction: column;
     gap: 16px;
+}
+
+.profile-edit.btn {
+    padding: 12px 10px;
+    border: none;
+    outline: none;
+    /* border:  1px solid #b9b9b9; */
+    border-radius: 4px;
+    margin-top: 10px;
+    cursor: pointer;
+    margin-bottom: 16px;
+    background-color: #240750;
+    color: white;
 }

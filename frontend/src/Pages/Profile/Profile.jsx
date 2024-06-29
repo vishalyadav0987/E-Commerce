@@ -3,6 +3,7 @@ import './Profile.css'
 import { useNavigate } from 'react-router-dom';
 import { FaCamera } from "react-icons/fa";
 import { useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
 
 const Profile = () => {
     const { loading, user, isAuthenticate } = useSelector(state => state.user);
@@ -23,10 +24,10 @@ const Profile = () => {
                 <div className="card-container-box">
                     <div className="profile-box">
                         <img src={user?.avatar?.url} alt="" />
-                        <span className='edit-profile'>
+                        <Link to={'/me/update'} className='edit-profile'>
                             <span><FaCamera /></span>
                             <span className='text'>Edit</span>
-                        </span>
+                        </Link>
                     </div>
                     <div className="info-box">
                         <div className="name-create">
@@ -39,7 +40,7 @@ const Profile = () => {
                             <div className="create-box flex-col">
                                 <label className='labeled-text'><b>Joined On</b></label>
                                 <span className="create box">
-                                    28-07-2024
+                                    {user?.createdAt.substring(0, 10)}
                                 </span>
                             </div>
                         </div>
@@ -50,9 +51,16 @@ const Profile = () => {
                             </span>
                         </div>
                         <div className="button-box">
-                            <button className="myorder btn">My Orders</button>
-                            <button className="change-pass btn">Change Password</button>
+                            <Link className='myorder' to={'/orders'} style={{ display: "grid" }}>
+                                <button className="btn">My Orders</button>
+                            </Link>
+                            <Link to={'/me/password'} className='change-pass' style={{ display: "grid" }}>
+                                <button className="btn">Change Password</button>
+                            </Link>
                         </div>
+                        <Link to={'/me/update'} style={{ display: "grid" }}>
+                            <button className="profile-edit btn">Edit Profile</button>
+                        </Link>
                     </div>
                 </div>
             </section>

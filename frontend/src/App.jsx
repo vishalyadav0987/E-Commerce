@@ -14,6 +14,7 @@ import Profile from './Pages/Profile/Profile';
 import { useSelector } from 'react-redux';
 import ProtectedRoute from './Utils/ProtectedRoute';
 import UpdateProfile from './Pages/UpdateProfile/UpdateProfile';
+import UpdatePassword from './Pages/UpdatePassword/UpdatePassword';
 
 
 
@@ -45,6 +46,9 @@ const App = () => {
           </Route>
           <Route element={<ProtectedRoute />}>
             <Route path='/me/update' element={<UpdateProfile />} />
+          </Route>
+          <Route element={<ProtectedRoute />}>
+            <Route path='/me/password' element={<UpdatePassword />} />
           </Route>
         </Routes>
         <Footer />

@@ -59,7 +59,7 @@ const UserNavOption = ({ user }) => {
                 {
                     navOption.map((navOpt) => {
                         return (
-                            <SpeedDialAction
+                            <SpeedDialAction key={navOpt.name}
                                 icon={navOpt.icon}
                                 tooltipTitle={navOpt.name}
                                 onClick={navOpt.func}

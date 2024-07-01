@@ -8,6 +8,7 @@ import ReactStars from 'react-rating-stars-component'
 import Loader from '../../Components/Loader/Loder'
 import Review from '../../Components/Review/Review';
 import { useAlert } from 'react-alert'
+import { addItemToCart } from '../../actions/cartAction';
 
 const SingleProductPage = () => {
     const alert = useAlert();
@@ -35,6 +36,10 @@ const SingleProductPage = () => {
         setQuantity(quantity => quantity - 1)
     }
 
+    const addCartHandler = () => {
+        dispatch(addItemToCart(id, quantity));
+        alert.success("Item Added To Cart")
+    }
 
     useEffect(() => {
         if (error) {
@@ -88,7 +93,12 @@ const SingleProductPage = () => {
                                         <p>{quantity}</p>
                                         <button className='cnt' onClick={increseQunatity}>+</button>
                                     </div>
-                                    <button className='add-to-cart btn'>Add To Cart</button>
+                                    <button
+                                        className='add-to-cart btn'
+                                        onClick={addCartHandler}
+                                    >
+                                    Add To Cart
+                                    </button>
                                 </div>
                                 <div className="status">
                                     <span className='status-text'>Status:

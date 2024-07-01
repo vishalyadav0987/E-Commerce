@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import './Cart.css'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { FaTrashAlt } from "react-icons/fa";
 import { useDispatch, useSelector } from 'react-redux'
 import { addItemToCart, removeFromCart } from '../../actions/cartAction';
@@ -8,6 +8,7 @@ import { useAlert } from 'react-alert'
 import { MdRemoveShoppingCart } from "react-icons/md";
 
 const Cart = () => {
+    const navigate = useNavigate();
     const alert = useAlert();
     const dispatch = useDispatch();
     const { cartItems } = useSelector(state => state.cart);
@@ -27,6 +28,9 @@ const Cart = () => {
     const removeItemFromCartHandler = (id) => {
         dispatch(removeFromCart(id));
         alert.success("Product Remove From Cart");
+    }
+    const checkOutHandler = () => {
+        navigate("/login?redirect=shipping")
     }
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -62,21 +66,35 @@ const Cart = () => {
                                                     </Link>
                                                     <div className="product-info-text">
                                                         <Link to={`/product/${item.id}`}>
-                                                            <span className="product-name">{item.name}</span>
+                                                            <span className="product-name">
+                                                                {item.name}
+                                                            </span>
                                                         </Link>
                                                         <span className="price-tag center">
-                                                            <span className="price-text"><b>Price:</b></span>
-                                                            <span className="price-num">₹{item.price}</span>
+                                                            <span className="price-text">
+                                                                <b>Price:</b>
+                                                            </span>
+                                                            <span className="price-num">
+                                                                ₹{item.price}
+                                                            </span>
                                                         </span>
                                                         <span className="price-tag center">
-                                                            <span className="price-text"><b>Quantity:</b></span>
-                                                            <span className="price-num">{item.quantity}</span>
+                                                            <span className="price-text">
+                                                                <b>Quantity:</b>
+                                                            </span>
+                                                            <span className="price-num">
+                                                                {item.quantity}
+                                                            </span>
                                                         </span>
                                                         <span
                                                             className="remove-product center"
-                                                            onClick={() => removeItemFromCartHandler(item.id)}
+                                                            onClick={() => removeItemFromCartHandler(
+                                                                item.id
+                                                            )}
                                                         >
-                                                            <span className="remove-text">Remove</span>
+                                                            <span className="remove-text"
+                                                            >Remove
+                                                            </span>
                                                             <FaTrashAlt className='icon' />
                                                         </span>
                                                     </div>
@@ -118,7 +136,11 @@ const Cart = () => {
                                         }, 0)
                                     }</span>
                                 </div>
-                                <button className='check-out'>Check Out</button>
+                                <button
+                                    onClick={checkOutHandler}
+                                    className='check-out'
+                                >Check Out
+                                </button>
                             </div>
                         </div>
                     </section>

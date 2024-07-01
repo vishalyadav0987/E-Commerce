@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import './LoginSignUp.css';
-import { toast } from 'react-hot-toast';
 import { useDispatch, useSelector } from 'react-redux';
 import { login, clearError, register } from '../../actions/userAction';
 import { useAlert } from 'react-alert'
 import Loader from '../../Components/Loader/Loder';
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 
 const LoginSignUp = () => {
     const navigate = useNavigate();
+    const location = useLocation();
     const alert = useAlert();
     const dispatch = useDispatch();
 
@@ -63,16 +63,17 @@ const LoginSignUp = () => {
 
         dispatch(register(formData));
     };
-
+    const redirect = location.search ? location.search.split("=")[1] : "/account";
+    console.log(redirect)
     useEffect(() => {
         if (error) {
             alert.error(error)
             dispatch(clearError())
         }
         if (isAuthenticate) {
-            navigate('/account');
+            navigate(redirect);
         }
-    }, [dispatch, error, alert, isAuthenticate, navigate])
+    }, [dispatch, error, alert, isAuthenticate, navigate, redirect])
 
     useEffect(() => {
         window.scrollTo(0, 0);

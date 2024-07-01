@@ -78,7 +78,7 @@ const Navbar = () => {
             <ReactNavbar {...options} />
             <div className="nav-links-icons" style={{ color: navColor }}>
                 <Link to='/search'><FaSearch /></Link>
-                <Link to={"/"}><FaCartPlus /></Link>
+                <Link to={"/cart"}><FaCartPlus /></Link>
                 {isAuthenticate ?
                     <UserNavOption user={user} /> :
                     <Link to={"/login"}>

@@ -1,14 +1,16 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import './SingleProductPage.css'
 import { useDispatch, useSelector } from 'react-redux'
-import { getSingleProducts } from '../../actions/productAction'
+import { clearError, getSingleProducts } from '../../actions/productAction'
 import { useParams } from 'react-router-dom';
 import Carousel from 'react-material-ui-carousel'
 import ReactStars from 'react-rating-stars-component'
 import Loader from '../../Components/Loader/Loder'
 import Review from '../../Components/Review/Review';
+import { useAlert } from 'react-alert'
 
 const SingleProductPage = () => {
+    const alert = useAlert();
     const { id } = useParams();
     const dispatch = useDispatch();
     const { product, error, loading } = useSelector(state => state.singleProduct);
@@ -22,8 +24,23 @@ const SingleProductPage = () => {
         isHalf: true,
     }
 
-   
+    const [quantity, setQuantity] = useState(1);
+
+    const increseQunatity = () => {
+        if (product.Stock <= quantity) return;
+        setQuantity(quantity => quantity + 1);
+    }
+    const decreaseQunatity = () => {
+        if (1 >= quantity) return;
+        setQuantity(quantity => quantity - 1)
+    }
+
+
     useEffect(() => {
+        if (error) {
+            alert.error(error);
+            dispatch(clearError());
+        }
         dispatch(getSingleProducts(id))
     }, [dispatch, id]);
 
@@ -67,9 +84,9 @@ const SingleProductPage = () => {
                                 </div>
                                 <div className="counter">
                                     <div>
-                                        <button className='cnt'>-</button>
-                                        <p>{"4"}</p>
-                                        <button className='cnt'>+</button>
+                                        <button className='cnt' onClick={decreaseQunatity}>-</button>
+                                        <p>{quantity}</p>
+                                        <button className='cnt' onClick={increseQunatity}>+</button>
                                     </div>
                                     <button className='add-to-cart btn'>Add To Cart</button>
                                 </div>
@@ -92,7 +109,7 @@ const SingleProductPage = () => {
                         <div className="id-title ok">
                             <p>Review</p>
                         </div>
-                        <Review product={product}/>
+                        <Review product={product} />
                     </div>
             }
         </>

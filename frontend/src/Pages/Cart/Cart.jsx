@@ -1,5 +1,6 @@
-import React, { useState } from 'react'
+import React from 'react'
 import './Cart.css'
+import { Link } from 'react-router-dom'
 import { FaTrashAlt } from "react-icons/fa";
 import { useDispatch, useSelector } from 'react-redux'
 import { addItemToCart, removeFromCart } from '../../actions/cartAction';
@@ -43,9 +44,13 @@ const Cart = () => {
                                 return (
                                     <div className="cart-content" key={index}>
                                         <div className='product-detail'>
-                                            <img src={item.image} alt="" />
+                                            <Link to={`/product/${item.id}`}>
+                                                <img src={item.image} alt="" />
+                                            </Link>
                                             <div className="product-info-text">
-                                                <span className="product-name">{item.name}</span>
+                                                <Link to={`/product/${item.id}`}>
+                                                    <span className="product-name">{item.name}</span>
+                                                </Link>
                                                 <span className="price-tag center">
                                                     <span className="price-text"><b>Price:</b></span>
                                                     <span className="price-num">₹{item.price}</span>
@@ -94,7 +99,11 @@ const Cart = () => {
                     <div className="grandtotal-container">
                         <div className="grand-total">
                             <span><b>Gross Total</b></span>
-                            <span>₹6000</span>
+                            <span>₹{
+                                cartItems.reduce((acc, item) => {
+                                    return acc + (item.price * item.quantity);
+                                }, 0)
+                            }</span>
                         </div>
                         <button className='check-out'>Check Out</button>
                     </div>

@@ -2,6 +2,38 @@
     width: 100%;
 }
 
+.cart-empty {
+    height: 100vh;
+    width: fit-content;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    justify-content: center;
+}
+
+.cart-empty .icon {
+    font-size: 5rem;
+    color: rgba(0, 0, 0, 0.797);
+}
+
+.cart-empty span {
+    font-size: 16px;
+    font-family: sans-serif;
+    color: rgba(0, 0, 0, 0.797);
+}
+
+.cart-empty button {
+    padding: 15px 40px;
+    border: none;
+    overflow: none;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.797);
+    cursor: pointer;
+    border-radius: 4px;
+}
+
 .cart-container {
     width: 85%;
     margin: 0 auto;
@@ -104,13 +136,16 @@
     align-items: center;
     padding: 16px 10px;
 }
-.grand-total span:first-child{
+
+.grand-total span:first-child {
     font-size: 16px;
 }
-.grand-total span:last-child{
+
+.grand-total span:last-child {
     font-size: 16px;
 }
-.grandtotal-container button{
+
+.grandtotal-container button {
     width: 300px;
     padding: 10px;
     border-radius: 40px;
@@ -149,11 +184,13 @@
     .cart-items .counter div p:nth-child(2) {
         padding: 6.5px 13px;
     }
-    .grandtotal-container{
+
+    .grandtotal-container {
         align-items: center;
     }
+
     .grandtotal-container .grand-total,
-    .grandtotal-container button{
+    .grandtotal-container button {
         width: 100%;
     }
 }

@@ -2,22 +2,29 @@ import React, { useState } from 'react'
 import './Cart.css'
 import { FaTrashAlt } from "react-icons/fa";
 import { useDispatch, useSelector } from 'react-redux'
+import { addItemToCart, removeFromCart } from '../../actions/cartAction';
+import { useAlert } from 'react-alert'
 
 const Cart = () => {
+    const alert = useAlert();
     const dispatch = useDispatch();
-    const product = {
-        Stock: 7,
-    }
+    const { cartItems } = useSelector(state => state.cart);
 
-    const [quantity, setQuantity] = useState(1);
 
-    const increseQunatity = () => {
-        if (product.Stock <= quantity) return;
-        setQuantity(quantity => quantity + 1);
+    const increseQunatity = (id, quantity, Stock) => {
+        const newQuantity = quantity + 1;
+        if (Stock <= quantity) return;
+        dispatch(addItemToCart(id, newQuantity))
     }
-    const decreaseQunatity = () => {
+    const decreaseQunatity = (id, quantity) => {
+        const newQuantity = quantity - 1;
         if (1 >= quantity) return;
-        setQuantity(quantity => quantity - 1)
+        dispatch(addItemToCart(id, newQuantity))
+    }
+
+    const removeItemFromCartHandler = (id) => {
+        dispatch(removeFromCart(id));
+        alert.success("Product Remove From Cart");
     }
     return (
         <>
@@ -31,66 +38,65 @@ const Cart = () => {
                         </ul>
                     </div>
                     <div className='cart-items'>
-                        <div className="cart-content">
-                            <div className='product-detail'>
-                                <img src="https://i.ibb.co/DRST11n/1.webp" alt="" />
-                                <div className="product-info-text">
-                                    <span className="product-name">T-shirt</span>
-                                    <span className="price-tag center">
-                                        <span className="price-text"><b>Price:</b></span>
-                                        <span className="price-num">₹300</span>
-                                    </span>
-                                    <span className="price-tag center">
-                                        <span className="price-text"><b>Quantity:</b></span>
-                                        <span className="price-num">3</span>
-                                    </span>
-                                    <span className="remove-product center">
-                                        <span className="remove-text">Remove</span>
-                                        <FaTrashAlt className='icon' />
-                                    </span>
-                                </div>
-                            </div>
-                            <div className="counter">
-                                <div>
-                                    <button className='cnt' onClick={decreaseQunatity}>-</button>
-                                    <p>{quantity}</p>
-                                    <button className='cnt cnt-cart' onClick={increseQunatity}>+</button>
-                                </div>
-                            </div>
-                            <div className='subtotal-text'>
-                                ₹200
-                            </div>
+                        {
+                            cartItems && cartItems.map((item, index) => {
+                                return (
+                                    <div className="cart-content" key={index}>
+                                        <div className='product-detail'>
+                                            <img src={item.image} alt="" />
+                                            <div className="product-info-text">
+                                                <span className="product-name">{item.name}</span>
+                                                <span className="price-tag center">
+                                                    <span className="price-text"><b>Price:</b></span>
+                                                    <span className="price-num">₹{item.price}</span>
+                                                </span>
+                                                <span className="price-tag center">
+                                                    <span className="price-text"><b>Quantity:</b></span>
+                                                    <span className="price-num">{item.quantity}</span>
+                                                </span>
+                                                <span
+                                                    className="remove-product center"
+                                                    onClick={() => removeItemFromCartHandler(item.id)}
+                                                >
+                                                    <span className="remove-text">Remove</span>
+                                                    <FaTrashAlt className='icon' />
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div className="counter">
+                                            <div>
+                                                <button
+                                                    className='cnt'
+                                                    onClick={() => {
+                                                        decreaseQunatity(item.id, item.quantity)
+                                                    }}>-</button>
+                                                <p>{item.quantity}</p>
+                                                <button
+                                                    className='cnt cnt-cart'
+                                                    onClick={() => {
+                                                        increseQunatity(item.id,
+                                                            item.quantity,
+                                                            item.Stock
+                                                        )
+                                                    }}>+</button>
+                                            </div>
+                                        </div>
+                                        <div className='subtotal-text'>
+                                            ₹{
+                                                item.quantity * item.price
+                                            }
+                                        </div>
+                                    </div>
+                                )
+                            })
+                        }
+                    </div>
+                    <div className="grandtotal-container">
+                        <div className="grand-total">
+                            <span><b>Gross Total</b></span>
+                            <span>₹6000</span>
                         </div>
-                        <div className="cart-content">
-                            <div className='product-detail'>
-                                <img src="https://i.ibb.co/DRST11n/1.webp" alt="" />
-                                <div className="product-info-text">
-                                    <span className="product-name">T-shirt</span>
-                                    <span className="price-tag center">
-                                        <span className="price-text"><b>Price:</b></span>
-                                        <span className="price-num">₹300</span>
-                                    </span>
-                                    <span className="price-tag center">
-                                        <span className="price-text"><b>Quantity:</b></span>
-                                        <span className="price-num">3</span>
-                                    </span>
-                                    <span className="remove-product center">
-                                        <span className="remove-text">Remove</span>
-                                        <FaTrashAlt className='icon' />
-                                    </span>
-                                </div>
-                            </div>
-                            <div className="counter">
-                                <div>
-                                    <button className='cnt cnt-cart' onClick={decreaseQunatity}>-</button>
-                                    <p>{quantity}</p>
-                                    <button className='cnt cnt-cart' onClick={increseQunatity}>+</button>
-                                </div>
-                            </div>
-                            <div className='subtotal-text'>
-                                ₹200
-                            </div>
-                        </div>
+                        <button className='check-out'>Check Out</button>
                     </div>
                 </div>
             </section>

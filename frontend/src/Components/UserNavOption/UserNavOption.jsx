@@ -5,10 +5,11 @@ import { MdDashboard } from "react-icons/md";
 import { IoPerson } from "react-icons/io5";
 import { MdExitToApp } from "react-icons/md";
 import { FaListAlt } from "react-icons/fa";
+import { FaCartPlus } from "react-icons/fa6";
 import './UserNavOption.css';
 import { useNavigate } from 'react-router-dom';
 import { useAlert } from 'react-alert';
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { logout } from '../../actions/userAction';
 
 const UserNavOption = ({ user }) => {
@@ -17,11 +18,17 @@ const UserNavOption = ({ user }) => {
     const alert = useAlert();
     const dispatch = useDispatch()
 
+    const { cartItems } = useSelector(state => state.cart)
+
     const dashboard = () => {
         navigate('/dashboard');
     }
     const orders = () => {
         navigate('/orders');
+    }
+
+    const cart = () => {
+        navigate('/cart');
     }
     const account = () => {
         navigate('/account');
@@ -32,14 +39,20 @@ const UserNavOption = ({ user }) => {
     }
 
     const navOption = [
-        { icon: <FaListAlt style={{ fontSize: '14px' }} />, name: "Orders", func: orders },
-        { icon: <IoPerson style={{ fontSize: '14px' }} />, name: "Profile", func: account },
-        { icon: <MdExitToApp style={{ fontSize: '14px' }} />, name: "Logout", func: logoutUser },
+        { icon: <FaListAlt style={{ fontSize: '16px' }} />, name: "Orders", func: orders },
+        {
+            icon: <FaCartPlus style={{
+                fontSize: '16px',
+                color: cartItems.length === 0 ? "" : "#240750"
+            }} />, name: `Cart (${cartItems.length})`, func: cart
+        },
+        { icon: <IoPerson style={{ fontSize: '16px' }} />, name: "Profile", func: account },
+        { icon: <MdExitToApp style={{ fontSize: '16px' }} />, name: "Logout", func: logoutUser },
     ]
 
     if (user?.role === "admin") {
         navOption.unshift({
-            icon: <MdDashboard style={{ fontSize: '14px' }} />, name: "Dashboard", func: dashboard
+            icon: <MdDashboard style={{ fontSize: '16px' }} />, name: "Dashboard", func: dashboard
         })
     }
 

@@ -36,9 +36,14 @@ const SingleProductPage = () => {
         setQuantity(quantity => quantity - 1)
     }
 
-    const addCartHandler = () => {
-        dispatch(addItemToCart(id, quantity));
-        alert.success("Item Added To Cart")
+    const addCartHandler = (Stock) => {
+        if (Stock > 0) {
+            dispatch(addItemToCart(id, quantity));
+            alert.success("Item Added To Cart")
+        }
+        else{
+            alert.error("Product is Out Of Stock") 
+        }
     }
 
     useEffect(() => {
@@ -95,9 +100,9 @@ const SingleProductPage = () => {
                                     </div>
                                     <button
                                         className='add-to-cart btn'
-                                        onClick={addCartHandler}
+                                        onClick={() => addCartHandler(product.Stock)}
                                     >
-                                    Add To Cart
+                                        Add To Cart
                                     </button>
                                 </div>
                                 <div className="status">
@@ -105,7 +110,7 @@ const SingleProductPage = () => {
                                         <span
                                             className={`${product.Stock > 0 ? "greenColor" : "redColor"}`}
                                         >
-                                            {product.Stock > 0 ? " InStock" : " OutOfStock"}
+                                            {product.Stock > 0 ? " InStock" : " OutOFStock"}
                                         </span>
                                     </span>
                                 </div>

@@ -21,8 +21,10 @@ const Register = async (req, res) => {
 
         })
         const userExsist = await UserSchema.findOne({ email });
+        console.log(userExsist);
+        
         if (userExsist) {
-            return res.json({ success: true, message: "User Already exsist!" });
+            return res.json({ success: false, message: "User Already exsist!" });
         }
 
 

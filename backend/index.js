@@ -10,6 +10,7 @@ const orderRoutes = require('./routes/orderRoute');
 const cloudinary = require('cloudinary');
 const bodyParser = require('body-parser');
 const fileUpload = require('express-fileupload')
+const cartRoutes = require('./routes/cartRouter')
 
 
 // Handled uncaught exception
@@ -23,12 +24,13 @@ process.on("uncaughtException", (err) => {
 
 app.use(express.json());
 app.use(cookieParser());
-app.use(bodyParser.urlencoded({extended:true}));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(fileUpload());
 
 app.use('/api/v1/product', productRoutes);
 app.use('/api/v1/user', userRoutes);
 app.use('/api/v1/order', orderRoutes);
+app.use('/api/v1/cart',cartRoutes);
 
 // TEST ENDPOINT
 app.get('/test', (req, res) => {
@@ -36,16 +38,16 @@ app.get('/test', (req, res) => {
 });
 
 cloudinary.config({
-    cloud_name:process.env.CLOUDINARY_NAME,
-    api_key:process.env.CLOUDINARY_API_KEY,
-    api_secret:process.env.CLOUDINARY_SECRET_KEY
+    cloud_name: process.env.CLOUDINARY_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_SECRET_KEY
 })
 
 const start = async () => {
     try {
         await connectDB(process.env.MONGO_URI);
         const server = app.listen(PORT, () => {
-            console.log(`Server running at http://localhost:${PORT}`);
+            console.log(`Server running at http://localhost:${4000}`);
         })
         // Unhandled promises rejection
         process.on("unhandledRejection", (err) => {

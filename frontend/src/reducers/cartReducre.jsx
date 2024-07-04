@@ -1,4 +1,4 @@
-import { ADD_TO_CART, REMOVE_ITEM_FROM_CART } from "../constants/cartConstants";
+import { ADD_TO_CART, REMOVE_ITEM_FROM_CART, SAVE_SHIPPING_INFO } from "../constants/cartConstants";
 
 const cartReducre = (state = { cartItems: [] }, action) => {
     switch (action.type) {
@@ -24,6 +24,11 @@ const cartReducre = (state = { cartItems: [] }, action) => {
                 ...state,
                 cartItems: state.cartItems.filter((product) =>
                     product.id !== action.payload) // reduer me hum payload me id bhej raeh hai
+            }
+        case SAVE_SHIPPING_INFO:
+            return {
+                ...state,
+                shippingInfo: action.payload,
             }
 
 

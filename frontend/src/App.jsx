@@ -16,6 +16,7 @@ import ProtectedRoute from './Utils/ProtectedRoute';
 import UpdateProfile from './Pages/UpdateProfile/UpdateProfile';
 import UpdatePassword from './Pages/UpdatePassword/UpdatePassword';
 import Cart from './Pages/Cart/Cart';
+import Shipping from './Pages/Shipping/Shipping';
 
 
 
@@ -52,6 +53,9 @@ const App = () => {
             <Route path='/me/password' element={<UpdatePassword />} />
           </Route>
           <Route path='/cart' Component={Cart} />
+          <Route element={<ProtectedRoute />}>
+            <Route path='/shipping' element={<Shipping />} />
+          </Route>
         </Routes>
         <Footer />
       </Router>

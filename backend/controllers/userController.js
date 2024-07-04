@@ -250,7 +250,7 @@ const getUserOwnDetails = async (req, res) => {
     try {
         const { id } = req.user;
         const userMe = await UserSchema.findById(id);
-        res.json({ success: true, data: userMe });
+        res.json({ success: true, user: userMe });
     } catch (error) {
         console.error("Error in getUserOwnDetails function: ", error.message);
         res.status(500).json({

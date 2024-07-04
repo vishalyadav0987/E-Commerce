@@ -20,7 +20,8 @@ import {
     UPDATE_PASSWORD_FAIL,
     CLEAR_ERRORS,
 } from '../constants/userConstants';
-import axios from 'axios'
+import axios from 'axios';
+import Cookies from 'js-cookie'
 
 
 // LOGIN
@@ -37,8 +38,9 @@ const login = (email, password) => async (dispatch) => {
 
         dispatch({
             type: LOGIN_SUCEESS,
-            payload: response.data.user,
+            payload: response.data,
         })
+        Cookies.set('token', response.data.token);
     } catch (error) {
         dispatch({
             type: LOGIN_FAIL,
@@ -62,10 +64,19 @@ const register = (userData) => async (dispatch) => {
             config,
         );
 
-        dispatch({
-            type: REGISTER_USER_SUCEESS,
-            payload: response.data.user,
-        })
+        if (response.data.success) {
+            dispatch({
+                type: REGISTER_USER_SUCEESS,
+                payload: response.data,
+            })
+            Cookies.set('token', response.data.token);
+        }
+        else{
+            dispatch({
+                type: REGISTER_USER_FAIL,
+                payload: response.data.message
+            }); 
+        }
     } catch (error) {
         dispatch({
             type: REGISTER_USER_FAIL,
@@ -83,10 +94,18 @@ const loadUser = () => async (dispatch) => {
     try {
         dispatch({ type: LOAD_USER_REQUEST });
         const response = await axios.get(`/api/v1/user/me`);
-        dispatch({
-            type: LOAD_USER_SUCEESS,
-            payload: response.data.data,
-        })
+        if (response.data.success) {
+            dispatch({
+                type: LOAD_USER_SUCEESS,
+                payload: response.data,
+            })
+        }
+        else {
+            dispatch({
+                type: LOAD_USER_FAIL,
+            })
+        }
+        console.log(response.data)
     } catch (error) {
         dispatch({
             type: LOAD_USER_FAIL,

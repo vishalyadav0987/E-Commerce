@@ -37,7 +37,8 @@ const userReducer = (state = { user: {} }, action) => {
                 ...state,
                 loading: false,
                 isAuthenticate: true,
-                user: action.payload,
+                user: action.payload.user, // यूजर की जानकारी
+                token: action.payload.token, // टोकन को स्टोर करें
             }
         case LOGOUT_USER_SUCEESS:
             return {

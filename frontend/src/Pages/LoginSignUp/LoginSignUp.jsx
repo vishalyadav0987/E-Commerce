@@ -5,6 +5,7 @@ import { login, clearError, register } from '../../actions/userAction';
 import { useAlert } from 'react-alert'
 import Loader from '../../Components/Loader/Loder';
 import { useNavigate, useLocation } from 'react-router-dom'
+import Cookies from 'js-cookie'
 
 const LoginSignUp = () => {
     const navigate = useNavigate();
@@ -12,7 +13,7 @@ const LoginSignUp = () => {
     const alert = useAlert();
     const dispatch = useDispatch();
 
-    const { error, loading, isAuthenticate } = useSelector((state) => state.user)
+    const { error, loading, isAuthenticate ,token} = useSelector((state) => state.user)
 
     const [currState, setCurState] = useState("Login");
     const [data, setData] = useState({
@@ -64,13 +65,14 @@ const LoginSignUp = () => {
         dispatch(register(formData));
     };
     const redirect = location.search ? location.search.split("=")[1] : "/account";
-    console.log(redirect)
+
     useEffect(() => {
         if (error) {
             alert.error(error)
             dispatch(clearError())
         }
         if (isAuthenticate) {
+            Cookies.set('token', token); // लॉगिन के बाद कुकीज़ में टोकन सेट करें
             navigate(redirect);
         }
     }, [dispatch, error, alert, isAuthenticate, navigate, redirect])

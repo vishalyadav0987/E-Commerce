@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { addItemToCart, removeFromCart } from '../../actions/cartAction';
 import { useAlert } from 'react-alert'
 import { MdRemoveShoppingCart } from "react-icons/md";
+import Cookies from 'js-cookie';
 
 const Cart = () => {
     const navigate = useNavigate();
@@ -29,9 +30,16 @@ const Cart = () => {
         dispatch(removeFromCart(id));
         alert.success("Product Remove From Cart");
     }
+
     const checkOutHandler = () => {
-        navigate("/login?redirect=shipping")
+        const token = Cookies.get('token'); // कुकीज़ से टोकन प्राप्त करें
+        if (token) {
+            navigate("/shipping");
+        } else {
+            navigate("/login?redirect=/shipping");
+        }
     }
+
     useEffect(() => {
         window.scrollTo(0, 0);
     }, []);

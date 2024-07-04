@@ -16,6 +16,7 @@
     "@mui/material": "^5.15.20",
     "axios": "^1.7.2",
     "country-state-city": "^3.2.1",
+    "js-cookie": "^3.0.5",
     "overlay-navbar": "^1.2.3",
     "react": "^18.2.0",
     "react-alert": "^7.0.3",

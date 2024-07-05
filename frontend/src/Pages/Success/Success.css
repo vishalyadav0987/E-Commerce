@@ -1,0 +1,39 @@
+.orderSuccess {
+    margin: auto;
+    text-align: center;
+    padding: 10vmax;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+ 
+  .orderSuccess > p {
+    font-size: 2vmax;
+  }
+  .orderSuccess > a {
+    background-color: #240750;
+    color: white;
+    border: none;
+    padding: 16px 50px;
+    cursor: pointer;
+    font: 400 1vmax "Roboto";
+    text-decoration: none;
+    margin: 2vmax;
+    border-radius: 4px;
+  }
+  
+  @media screen and (max-width: 600px) {
+    .orderSuccess > a {
+      padding: 3vw 6vw;
+      font: 400 4vw "Roboto";
+      margin: 2vmax;
+    }
+  
+   
+    .orderSuccess > p {
+      margin: 2vmax;
+      font-size: 5vw;
+    }
+  }

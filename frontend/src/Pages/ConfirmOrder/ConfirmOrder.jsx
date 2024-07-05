@@ -22,6 +22,13 @@ const ConfirmOrder = () => {
     const address = `${shippingInfo.address}, ` + `${shippingInfo.state}, ` + `${shippingInfo.city} `;
 
     const proceedPaymentHandler = () => {
+        const data = {
+            subTotal,
+            shippingCharges,
+            tax,
+            Total
+        }
+        sessionStorage.setItem("orderInfo",JSON.stringify(data))
         if (isAuthenticate === true) {
             navigate('/process/payment');
         }
@@ -55,7 +62,7 @@ const ConfirmOrder = () => {
                             <div>
                                 {
                                     cartItems && cartItems.map((item, index) => (
-                                        <div className="item-1">
+                                        <div className="item-1" key={index}>
                                             <div className="img-name">
                                                 <Link to={`/product/${item.id}`}>
                                                     <img src="https://i.ibb.co/DRST11n/1.webp" alt=""

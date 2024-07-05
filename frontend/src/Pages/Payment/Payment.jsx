@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import './Payment.css'
 import { BsFillCreditCardFill } from "react-icons/bs";
 import { BsCalendarEventFill } from "react-icons/bs";
@@ -12,19 +12,31 @@ import { loadStripe } from '@stripe/stripe-js';
 import { useAlert } from 'react-alert'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom'
+import { clearError, createOrder } from '../../actions/orderAction';
 
-const Payment = ({ stripeApiKey }) => {
-    const navigate = useNavigate()
+const Payment = () => {
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
     const orderInfo = JSON.parse(sessionStorage.getItem("orderInfo"))
     const payBtn = useRef(null);
     const alert = useAlert();
     const stripe = useStripe();
     const elements = useElements();
     const { user } = useSelector(state => state.user);
-    const { shippingInfo } = useSelector(state => state.cart);
+    const { shippingInfo, cartItems } = useSelector(state => state.cart);
+    const { error } = useSelector(state => state.newOrder);
 
-    const paymentData ={
-        amount : Math.round(orderInfo.Total) * 100
+    const paymentData = {
+        amount: Math.round(orderInfo.Total) * 100
+    }
+
+    const orderDetails = {
+        shippingInfo,
+        orderItems: cartItems,
+        itemsPrice: orderInfo.subTotal,
+        taxPrice: orderInfo.tax,
+        shippingPrice: orderInfo.shippingCharges,
+        totalPrice: orderInfo.Total,
     }
 
     const submitHandler = async (e) => {
@@ -66,9 +78,15 @@ const Payment = ({ stripeApiKey }) => {
             }
             else {
                 if (result.paymentIntent.status === "succeeded") {
+                    orderDetails.paymentInfo = {
+                        id: result.paymentIntent.id,
+                        status: result.paymentIntent.status,
+                    };
+
+                    dispatch(createOrder(orderDetails))
                     navigate('/success');
                 }
-                else{
+                else {
                     alert.error("There's some while processing the payment");
                 }
             }
@@ -79,6 +97,16 @@ const Payment = ({ stripeApiKey }) => {
         }
     };
 
+    useEffect(() => {
+        if (error) {
+            alert.error(error);
+            dispatch(clearError())
+        }
+    }, [dispatch, alert, error]);
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    })
     return (
         <>
             <CheckOutStep activeStep={2} />

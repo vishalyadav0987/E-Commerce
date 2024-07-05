@@ -17,6 +17,7 @@ import UpdateProfile from './Pages/UpdateProfile/UpdateProfile';
 import UpdatePassword from './Pages/UpdatePassword/UpdatePassword';
 import Cart from './Pages/Cart/Cart';
 import Shipping from './Pages/Shipping/Shipping';
+import ConfirmOrder from './Pages/ConfirmOrder/ConfirmOrder';
 
 
 
@@ -55,6 +56,9 @@ const App = () => {
           <Route path='/cart' Component={Cart} />
           <Route element={<ProtectedRoute />}>
             <Route path='/shipping' element={<Shipping />} />
+          </Route>
+          <Route element={<ProtectedRoute />}>
+            <Route path='/order/confirm' element={<ConfirmOrder />} />
           </Route>
         </Routes>
         <Footer />

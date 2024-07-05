@@ -42,7 +42,7 @@ const SingleProductPage = () => {
             alert.success("Item Added To Cart")
         }
         else{
-            alert.error("Product is Out Of Stock") 
+            alert.error("Product is Out Of Stock")
         }
     }
 

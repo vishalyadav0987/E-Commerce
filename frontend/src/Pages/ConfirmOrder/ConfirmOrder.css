@@ -1,0 +1,184 @@
+.confirm-order {
+    width: 100%;
+    height: 100%;
+}
+
+.confirm-container {
+    width: 85%;
+    margin: 0 auto;
+    display: flex;
+    padding: 30px 10px;
+}
+
+.left {
+    flex: 0.7;
+    display: flex;
+    gap: 40px;
+    flex-direction: column;
+    border-right: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.shipping-heading-1 {
+    font-size: 3rem;
+    font-weight: 500;
+    padding: 6px 20px;
+    width: fit-content;
+    margin-bottom: 24px;
+}
+
+.shipping-info-box>div {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding-left: 40px;
+}
+
+.flex-gap {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+}
+
+.flex-gap>span>b {
+    font-size: 16px;
+}
+
+.item-1 {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 85%;
+    padding-left: 40px;
+    margin-bottom: 20px;
+}
+
+.item-1>div {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.item-1>div>img {
+    width: 8rem;
+    border-radius: 4px;
+}
+
+.item-1>div>span {
+    font-size: 18px;
+    color: rgba(0, 0, 0, 0.606);
+}
+
+.quantity-ruppee{
+    font-size: 18px;
+    color: rgba(0, 0, 0, 0.806);
+}
+
+@media (max-width:1024px) {
+    .confirm-container {
+        width: 95%;
+        padding: 30px 0px;
+    }
+    .left{
+        flex: 0.6;
+    }
+    .confirm-container .right{
+        flex: 0.4;
+    }
+}
+@media (max-width:711px) {
+    .confirm-container {
+        width: 95%;
+        padding: 30px 0px;
+        flex-direction: column;
+        gap: 30px;
+    }
+    .left{
+        flex: 1;
+    }
+    .confirm-container .right{
+        flex: 1;
+        align-items: flex-start;
+        padding-left: 30px;
+    }
+    .shipping-info-box>div{
+        padding-left: 20px;
+    }
+    .item-1{
+        padding-left: 20px;
+        width: 95%;
+    }
+    .quantity-ruppee{
+        font-size: 14px;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.right {
+
+    flex: 0.3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.shipping-heading {
+    font-size: 3rem;
+    font-weight: 500;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.215);
+    padding: 6px 20px;
+    width: fit-content;
+    margin-bottom: 24px;
+}
+
+.right>div {
+    display: flex;
+    flex-direction: column;
+    width: 24rem;
+    padding: 10px 8px;
+    gap: 10px;
+    margin-bottom: 24px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+}
+
+.flex-space {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 16px;
+}
+
+.procced-to-pay {
+    width: 24rem;
+    padding: 14px 8px;
+    border-radius: 4px;
+    border: none;
+    overflow: unset;
+    color: white;
+    background-color: #240750;
+    cursor: pointer;
+}

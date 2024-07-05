@@ -22,6 +22,7 @@ import axios from 'axios';
 import Payment from './Pages/Payment/Payment';
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
+import Success from './Pages/Success/Success';
 
 
 
@@ -78,6 +79,9 @@ const App = () => {
             <Route path='/process/payment' element={<Elements stripe={loadStripe(stripeApiKey)}>
               <Payment stripeApiKey={stripeApiKey} />
             </Elements>} />
+          </Route>
+          <Route element={<ProtectedRoute />}>
+            <Route path='/success' element={<Success />} />
           </Route>
         </Routes>
         <Footer />

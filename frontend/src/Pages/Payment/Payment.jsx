@@ -5,48 +5,106 @@ import { BsCalendarEventFill } from "react-icons/bs";
 import { MdVpnKeyOff } from "react-icons/md";
 import CheckOutStep from '../../Components/CheckOutStep/CheckOutStep';
 import { Typography } from '@mui/material';
-import { CardExpiryElement, CardCvcElement, CardNumberElement } from '@stripe/react-stripe-js';
+import { CardExpiryElement, CardCvcElement, CardNumberElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { useDispatch, useSelector } from 'react-redux'
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
+import { useAlert } from 'react-alert'
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom'
 
 const Payment = ({ stripeApiKey }) => {
+    const navigate = useNavigate()
     const orderInfo = JSON.parse(sessionStorage.getItem("orderInfo"))
     const payBtn = useRef(null);
+    const alert = useAlert();
+    const stripe = useStripe();
+    const elements = useElements();
+    const { user } = useSelector(state => state.user);
+    const { shippingInfo } = useSelector(state => state.cart);
 
-    const submitHandler = (e) => {
+    const paymentData ={
+        amount : Math.round(orderInfo.Total) * 100
+    }
+
+    const submitHandler = async (e) => {
         e.preventDefault();
         // Handle form submission logic here
+        payBtn.current.disabled = true;
+        try {
+            const config = {
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            }
+            const { data } = await axios.post('/api/v1/payment/process', paymentData, config);
+
+            const client_secret = data.client_secret;
+
+            if (!stripe || !elements) return;
+
+            const result = await stripe.confirmCardPayment(client_secret, {
+                payment_method: {
+                    card: elements.getElement(CardNumberElement),
+                    billing_details: {
+                        name: user.name,
+                        email: user.email,
+                        address: {
+                            line1: shippingInfo.address,
+                            city: shippingInfo.city,
+                            state: shippingInfo.state,
+                            postal_code: shippingInfo.pinCode,
+                            country: shippingInfo.country
+                        }
+                    }
+                }
+            });
+
+            if (result.error) {
+                payBtn.current.disabled = false;
+                alert.error(result.error.message);
+            }
+            else {
+                if (result.paymentIntent.status === "succeeded") {
+                    navigate('/success');
+                }
+                else{
+                    alert.error("There's some while processing the payment");
+                }
+            }
+
+        } catch (error) {
+            payBtn.current.disabled = false;
+            alert.error(error.response.data.message)
+        }
     };
 
     return (
         <>
-            <Elements stripe={loadStripe(stripeApiKey)}>
-                <CheckOutStep activeStep={2} />
-                <div className="paymentContainer">
-                    <form className="paymentForm" onSubmit={submitHandler}>
-                        <Typography>Card Info</Typography>
-                        <div>
-                            <BsFillCreditCardFill />
-                            <CardNumberElement className="paymentInput" />
-                        </div>
-                        <div>
-                            <BsCalendarEventFill />
-                            <CardExpiryElement className="paymentInput" />
-                        </div>
-                        <div>
-                            <MdVpnKeyOff />
-                            <CardCvcElement className="paymentInput" />
-                        </div>
-                        <input
-                            type="submit"
-                            value={`Pay - ${orderInfo && orderInfo.Total}`}
-                            ref={payBtn}
-                            className="paymentBtn"
-                        />
-                    </form>
-                </div>
-            </Elements>
+            <CheckOutStep activeStep={2} />
+            <div className="paymentContainer">
+                <form className="paymentForm" onSubmit={submitHandler}>
+                    <Typography>Card Info</Typography>
+                    <div>
+                        <BsFillCreditCardFill />
+                        <CardNumberElement className="paymentInput" />
+                    </div>
+                    <div>
+                        <BsCalendarEventFill />
+                        <CardExpiryElement className="paymentInput" />
+                    </div>
+                    <div>
+                        <MdVpnKeyOff />
+                        <CardCvcElement className="paymentInput" />
+                    </div>
+                    <input
+                        type="submit"
+                        value={`Pay - ₹${orderInfo && Math.round(orderInfo.Total)}`}
+                        ref={payBtn}
+                        className="paymentBtn"
+                    />
+                </form>
+            </div>
         </>
     );
 };

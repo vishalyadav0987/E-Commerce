@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import Navbar from './Components/Navbar/Navbar';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom'
 import webFont from "webfontloader"
@@ -18,11 +18,23 @@ import UpdatePassword from './Pages/UpdatePassword/UpdatePassword';
 import Cart from './Pages/Cart/Cart';
 import Shipping from './Pages/Shipping/Shipping';
 import ConfirmOrder from './Pages/ConfirmOrder/ConfirmOrder';
+import axios from 'axios';
+import Payment from './Pages/Payment/Payment';
+import { Elements } from '@stripe/react-stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
 
 
 
 
 const App = () => {
+
+  const [stripeApiKey, setStripeApiKey] = useState("");
+
+  const getStripeApiKey = async () => {
+    const response = await axios.get('/api/v1/payment/stripeapikey');
+    console.log(response.data);
+    setStripeApiKey(response.data.stripeApiKey)
+  }
 
   useEffect(() => {
     webFont.load({
@@ -32,7 +44,9 @@ const App = () => {
     })
 
     store.dispatch(loadUser()); // another technique call aur dispatch the function in action
+    getStripeApiKey();
   }, [])
+  // console.log(stripeApiKey);
   return (
     <div>
       <Router>
@@ -59,6 +73,11 @@ const App = () => {
           </Route>
           <Route element={<ProtectedRoute />}>
             <Route path='/order/confirm' element={<ConfirmOrder />} />
+          </Route>
+          <Route element={<ProtectedRoute />}>
+            <Route path='/process/payment' element={<Elements stripe={loadStripe(stripeApiKey)}>
+              <Payment stripeApiKey={stripeApiKey} />
+            </Elements>} />
           </Route>
         </Routes>
         <Footer />

@@ -23,7 +23,7 @@ import Payment from './Pages/Payment/Payment';
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import Success from './Pages/Success/Success';
-import Order from './Pages/Order/Order';
+import MyOrder from './Pages/Order/MyOrder';
 
 
 
@@ -61,32 +61,25 @@ const App = () => {
           <Route path='/search' element={<Search />} />
           <Route path='/login' element={<LoginSignUp />} />
           <Route element={<ProtectedRoute />}>
-            <Route path='/account' element={<Profile />} />
-          </Route>
-          <Route element={<ProtectedRoute />}>
-            <Route path='/me/update' element={<UpdateProfile />} />
-          </Route>
-          <Route element={<ProtectedRoute />}>
-            <Route path='/me/password' element={<UpdatePassword />} />
-          </Route>
-          <Route path='/cart' Component={Cart} />
-          <Route element={<ProtectedRoute />}>
-            <Route path='/shipping' element={<Shipping />} />
-          </Route>
-          <Route element={<ProtectedRoute />}>
-            <Route path='/order/confirm' element={<ConfirmOrder />} />
-          </Route>
-          <Route element={<ProtectedRoute />}>
-            <Route path='/process/payment' element={<Elements stripe={loadStripe(stripeApiKey)}>
-              <Payment stripeApiKey={stripeApiKey} />
-            </Elements>} />
-          </Route>
-          <Route element={<ProtectedRoute />}>
-            <Route path='/success' element={<Success />} />
-          </Route>
-          <Route element={<ProtectedRoute />}>
-            <Route path='/orders' element={<Order />} />
-          </Route>
+          <Route path='/account' element={<Profile />} />
+          <Route path='/me/update' element={<UpdateProfile />} />
+          <Route path='/me/password' element={<UpdatePassword />} />
+          <Route path='/shipping' element={<Shipping />} />
+          <Route path='/order/confirm' element={<ConfirmOrder />} />
+          {stripeApiKey && (
+            <Route
+              path='/process/payment'
+              element={
+                <Elements stripe={loadStripe(stripeApiKey)}>
+                  <Payment />
+                </Elements>
+              }
+            />
+          )}
+          <Route path='/success' element={<Success />} />
+          <Route path='/orders' element={<MyOrder />} />
+        </Route>
+        <Route path='/cart' element={<Cart />} />
         </Routes>
         <Footer />
       </Router>

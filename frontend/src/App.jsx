@@ -23,6 +23,7 @@ import Payment from './Pages/Payment/Payment';
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import Success from './Pages/Success/Success';
+import Order from './Pages/Order/Order';
 
 
 
@@ -82,6 +83,9 @@ const App = () => {
           </Route>
           <Route element={<ProtectedRoute />}>
             <Route path='/success' element={<Success />} />
+          </Route>
+          <Route element={<ProtectedRoute />}>
+            <Route path='/orders' element={<Order />} />
           </Route>
         </Routes>
         <Footer />

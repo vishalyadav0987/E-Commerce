@@ -32,7 +32,7 @@ const Payment = () => {
 
     const orderDetails = {
         shippingInfo,
-        orderItems: cartItems,
+        OrderItems: cartItems,
         itemsPrice: orderInfo.subTotal,
         taxPrice: orderInfo.tax,
         shippingPrice: orderInfo.shippingCharges,

@@ -22,7 +22,7 @@ const Shipping = () => {
   const [city, setCity] = useState(shippingInfo.city);
   const [state, setState] = useState(shippingInfo.state);
   const [country, setCountry] = useState(shippingInfo.country);
-  const [pinCode, setPinCode] = useState(shippingInfo.pinCode);
+  const [pincode, setPinCode] = useState(shippingInfo.pinCode);
   const [phoneNo, setPhoneNo] = useState(shippingInfo.phoneNo);
 
   const shippingSubmitHandle = (e) => {
@@ -31,7 +31,7 @@ const Shipping = () => {
       alert.error("Phone number should be 10 digit.");
       return;
     }
-    dispatch(saveShippingInfo({ address, city, state, country, pinCode, phoneNo }));
+    dispatch(saveShippingInfo({ address, city, state, country, pincode, phoneNo }));
     naivgate('/order/confirm')
   }
 
@@ -73,7 +73,7 @@ const Shipping = () => {
                 type="number"
                 placeholder='Pin Code'
                 required
-                value={pinCode}
+                value={pincode}
                 onChange={(e) => setPinCode(e.target.value)}
               />
             </div>

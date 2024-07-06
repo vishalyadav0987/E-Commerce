@@ -1,0 +1,98 @@
+.my-order-page {
+    width: 100%;
+    max-width: 100%;
+    padding: 0 2vmax;
+    box-sizing: border-box;
+    background-color: rgb(235, 235, 235);
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+#my-order-heading {
+    text-align: center;
+    font: 400 1.2vmax "Roboto";
+    padding: 0.5vmax;
+    box-sizing: border-box;
+    color: rgb(255, 255, 255);
+    transition: all 0.5s;
+    background-color: rgb(44, 44, 44);
+}
+
+.MuiDataGrid-root .MuiDataGrid-cell--textLeft,
+.MuiDataGrid-root .MuiDataGrid-cell--textRight {
+    font-size: 13px;
+}
+
+.my-order-table {
+    background-color: white;
+}
+
+.my-order-table div {
+    font: 300 1vmax "Roboto";
+    /* color: rgba(0, 0, 0, 0.678); */
+    border: none;
+}
+
+.my-order-table a {
+    color: rgba(0, 0, 0, 0.527);
+    transition: all 0.5s;
+}
+
+.my-order-table a:hover {
+    color: #240750;
+}
+
+.MuiDataGrid-columnHeader {
+    background-color: #240750;
+    padding: 1vmax !important;
+}
+
+.MuiDataGrid-columnHeader div {
+    color: rgb(255, 255, 255);
+    font: 500 1.1vmax "Roboto" !important;
+}
+
+.MuiDataGrid-iconSeparator {
+    display: none !important;
+}
+
+.MuiTablePagination-caption {
+    font-size: 12px !important; 
+}
+
+.MuiDataGrid-root .MuiDataGrid-cell--textRight.MuiDataGrid-cell--withRenderer, .MuiDataGrid-root .MuiDataGrid-cell--textRight.MuiDataGrid-cell--editing {
+    justify-content: center !important;
+}
+/* 
+.MuiDataGrid-root .MuiDataGrid-columnHeader--alignRight .MuiDataGrid-columnHeaderDraggableContainer, .MuiDataGrid-root .MuiDataGrid-columnHeader--alignRight .MuiDataGrid-columnHeaderTitleContainer {
+    flex-direction: row !important;
+} */
+
+@media screen and (max-width: 600px) {
+    .my-order-page {
+        padding: 0;
+        height: 100vh;
+    }
+
+    #my-order-heading {
+        font: 400 2.2vmax "Roboto";
+        padding: 4vw;
+    }
+
+    .my-order-table div {
+        font: 300 4vw "Roboto";
+    }
+
+    .MuiDataGrid-columnHeader {
+        padding: 20px !important;
+    }
+
+    .MuiDataGrid-columnHeader div {
+        font: 500 5vw "Roboto" !important;
+    }
+}

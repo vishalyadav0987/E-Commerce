@@ -7,6 +7,9 @@ import {
     SINGLE_PRODUCT_SUCEESS,
     SINGLE_PRODUCT_FAIL,
     CLEAR_ERRORS,
+    NEW_REVIEW_REQUEST,
+    NEW_REVIEW_SUCEESS,
+    NEW_REVIEW_FAIL,
 } from '../constants/productConstants';
 
 const getAllProducts = (keyword = "", currentPage = 1, price = [200, 10000], category, ratings = 0) => async (dispatch) => {
@@ -50,6 +53,29 @@ const getSingleProducts = (id) => async (dispatch) => {
     }
 }
 
+// NEW REVIEW
+const newReview = (reviewData) => async (dispatch) => {
+    try {
+        dispatch({ type: NEW_REVIEW_REQUEST })
+        const response = await axios.post(
+            `/api/v1/product/review`,
+            reviewData,
+            { headers: { "Content-Type": "application/json" } }
+        );
+        dispatch({
+            type: NEW_REVIEW_SUCEESS,
+            payload: response.data.success,
+        })
+    } catch (error) {
+        dispatch({
+            type: NEW_REVIEW_FAIL,
+            payload: error.response && error.response.data.message
+                ? error.response.data.message
+                : error.message,
+        });
+    }
+}
+
 
 // clearing Error
 const clearError = () => async (dispatch) => {
@@ -57,4 +83,4 @@ const clearError = () => async (dispatch) => {
 }
 
 
-export { getAllProducts, clearError, getSingleProducts }
+export { getAllProducts, clearError, getSingleProducts,newReview }

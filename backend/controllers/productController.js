@@ -1,5 +1,6 @@
 const ApiFeatures = require('../Utils/ApiFeatures');
 const ProductSchema = require('../modals/ProductSchema');
+const mongoose = require('mongoose')
 
 
 // ADMIN --- Controller --- Admin Rights
@@ -28,9 +29,9 @@ const getAllProducts = async (req, res) => {
             .filter()
 
         // let products = await apiFeatures.query;
-         // Clone the query object before executing the first query to get filtered products count
-         let queryClone = apiFeatures.query.clone();
-         let products = await queryClone;
+        // Clone the query object before executing the first query to get filtered products count
+        let queryClone = apiFeatures.query.clone();
+        let products = await queryClone;
         let filteredProductsCount = products.length;
 
         apiFeatures.pagination(resultPerPage);
@@ -136,6 +137,12 @@ const getSingleProduct = async (req, res) => {
 const createProductReview = async (req, res) => {
     try {
         const { productId, comment, rating } = req.body;
+        if (!mongoose.Types.ObjectId.isValid(productId)) {
+            return res.status(400).json({
+                success: false,
+                message: 'Invalid product ID'
+            });
+        }
         const product = await ProductSchema.findById(productId);
         if (!product) {
             return res.json({
@@ -147,10 +154,10 @@ const createProductReview = async (req, res) => {
             userRevId: req.user.id,
             name: req.user.name,
             comment,
-            rating: +rating
+            rating: Number(rating),
         }
 
-        console.log(review);
+        // console.log(review);
         // console.log(product.reviews[0].userRevId.toString(), req.user.id);
 
         // Iam not use like the bacause [reviews] parameter is array
@@ -162,7 +169,7 @@ const createProductReview = async (req, res) => {
         const isReviewed = await product.reviews.find((rev) =>
             rev.userRevId.toString() === req.user.id
         );
-        console.log(isReviewed);
+        // console.log(isReviewed);
 
         if (isReviewed) {
             product.reviews.forEach((rev) => {
@@ -180,9 +187,9 @@ const createProductReview = async (req, res) => {
         product.reviews.forEach((rev) => {
             sum += rev.rating;
         });
-        console.log(sum);
+        // console.log(sum);
         let avg = sum / product.reviews.length;
-        console.log(avg);
+        // console.log(avg);
         product.ratings = avg;
         await product.save({ validateBeforeSave: false });
 

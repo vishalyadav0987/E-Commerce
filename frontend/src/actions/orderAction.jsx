@@ -5,7 +5,10 @@ import {
     MY_ORDER_REQUEST,
     MY_ORDER_SUCCESS,
     MY_ORDER_FAIL,
-    CLEAR_ERRORS
+    CLEAR_ERRORS,
+    SINGLE_ORDER_DETAILS_REQUEST,
+    SINGLE_ORDER_DETAILS_SUCCESS,
+    SINGLE_ORDER_DETAILS_FAIL
 } from '../constants/orderConstants';
 import axios from 'axios'
 
@@ -52,9 +55,27 @@ const getMyOrder = () => async (dispatch) => {
 }
 
 
+//Single Order Details MY ORDER
+const singleOrderDetail = (id) => async (dispatch) => {
+    try {
+        dispatch({ type: SINGLE_ORDER_DETAILS_REQUEST })
+        const response = await axios.get(`/api/v1/order/orders/${id}`);
+        dispatch({
+            type: SINGLE_ORDER_DETAILS_SUCCESS,
+            payload: response.data.data
+        })
+    } catch (error) {
+        dispatch({
+            type: SINGLE_ORDER_DETAILS_FAIL,
+            payload: error.response && error.response.data.message
+                ? error.response.data.message
+                : error.message,
+        });
+    }
+}
 // clearing Error
 const clearError = () => async (dispatch) => {
     dispatch({ type: CLEAR_ERRORS });
 }
 
-export { createOrder, getMyOrder,clearError }
+export { createOrder, getMyOrder, singleOrderDetail, clearError }

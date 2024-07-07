@@ -24,6 +24,7 @@ import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import Success from './Pages/Success/Success';
 import MyOrder from './Pages/Order/MyOrder';
+import SingleOrderDetail from './Pages/SingleOrderDetails/SingleOrderDetail';
 
 
 
@@ -61,25 +62,26 @@ const App = () => {
           <Route path='/search' element={<Search />} />
           <Route path='/login' element={<LoginSignUp />} />
           <Route element={<ProtectedRoute />}>
-          <Route path='/account' element={<Profile />} />
-          <Route path='/me/update' element={<UpdateProfile />} />
-          <Route path='/me/password' element={<UpdatePassword />} />
-          <Route path='/shipping' element={<Shipping />} />
-          <Route path='/order/confirm' element={<ConfirmOrder />} />
-          {stripeApiKey && (
-            <Route
-              path='/process/payment'
-              element={
-                <Elements stripe={loadStripe(stripeApiKey)}>
-                  <Payment />
-                </Elements>
-              }
-            />
-          )}
-          <Route path='/success' element={<Success />} />
-          <Route path='/orders' element={<MyOrder />} />
-        </Route>
-        <Route path='/cart' element={<Cart />} />
+            <Route path='/account' element={<Profile />} />
+            <Route path='/me/update' element={<UpdateProfile />} />
+            <Route path='/me/password' element={<UpdatePassword />} />
+            <Route path='/shipping' element={<Shipping />} />
+            <Route path='/order/confirm' element={<ConfirmOrder />} />
+            {stripeApiKey && (
+              <Route
+                path='/process/payment'
+                element={
+                  <Elements stripe={loadStripe(stripeApiKey)}>
+                    <Payment />
+                  </Elements>
+                }
+              />
+            )}
+            <Route path='/success' element={<Success />} />
+            <Route path='/orders' element={<MyOrder />} />
+            <Route path='/order/:id' element={<SingleOrderDetail />} />
+          </Route>
+          <Route path='/cart' element={<Cart />} />
         </Routes>
         <Footer />
       </Router>

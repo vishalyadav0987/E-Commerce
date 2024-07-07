@@ -1,8 +1,10 @@
 import React from 'react'
 import ReactStars from 'react-rating-stars-component'
 import './Review.css'
+import { useSelector } from 'react-redux'
 
-const Review = ({ product }) => {
+const Review = ({ product, submitReviewToggle }) => {
+    const { user } = useSelector(state => state.user);
     let rate = product.ratings;
     let rates = Math.round(rate)
     const options = {
@@ -31,7 +33,7 @@ const Review = ({ product }) => {
                         <div className="review-submit-container">
                             <h2>Review this product</h2>
                             <p>Share your thoughts with other customers</p>
-                            <button>Write product review here</button>
+                            <button onClick={submitReviewToggle}>Write product review here</button>
                         </div>
                     </div>
                     <div className="right-box">

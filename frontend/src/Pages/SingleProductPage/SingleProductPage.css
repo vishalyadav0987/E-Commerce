@@ -29,6 +29,23 @@
 
 }
 
+.submitDialog{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 14px;
+}
+
+.submitDialogTextArea{
+    color: #323232;
+    padding: 10px;
+    font-size: 14px;
+    outline: none;
+    border: 1px solid #d7d7d7;
+    font-family: sans-serif;
+}
+
 
 .rght-side {
     width: 50%;

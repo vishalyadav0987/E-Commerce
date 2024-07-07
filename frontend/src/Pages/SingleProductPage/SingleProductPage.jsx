@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import './SingleProductPage.css'
 import { useDispatch, useSelector } from 'react-redux'
-import { clearError, getSingleProducts } from '../../actions/productAction'
+import { clearError, getSingleProducts, newReview } from '../../actions/productAction'
 import { useParams } from 'react-router-dom';
 import Carousel from 'react-material-ui-carousel'
 import ReactStars from 'react-rating-stars-component'
@@ -9,6 +9,15 @@ import Loader from '../../Components/Loader/Loder'
 import Review from '../../Components/Review/Review';
 import { useAlert } from 'react-alert'
 import { addItemToCart } from '../../actions/cartAction';
+import {
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogTitle,
+    Button
+} from '@material-ui/core'
+import { Rating } from '@mui/material';
+import { NEW_REVIEW_RESET } from '../../constants/productConstants';
 
 const SingleProductPage = () => {
     const alert = useAlert();
@@ -36,12 +45,33 @@ const SingleProductPage = () => {
         setQuantity(quantity => quantity - 1)
     }
 
+    const { success, error: reviewError } = useSelector(state => state.newReview)
+
+    const [rating, setRating] = useState(0)
+    const [comments, setComments] = useState("")
+    const [open, setOpen] = useState(false)
+
+    const submitReviewToggle = () => {
+        open ? setOpen(false) : setOpen(true)
+    }
+
+    const reviewSubmitHandler = () => {
+        const formData = new FormData();
+
+        formData.set("comment", comments);
+        formData.set("rating", rating);
+        formData.set("productId", id);
+
+        dispatch(newReview(formData));
+        setOpen(false)
+    }
+
     const addCartHandler = (Stock) => {
         if (Stock > 0) {
             dispatch(addItemToCart(id, quantity));
             alert.success("Item Added To Cart")
         }
-        else{
+        else {
             alert.error("Product is Out Of Stock")
         }
     }
@@ -51,8 +81,16 @@ const SingleProductPage = () => {
             alert.error(error);
             dispatch(clearError());
         }
+        if (reviewError) {
+            alert.error(reviewError);
+            dispatch(clearError());
+        }
+        if (success) {
+            alert.success("Review Submitted Successfully.");
+            dispatch({ type: NEW_REVIEW_RESET })
+        }
         dispatch(getSingleProducts(id))
-    }, [dispatch, id]);
+    }, [dispatch, id, reviewError, alert, success]);
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -118,13 +156,56 @@ const SingleProductPage = () => {
                                     <span className='discription-text'>discription: </span>
                                     {product.description}
                                 </p>
-                                <button className='submit-review btn'>Submit Review</button>
+                                <button
+                                    onClick={submitReviewToggle}
+                                    className='submit-review btn'>Submit Review</button>
+
+
+                                <Dialog
+                                    aria-labelledby='simple-dialog-title'
+                                    open={open}
+                                    onClose={submitReviewToggle}
+                                >
+                                    <DialogTitle
+                                        style={{
+                                            background: "white"
+                                        }}
+                                    >Submit Review</DialogTitle>
+                                    <DialogContent className='submitDialog'
+                                        style={{ background: "white" }}>
+                                        <Rating
+                                            onChange={(e) => setRating(e.target.value)}
+                                            value={rating}
+                                            size='large'
+                                        />
+                                        <textarea
+                                            required
+                                            className='submitDialogTextArea'
+                                            cols={30}
+                                            rows={5}
+                                            value={comments}
+                                            onChange={(e) => setComments(e.target.value)}
+                                        ></textarea>
+                                    </DialogContent>
+                                    <DialogActions style={{ background: "white" }}>
+                                        <Button
+                                            color='secondary'
+                                            style={{ fontSize: "13px", fontWeight: "bold" }}
+                                            onClick={submitReviewToggle}
+                                        >Cancel</Button>
+                                        <Button
+                                            color='primary'
+                                            style={{ fontSize: "13px", fontWeight: "bold" }}
+                                            onClick={reviewSubmitHandler}
+                                        >Submit</Button>
+                                    </DialogActions>
+                                </Dialog>
                             </div>
                         </div>
                         <div className="id-title ok">
                             <p>Review</p>
                         </div>
-                        <Review product={product} />
+                        <Review product={product} submitReviewToggle={submitReviewToggle} />
                     </div>
             }
         </>

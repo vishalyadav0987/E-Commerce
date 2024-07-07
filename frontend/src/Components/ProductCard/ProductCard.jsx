@@ -1,17 +1,14 @@
 import React from 'react'
 import './ProductCard.css'
-import ReactStars from 'react-rating-stars-component'
 import { Link } from 'react-router-dom'
+import { Rating } from '@mui/material'
 
 
 const ProductCard = ({ item }) => {
     const options = {
-        edit: false,
-        color: "#e5ddd3",
-        activeColor: "tomato",
-        size: window.innerWidth < 600 ? 20 : 25,
+        size: "large",
         value: item.ratings,
-        isHalf: true,
+        readOnly: true,
     }
     console.log(item)
     return (
@@ -22,7 +19,7 @@ const ProductCard = ({ item }) => {
             <p>{item.name}</p>
             <div className="rating-container">
                 <div className="rating">
-                    <ReactStars {...options} />
+                    <Rating {...options} />
                 </div>
                 <div className="rating-count">
                     ({item.numOfReviews} Reviews)

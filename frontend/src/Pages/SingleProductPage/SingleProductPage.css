@@ -129,7 +129,7 @@
 }
 
 .counter .btn,.submit-review.btn {
-    padding: 10px 40px;
+    padding: 10px 30px;
     border-radius: 50px;
     border: 1px solid #c5c5c5;
     background-color: #240750;
@@ -166,6 +166,10 @@
 }
 .redColor{
     color: red;
+}
+
+.review-container span:first-child{
+    font-size: 20px;
 }
 
 .id-title.ok{

@@ -30,6 +30,7 @@
     border: 1px solid #323232;
 }
 
+
 .bottom-box {
     display: flex;
     width: 80vmax;
@@ -51,11 +52,17 @@
 .bottom-box .left-box h2 {
     font-size: clamp(1.2rem, 5vw, 2rem);
 }
-
+.review-container{
+    display: flex;
+    align-items: center;
+}
 .bottom-box .left-box .review-container span {
     font-weight: 500;
     font-size: 14px;
-    margin-bottom: -2px;
+}
+
+.bottom-box .left-box .review-container span:first-child{
+    font-size: 20px;
 }
 
 .bottom-box .left-box .review-submit-container {

@@ -26,12 +26,9 @@ const SingleProductPage = () => {
     const { product, error, loading } = useSelector(state => state.singleProduct);
 
     const options = {
-        edit: false,
-        color: "#e5ddd3",
         value: product.ratings,
-        activeColor: "tomato",
-        size: window.innerWidth < 600 ? 20 : 25,
-        isHalf: true,
+        size: "large",
+        readOnly:true,
     }
 
     const [quantity, setQuantity] = useState(1);
@@ -127,7 +124,7 @@ const SingleProductPage = () => {
                                     <p>Product # {product._id}</p>
                                 </div>
                                 <div className="review-container">
-                                    <ReactStars {...options} />
+                                    <Rating {...options} />
                                     <span>({product.numOfReviews} Reviews)</span>
                                 </div>
                                 <div className="counter">

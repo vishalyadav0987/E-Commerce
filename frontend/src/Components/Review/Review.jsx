@@ -2,18 +2,16 @@ import React from 'react'
 import ReactStars from 'react-rating-stars-component'
 import './Review.css'
 import { useSelector } from 'react-redux'
+import { Rating } from '@mui/material'
 
 const Review = ({ product, submitReviewToggle }) => {
     const { user } = useSelector(state => state.user);
     let rate = product.ratings;
     let rates = Math.round(rate)
     const options = {
-        edit: false,
-        color: "#e5ddd3",
         value: rates,
-        activeColor: "tomato",
-        size: window.innerWidth < 600 ? 20 : 25,
-        isHalf: true,
+        size: "large",
+        readOnly:true
     }
 
     return (
@@ -27,7 +25,7 @@ const Review = ({ product, submitReviewToggle }) => {
                     <div className="left-box">
                         <h2>Customer reviews</h2>
                         <div className="review-container">
-                            <ReactStars {...options} />
+                            <Rating {...options} />
                             <span>({`${rates} out of 5`} Reviews)</span>
                         </div>
                         <div className="review-submit-container">
@@ -77,7 +75,7 @@ const Review = ({ product, submitReviewToggle }) => {
                                                     <p className="review-holder-name">{review.name}</p>
                                                 </div>
                                                 <div className="review-container">
-                                                    <ReactStars {...options} value={review.rating} />
+                                                    <Rating {...options} value={review.rating} />
                                                     <span style={{ color: "#c5c5c5" }}>{`UserId # ${review.userRevId}`}</span>
                                                 </div>
                                                 <p className="review-message">

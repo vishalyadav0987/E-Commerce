@@ -38,7 +38,7 @@ const MyOrder = () => {
       flex: 0.5, sortable: false,
       renderCell: (params) => {
         return (
-          <Link to={`/orders/${params.getValue(params.id, "id")}`}>
+          <Link to={`/order/${params.getValue(params.id, "id")}`}>
             <MdRocketLaunch />
           </Link>
         )

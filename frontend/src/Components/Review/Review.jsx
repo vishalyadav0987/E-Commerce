@@ -1,5 +1,4 @@
 import React from 'react'
-import ReactStars from 'react-rating-stars-component'
 import './Review.css'
 import { useSelector } from 'react-redux'
 import { Rating } from '@mui/material'
@@ -7,11 +6,12 @@ import { Rating } from '@mui/material'
 const Review = ({ product, submitReviewToggle }) => {
     const { user } = useSelector(state => state.user);
     let rate = product.ratings;
-    let rates = Math.round(rate)
+    let rates = rate?.toFixed(1)
     const options = {
         value: rates,
         size: "large",
-        readOnly:true
+        readOnly:true,
+        precision:0.5,
     }
 
     return (
@@ -26,7 +26,7 @@ const Review = ({ product, submitReviewToggle }) => {
                         <h2>Customer reviews</h2>
                         <div className="review-container">
                             <Rating {...options} />
-                            <span>({`${rates} out of 5`} Reviews)</span>
+                            <span>({`${(rates)} out of 5`} Reviews)</span>
                         </div>
                         <div className="review-submit-container">
                             <h2>Review this product</h2>

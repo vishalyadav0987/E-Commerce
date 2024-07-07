@@ -29,6 +29,7 @@ const SingleProductPage = () => {
         value: product.ratings,
         size: "large",
         readOnly:true,
+        precision:0.5,
     }
 
     const [quantity, setQuantity] = useState(1);

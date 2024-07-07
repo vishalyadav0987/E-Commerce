@@ -9,6 +9,7 @@ const ProductCard = ({ item }) => {
         size: "large",
         value: item.ratings,
         readOnly: true,
+        precision:0.5,
     }
     console.log(item)
     return (

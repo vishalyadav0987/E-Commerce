@@ -25,6 +25,8 @@ import { loadStripe } from '@stripe/stripe-js';
 import Success from './Pages/Success/Success';
 import MyOrder from './Pages/Order/MyOrder';
 import SingleOrderDetail from './Pages/SingleOrderDetails/SingleOrderDetail';
+import DashBoard from './Admin/DashBoard/DashBoard';
+import ProductList from './Admin/ProductList/ProductList';
 
 
 
@@ -80,6 +82,8 @@ const App = () => {
             <Route path='/success' element={<Success />} />
             <Route path='/orders' element={<MyOrder />} />
             <Route path='/order/:id' element={<SingleOrderDetail />} />
+            <Route isAdmin={true} path='/admin/dashboard' element={<DashBoard />} />
+            <Route isAdmin={true} path='/admin/products' element={<ProductList />} />
           </Route>
           <Route path='/cart' element={<Cart />} />
         </Routes>

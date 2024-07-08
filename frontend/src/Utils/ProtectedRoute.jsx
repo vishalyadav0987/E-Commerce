@@ -51,20 +51,20 @@ import { useSelector } from 'react-redux';
 import { Navigate, Outlet } from 'react-router-dom';
 import Loader from '../Components/Loader/Loder'
 
-const ProtectedRoute = () => {
+const ProtectedRoute = ({ isAdmin }) => {
     const { loading, isAuthenticate, user } = useSelector((state) => state.user);
 
     if (loading) {
-        return <Loader/>; // Or any other loading indicator you prefer
+        return <Loader />; // Or any other loading indicator you prefer
     }
 
     if (isAuthenticate === false) {
         return <Navigate to="/login" />;
     }
 
-    // if (isAdmin && user.role !== 'admin') {
-    //     return <Navigate to="/login" />;
-    // }
+    if (isAdmin === true && user.role !== 'admin') {
+        return <Navigate to="/login" />;
+    }
 
     return <Outlet />;
 };

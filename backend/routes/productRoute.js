@@ -8,6 +8,7 @@ const { AddNewProduct,
     createProductReview,
     getReviwesAllProducts,
     deleteProductReview,
+    getProductForAdmin,
 } = require('../controllers/productController');
 const { protecteRoute, authorizeRole } = require('../middleware/protectedRoute');
 
@@ -17,6 +18,7 @@ router.route('/new').post(
     AddNewProduct
 );
 router.route('/products').get(getAllProducts);
+router.route('/admin/products').get(getProductForAdmin, authorizeRole("admin"), protecteRoute);
 router.route('/:id').put(
     protecteRoute,
     authorizeRole("admin"),

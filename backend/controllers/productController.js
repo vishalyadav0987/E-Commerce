@@ -55,6 +55,24 @@ const getAllProducts = async (req, res) => {
     }
 }
 
+// FETCH PRODUCTS FOR ADMIN PANEL
+const getProductForAdmin = async(req,res)=>{
+    try {
+        const products = await ProductSchema.find({});
+        res.status(200).json({
+            success: true,
+            data: products,
+        });
+    } catch (error) {
+        console.log("Error in getProductForAdmin function: ", error.message);
+        res.status(500).json({
+            success: false,
+            message: "Something went wrong, Product is not fetched",
+            error: error.message
+        });
+    }
+}
+
 // ADMIN --- Controller --- Admin Rights
 const updateProduct = async (req, res) => {
     const { id } = req.params;
@@ -259,6 +277,7 @@ const deleteProductReview = async (req, res) => {
 module.exports = {
     AddNewProduct,
     getAllProducts,
+    getProductForAdmin,
     updateProduct,
     removeProduct,
     getSingleProduct,

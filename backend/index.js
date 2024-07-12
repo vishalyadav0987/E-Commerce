@@ -11,6 +11,7 @@ const paymentRoutes = require('./routes/paymentRoute');
 const cloudinary = require('cloudinary');
 const bodyParser = require('body-parser');
 const fileUpload = require('express-fileupload')
+const multer = require('multer')
 
 
 // Handled uncaught exception
@@ -22,10 +23,17 @@ process.on("uncaughtException", (err) => {
     })
 });
 
-app.use(express.json());
+app.use(express.json({ limit: '50mb' }));
 app.use(cookieParser());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json({ limit: '50mb' }));
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 app.use(fileUpload());
+
+cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_SECRET_KEY
+})
 
 app.use('/api/v1/product', productRoutes);
 app.use('/api/v1/user', userRoutes);
@@ -37,11 +45,7 @@ app.get('/test', (req, res) => {
     res.send("This is E-Kart website.");
 });
 
-cloudinary.config({
-    cloud_name: process.env.CLOUDINARY_NAME,
-    api_key: process.env.CLOUDINARY_API_KEY,
-    api_secret: process.env.CLOUDINARY_SECRET_KEY
-})
+
 
 const start = async () => {
     try {

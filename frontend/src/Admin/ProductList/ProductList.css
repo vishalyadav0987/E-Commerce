@@ -51,6 +51,15 @@
     background-color: #fff !important;
     font-size: 1.5rem !important;
 }
+
+
+.productListContainer .greenColor{
+  color: green !important;
+}
+
+.productListContainer .redColor{
+  color: red !important;
+}
   
   
   @media screen and (max-width: 600px) {

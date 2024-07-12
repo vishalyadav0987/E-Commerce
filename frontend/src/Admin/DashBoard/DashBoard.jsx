@@ -15,9 +15,17 @@ import {
   Legend,
 } from 'chart.js';
 import { Doughnut, Line } from 'react-chartjs-2';
+import { useDispatch, useSelector } from 'react-redux'
+import { productForAdminPanel } from '../../actions/productAction';
+import { getAllOrders } from '../../actions/orderAction';
+import { getAllUsers } from '../../actions/userAction';
 
 const DashBoard = () => {
   // Register the necessary components
+  const dispatch = useDispatch()
+  const { products } = useSelector(state => state.products)
+  const { totalAmount, orders } = useSelector(state => state.allOrder)
+  const { users } = useSelector(state => state.allUser);
   ChartJS.register(
     CategoryScale,
     LinearScale,
@@ -29,6 +37,22 @@ const DashBoard = () => {
     Legend
   );
 
+  useEffect(() => {
+    dispatch(productForAdminPanel())
+    dispatch(getAllOrders());
+    dispatch(getAllUsers());
+  }, [dispatch]);
+
+  let outOfStock = 0;
+
+  products && products.forEach((product) => {
+    if (product.Stock === 0) {
+      outOfStock += 1;
+    }
+  });
+
+  console.log()
+
   const lineState = {
     labels: ["Initial Amount", "Amount Earned"],
     datasets: [
@@ -36,7 +60,7 @@ const DashBoard = () => {
         label: "TOTAL AMOUNT",
         backgroundColor: ["tomato"],
         hoverBackgroundColor: ["rgb(197, 72, 49)"],
-        data: [0, 4000],
+        data: [0, totalAmount],
       },
     ],
   };
@@ -58,7 +82,7 @@ const DashBoard = () => {
       {
         backgroundColor: ["#00A6B4", "#6800B4"],
         hoverBackgroundColor: ["#4B5000", "#35014F"],
-        data: [2, 100],
+        data: [outOfStock, products && products.length - outOfStock],
       },
     ],
   };
@@ -76,8 +100,8 @@ const DashBoard = () => {
     },
   };
 
-  useEffect(()=>{
-    window.scrollTo(0,0);
+  useEffect(() => {
+    window.scrollTo(0, 0);
   })
 
   return (
@@ -87,22 +111,22 @@ const DashBoard = () => {
         <Typography component="h1">Dashboard</Typography>
         <div className="dashboardSummary">
           <div>
-            <p>
-              Total Amount <br /> ₹{"300"}
+            <p style={{ fontSize: "14px" }}>
+              Total Amount <br /> ₹{totalAmount && Math.round(totalAmount)}
             </p>
           </div>
           <div className="dashboardSummaryBox2">
             <Link to="/admin/products">
               <p>Product</p>
-              <p>{"23"}</p>
+              <p>{products && products?.length}</p>
             </Link>
             <Link to="/admin/orders">
               <p>Orders</p>
-              <p>{"23"}</p>
+              <p>{orders && orders?.length}</p>
             </Link>
             <Link to="/admin/users">
               <p>Users</p>
-              <p>{"19"}</p>
+              <p>{users && users?.length}</p>
             </Link>
           </div>
         </div>

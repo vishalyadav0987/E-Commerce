@@ -97,7 +97,7 @@ const Cart = () => {
                                                         <span
                                                             className="remove-product center"
                                                             onClick={() => removeItemFromCartHandler(
-                                                                item.id
+                                                                item.productId
                                                             )}
                                                         >
                                                             <span className="remove-text"

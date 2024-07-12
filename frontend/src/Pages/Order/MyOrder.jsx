@@ -34,8 +34,8 @@ const MyOrder = () => {
     {
       field: "actions",
       headerName: "Actions",
-      minWidth: 150, type: "number",
-      flex: 0.5, sortable: false,
+      minWidth: 50, type: "number",
+      flex: 0.4, sortable: false,
       renderCell: (params) => {
         return (
           <Link to={`/order/${params.getValue(params.id, "id")}`}>
@@ -64,10 +64,11 @@ const MyOrder = () => {
   }, [dispatch, alert, error])
   return (
     <>
-      {
-        loading
-          ? <Loader />
-          : <div className='my-order-page'>
+      {/* { */}
+        {/* loading */}
+          {/* ? <Loader /> */}
+          {/* :  */}
+          <div className='my-order-page'>
             <DataGrid
               rows={rows}
               columns={columns}
@@ -79,7 +80,7 @@ const MyOrder = () => {
             <Typography id='my-order-heading'>{user.name}'s Orders</Typography>
 
           </div>
-      }
+      {/* } */}
     </>
   )
 }

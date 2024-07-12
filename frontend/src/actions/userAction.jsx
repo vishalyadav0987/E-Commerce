@@ -19,6 +19,18 @@ import {
     UPDATE_PASSWORD_RESET,
     UPDATE_PASSWORD_FAIL,
     CLEAR_ERRORS,
+    GET_ALL_USER_REQUEST,
+    GET_ALL_USER_SUCEESS,
+    GET_ALL_USER_FAIL,
+    SINGLE_USER_DETAILS_REQUEST,
+    SINGLE_USER_DETAILS_SUCEESS,
+    SINGLE_USER_DETAILS_FAIL,
+    DELETE_USER_REQUEST,
+    DELETE_USER_SUCEESS,
+    DELETE_USER_FAIL,
+    UPDATE_USER_REQUEST,
+    UPDATE_USER_SUCEESS,
+    UPDATE_USER_FAIL,
 } from '../constants/userConstants';
 import axios from 'axios';
 import Cookies from 'js-cookie'
@@ -71,11 +83,11 @@ const register = (userData) => async (dispatch) => {
             })
             Cookies.set('token', response.data.token);
         }
-        else{
+        else {
             dispatch({
                 type: REGISTER_USER_FAIL,
                 payload: response.data.message
-            }); 
+            });
         }
     } catch (error) {
         dispatch({
@@ -190,10 +202,97 @@ const updatePassword = (passwords) => async (dispatch) => {
     }
 }
 
+//GET ALL USERS --- ADMIN
+const getAllUsers = () => async (dispatch) => {
+    try {
+        dispatch({ type: GET_ALL_USER_REQUEST });
+        const response = await axios.get(
+            '/api/v1/user/users'
+        );
+        dispatch({
+            type: GET_ALL_USER_SUCEESS,
+            payload: response.data.data
+        })
+    } catch (error) {
+        dispatch({
+            type: GET_ALL_USER_FAIL,
+            payload: error.response && error.response.data.message
+                ? error.response.data.message
+                : error.message,
+        });
+    }
+}
+
+// GET SINGLE USER DETAILS --- ADMIN
+const getSingleUserDetails = (id) => async (dispatch) => {
+    try {
+        dispatch({ type: SINGLE_USER_DETAILS_REQUEST });
+        const response = await axios.get(
+            `/api/v1/user/${id}`
+        );
+        dispatch({
+            type: SINGLE_USER_DETAILS_SUCEESS,
+            payload: response.data.data
+        })
+    } catch (error) {
+        dispatch({
+            type: SINGLE_USER_DETAILS_FAIL,
+            payload: error.response && error.response.data.message
+                ? error.response.data.message
+                : error.message,
+        });
+    }
+}
+
+//UPDATE USER --- ADMIN --SPECIAL---ROLE OF USER
+const updateUser = (id,userData)=>async(dispatch)=>{
+    try {
+        dispatch({ type: UPDATE_USER_REQUEST });
+        const response = await axios.put(
+            `/api/v1/user/role/${id}`,
+            userData,
+            {headers:{"Content-Type":"application/json"}}
+        );
+        dispatch({
+            type: UPDATE_USER_SUCEESS,
+            payload: response.data
+        })
+    } catch (error) {
+        dispatch({
+            type: UPDATE_USER_FAIL,
+            payload: error.response && error.response.data.message
+                ? error.response.data.message
+                : error.message,
+        });
+    }
+}
+
+
+// DELETE USER --- ADMIN
+const deleteUser =(id)=>async(dispatch)=>{
+    try {
+        dispatch({ type: DELETE_USER_REQUEST });
+        const response = await axios.delete(
+            `/api/v1/user/delete/${id}`
+        );
+        dispatch({
+            type: DELETE_USER_SUCEESS,
+            payload: response.data
+        })
+    } catch (error) {
+        dispatch({
+            type: DELETE_USER_FAIL,
+            payload: error.response && error.response.data.message
+                ? error.response.data.message
+                : error.message,
+        });
+    }
+}
+
 
 
 // clearing Error
 const clearError = () => async (dispatch) => {
     dispatch({ type: CLEAR_ERRORS });
 }
-export { login, clearError, register, loadUser, logout, updateProfile, updatePassword };
+export { login, clearError, register, loadUser, logout, updateProfile, updatePassword, getAllUsers, getSingleUserDetails,deleteUser,updateUser };

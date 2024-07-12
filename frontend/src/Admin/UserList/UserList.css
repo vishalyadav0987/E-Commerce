@@ -1,0 +1,6 @@
+.dashboard-userList .greenColor,
+.dashboard-userList .redColor {
+    font-weight: bold;
+    font-size: 13px !important;
+    text-transform: uppercase;
+}

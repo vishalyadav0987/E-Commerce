@@ -3,7 +3,9 @@
     min-height: 30vh;
     width: 85%;
 }
-
+.section-all-product .card-container{
+    height: 450.31px;
+}
 .paginationBox{
     margin-top: 80px;
 }

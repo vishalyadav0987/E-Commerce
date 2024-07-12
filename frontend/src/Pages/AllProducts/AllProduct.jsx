@@ -15,7 +15,7 @@ import { FaInfinity } from "react-icons/fa6";
 const AllProduct = () => {
 
 
-    const [price, setPrice] = useState([200, 10000]);
+    const [price, setPrice] = useState([200, 100000]);
     const [category, setCategory] = useState("");
     const [ratings, setRatings] = useState(0);
 

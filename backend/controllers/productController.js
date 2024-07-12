@@ -1,11 +1,38 @@
 const ApiFeatures = require('../Utils/ApiFeatures');
 const ProductSchema = require('../modals/ProductSchema');
 const mongoose = require('mongoose')
+const cloudinary = require('cloudinary').v2;
+const multer = require('multer');
+const upload = multer({ storage: multer.memoryStorage() });
+    // upload.array('images', 10),
 
 
 // ADMIN --- Controller --- Admin Rights
 const AddNewProduct = async (req, res) => {
     try {
+        let images = [];
+
+        if (typeof req.body.images === "string") {
+            images.push(req.body.images);
+        } else {
+            images = req.body.images;
+        }
+
+        const imagesLinks = [];
+
+        for (let i = 0; i < images.length; i++) {
+            const result = await cloudinary.uploader.upload(images[i], {
+                folder: "products",
+            });
+
+            imagesLinks.push({
+                public_id: result.public_id,
+                url: result.secure_url,
+            });
+        }
+
+
+        req.body.images = imagesLinks;
         req.body.user = req.user.id;
         const newProduct = await ProductSchema.create(req.body);
         res.status(200).json({ success: true, data: newProduct, message: "Product succesfully Added!" });
@@ -18,6 +45,46 @@ const AddNewProduct = async (req, res) => {
         });
     }
 }
+
+// const AddNewProduct = async (req, res) => {
+//     try {
+//       let images = [];
+//       if (req.files && req.files.length > 0) {
+//         images = req.files;
+//       }
+
+//       let imagesLinks = [];
+//       for (let i = 0; i < images.length; i++) {
+//         const result = await new Promise((resolve, reject) => {
+//           const uploadStream = cloudinary.uploader.upload_stream(
+//             { folder: "products" },
+//             (error, result) => {
+//               if (error) reject(error);
+//               resolve(result);
+//             }
+//           );
+//           uploadStream.end(images[i].buffer);
+//         });
+
+//         imagesLinks.push({
+//           public_id: result.public_id,
+//           url: result.secure_url,
+//         });
+//       }
+
+//       req.body.images = imagesLinks;
+//       req.body.user = req.user.id;
+//       const newProduct = await ProductSchema.create(req.body);
+//       res.status(200).json({ success: true, data: newProduct, message: "Product successfully added!" });
+//     } catch (error) {
+//       console.log("Error in AddNewProduct function: ", error.message);
+//       res.status(500).json({
+//         success: false,
+//         message: "Something went wrong, Product not added!",
+//         error: error.message,
+//       });
+//     }
+//   };
 
 // Get All the data --- USER --- ADMIN 
 const getAllProducts = async (req, res) => {
@@ -56,7 +123,7 @@ const getAllProducts = async (req, res) => {
 }
 
 // FETCH PRODUCTS FOR ADMIN PANEL
-const getProductForAdmin = async(req,res)=>{
+const getProductForAdmin = async (req, res) => {
     try {
         const products = await ProductSchema.find({});
         res.status(200).json({
@@ -77,30 +144,116 @@ const getProductForAdmin = async(req,res)=>{
 const updateProduct = async (req, res) => {
     const { id } = req.params;
     try {
-        const productExsist = await ProductSchema.findById(id);
-        if (!productExsist) {
+        let product = await ProductSchema.findById(id);
+        if (!product) {
             return res.status(400).json({
                 success: false,
                 message: "Product not found!",
             });
         }
-        const product = await ProductSchema.findByIdAndUpdate(id, req.body, {
+
+        // Initialize images array
+        let images = [];
+
+        // Handle different formats of req.body.images
+        if (typeof req.body.images === "string") {
+            images.push(req.body.images);
+        } else if (Array.isArray(req.body.images)) {
+            images = req.body.images;
+        }
+
+        // Validate if string is base64 encoded
+        const isBase64 = (str) => {
+            const base64Regex = /^data:image\/(png|jpg|jpeg);base64,/;
+            return typeof str === 'string' && base64Regex.test(str);
+        };
+
+        // Decode base64 string
+        const decodeBase64 = (str) => {
+            return Buffer.from(str.replace(/^data:image\/\w+;base64,/, ""), 'base64');
+        };
+
+        // Only process if images are provided
+        if (images.length > 0) {
+            // Remove old images from Cloudinary
+            if (product.images && product.images.length > 0) {
+                for (let i = 0; i < product.images.length; i++) {
+                    await cloudinary.uploader.destroy(product.images[i].public_id);
+                }
+            }
+
+            // Upload new images to Cloudinary and prepare image links
+            const imagesLinks = [];
+
+            for (let i = 0; i < images.length; i++) {
+                if (isBase64(images[i])) {
+                    const decodedImage = decodeBase64(images[i]);
+                    const uploadResult = await new Promise((resolve, reject) => {
+                        const uploadStream = cloudinary.uploader.upload_stream(
+                            {
+                                folder: "products",
+                            },
+                            (error, result) => {
+                                if (error) {
+                                    reject(error);
+                                } else {
+                                    resolve(result);
+                                }
+                            }
+                        );
+                        uploadStream.end(decodedImage);
+                    });
+                    imagesLinks.push({
+                        public_id: uploadResult.public_id,
+                        url: uploadResult.secure_url,
+                    });
+                } else {
+                    // Check if it is a valid URL
+                    try {
+                        // const url = new URL(images[i]);
+                        const result = await cloudinary.uploader.upload(images[i], {
+                            folder: "products",
+                        });
+
+                        imagesLinks.push({
+                            public_id: result.public_id,
+                            url: result.secure_url,
+                        });
+                    } catch (err) {
+                        return res.status(400).json({
+                            success: false,
+                            message: "Invalid image format!",
+                        });
+                    }
+                }
+            }
+
+            // Update req.body.images with new image links
+            req.body.images = imagesLinks;
+        }
+
+        // Update the product with new data
+        product = await ProductSchema.findByIdAndUpdate(id, req.body, {
             new: true,
             runValidators: true,
         });
+
         res.status(200).json({
             success: true,
-            message: "Product is succesfully updated!"
+            message: "Product is successfully updated!",
+            product,
         });
     } catch (error) {
         console.log("Error in updateProduct function: ", error.message);
         res.status(500).json({
             success: false,
             message: "Something went wrong, Product is not updated",
-            error: error.message
+            error: error.message,
         });
     }
-}
+};
+
+
 
 // ADMIN --- Controller --- Admin Rights
 const removeProduct = async (req, res) => {
@@ -114,9 +267,12 @@ const removeProduct = async (req, res) => {
             });
         }
         // await ProductSchema.findByIdAndDelete(id);
+        for (let i = 0; i < product.images.length; i++) {
+            await cloudinary.uploader.destroy(product.images[i].public_id)
+        }
         await ProductSchema.findByIdAndDelete(id);
-        return res.status(400).json({
-            success: false,
+        return res.status(200).json({
+            success: true,
             message: "Product Succesfully removed!",
         });
     } catch (error) {
@@ -247,14 +403,22 @@ const deleteProductReview = async (req, res) => {
         if (!product) {
             return res.json({ success: false, message: "Product not found!" });
         }
-        const reviews = product.reviews.filter((rev) => rev._id.toString() !== req.query.id);
+        const reviews = product.reviews.filter((rev) => rev._id.toString() !== req.query.reviewId);
         let sum = 0;
         reviews.forEach((rev) => {
             sum += rev.rating;
         });
-        let avg = sum / reviews.length;
+        let ratings = 0;
+        if (reviews.length === 0) {
+            ratings = 0;
+        }
+        else {
+            let avg = sum / reviews.length;
+            ratings = avg.toFixed(1);
+        }
+
         const numOfReviews = reviews.length;
-        const ratings = avg.toFixed(1);
+
         await ProductSchema.findByIdAndUpdate(req.query.productId, {
             reviews,
             numOfReviews,
@@ -284,4 +448,5 @@ module.exports = {
     createProductReview,
     getReviwesAllProducts,
     deleteProductReview,
+    upload,
 }

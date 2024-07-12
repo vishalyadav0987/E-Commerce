@@ -23,6 +23,7 @@ li{
 
 body{
     background-color: #F8F4E1;
+    cursor: url('./assets/cursor.png'), auto;
 }
 
 a{

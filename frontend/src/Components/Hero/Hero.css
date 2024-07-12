@@ -1,6 +1,10 @@
 .hero-container{
     width: 100%;
-    background-color: #240750;
+    /* background: #240750; */
+    background: url('../../assets/hero.jpg') center;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
     /* background-color: #0fb0c1; */
     height: 100vh;
     font-family: sans-serif;

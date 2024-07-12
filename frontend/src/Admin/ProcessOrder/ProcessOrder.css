@@ -1,0 +1,55 @@
+.updateOrderForm {
+    display: flex;
+    flex-direction: column;
+}
+
+.updateOrderForm > div {
+    display: flex;
+    width: 100%;
+    align-items: center;
+  }
+  .updateOrderForm > div > select {
+    padding: 1vmax 4vmax;
+    margin: 2rem 0;
+    width: 100%;
+    box-sizing: border-box;
+    border: 1px solid rgba(0, 0, 0, 0.267);
+    border-radius: 4px;
+    font: 300 0.9vmax cursive;
+    outline: none;
+  }
+  
+  .updateOrderForm > div > svg {
+    position: absolute;
+    transform: translateX(1vmax);
+    font-size: 1.6vmax;
+    color: rgba(0, 0, 0, 0.623);
+  }
+
+  .cofirm-order .updateOrderForm #createProductBtn{
+    background-color: #240750 !important;
+    cursor: pointer;
+  }
+
+  .orderDetailsPaymentStatus{
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .infoPayment{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .infoPayment > span{
+    font-size: 16px;
+    padding-left: 38px;
+    font-family: sans-serif;
+  }
+  .status-info > span{
+    font-size: 16px;
+    font-weight: 600;
+    font-family: sans-serif;
+    padding-left: 38px;
+  }

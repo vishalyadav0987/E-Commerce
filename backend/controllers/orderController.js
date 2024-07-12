@@ -103,19 +103,21 @@ const getAllOrders = async (req, res) => {
 // Admin --- rights
 const updateOrderStatus = async (req, res) => {
     const { id } = req.params;
-    const { orderStatus } = req.body;
+    const { orderStatus } = req.body;    
     try {
         const order = await OrderSchema.findById(id);
         if (!order) {
-            return res.json({ success: true, message: `Order doesn't found with this id:${id}` });
+            return res.json({ success: false, message: `Order doesn't found with this id:${id}` });
         }
         if (order.orderStatus === "Delivered") {
-            return res.json({ success: true, message: `You have already delivered this order` });
+            return res.json({ success: false, message: `You have already delivered this order` });
         }
 
-        order.OrderItems.forEach(async (order) => {
-            await updateStoke(order.productId, order.quantity);
-        });
+        if (orderStatus === "Shipped") {
+            order.OrderItems.forEach(async (order) => {
+                await updateStoke(order.productId, order.quantity);
+            });
+        }
 
         order.orderStatus = orderStatus;
         if (orderStatus === "Delivered") {

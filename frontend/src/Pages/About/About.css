@@ -1,0 +1,53 @@
+.about-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 100px auto;
+    padding: 40px;
+    max-width: 800px;
+    background-color: #f4f4f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: sans-serif;
+  }
+  
+  .profile-photo img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid #323232;
+    margin-bottom: 20px;
+  }
+  
+  .description h1 {
+    font-size: 2em;
+    margin-bottom: 10px;
+    color: #333;
+    text-align: center;
+    width: 100%;
+  }
+  
+  .description p {
+    font-size: 1.2em;
+    text-align: center;
+    color: #666;
+  }
+  
+  .social-links {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
+  }
+  
+  .social-links a {
+    color: #323232;;
+    font-size: 2em;
+    transition: color 0.3s;
+  }
+  
+  .social-links a:hover {
+    color: #323232;;
+  }
+  

@@ -65,11 +65,11 @@ const ConfirmOrder = () => {
                                         <div className="item-1" key={index}>
                                             <div className="img-name">
                                                 <Link to={`/product/${item.id}`}>
-                                                    <img src="https://i.ibb.co/DRST11n/1.webp" alt=""
+                                                    <img src={item.image} alt=""
                                                         style={{ width: "8rem", borderRadius: "4px" }} />
                                                 </Link>
                                                 <Link to={`/product/${item.id}`}>
-                                                    <span style={{ fontSize: "18px" }}>{"Pant"}</span>
+                                                    <span style={{ fontSize: "18px" }}>{item && item.name}</span>
                                                 </Link>
                                             </div>
                                             <span className="quantity-ruppee">

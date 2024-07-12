@@ -1,9 +1,11 @@
 {
-  "name": "backend",
+  "name": "ecommerce",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index.js"
+    "start": "nodemon index.js",
+    "dev": "node index.js",
+     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false && npm install --prefix frontend && npm run build --prefix frontend"
   },
   "keywords": [],
   "author": "",

@@ -1,6 +1,5 @@
 const express = require('express');
 const app = express();
-require('dotenv').config();
 const cookieParser = require('cookie-parser');
 const PORT = 4000 || process.env.PORT;
 const connectDB = require('./connectDB/connect');
@@ -12,6 +11,7 @@ const cloudinary = require('cloudinary');
 const bodyParser = require('body-parser');
 const fileUpload = require('express-fileupload')
 const multer = require('multer')
+const path = require('path')
 
 
 // Handled uncaught exception
@@ -22,6 +22,10 @@ process.on("uncaughtException", (err) => {
         process.exit(1);
     })
 });
+
+if(process.env.NODE_ENV!=="PRODUCTION"){
+    require("dotenv").config({ path: "backend/.env" });
+}
 
 app.use(express.json({ limit: '50mb' }));
 app.use(cookieParser());
@@ -39,6 +43,13 @@ app.use('/api/v1/product', productRoutes);
 app.use('/api/v1/user', userRoutes);
 app.use('/api/v1/order', orderRoutes);
 app.use('/api/v1/payment', paymentRoutes);
+
+
+app.use(express.static(path.join(__dirname,"../frontend/dist")));
+
+app.get('*',(req,res)=>{
+    res.sendFile(path.resolve(__dirname,"../frontend/dist/index.html"))
+})
 
 // TEST ENDPOINT
 app.get('/test', (req, res) => {

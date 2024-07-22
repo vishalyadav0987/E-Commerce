@@ -2,6 +2,9 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Node Version](https://img.shields.io/badge/node.js-14.x%20|%2016.x%20|%2018.x-brightgreen)](https://nodejs.org/en/download/)
+ <a href="https://img.shields.io/github/languages/count/vishalyadav0987/E-Commerce">
+    <img src="https://img.shields.io/github/languages/count/vishalyadav0987/E-Commerce" alt="Languages Count"/>
+  </a>
 
 
 

@@ -21,7 +21,6 @@ const Register = async (req, res) => {
 
         })
         const userExsist = await UserSchema.findOne({ email });
-        console.log(userExsist);
         
         if (userExsist) {
             return res.json({ success: false, message: "User Already exsist!" });
@@ -132,7 +131,6 @@ const Logout = async (req, res) => {
 
 const forgetPassword = async (req, res) => {
     const { email } = req.body;
-    console.log(email);
 
     if (!email) {
         return res.status(400).json({
@@ -143,7 +141,6 @@ const forgetPassword = async (req, res) => {
 
     try {
         const user = await UserSchema.findOne({ email: req.body.email });
-        console.log(user);
 
         if (!user) {
             return res.json({ success: true, message: "User doesn't exist!" });
@@ -154,7 +151,6 @@ const forgetPassword = async (req, res) => {
 
         try {
             await user.save({ validateBeforeSave: false })
-            console.log(user);
 
             res.json({ sucess: true });
         } catch (error) {
@@ -166,7 +162,7 @@ const forgetPassword = async (req, res) => {
 
 
         const resetPasswordUrl = `${req.protocol}://${req.get("host")}/api/v1/password/reset/${resetToken}`;
-        console.log(resetPasswordUrl);
+        
 
 
         const message = `Your password reset token is:\n\n${resetPasswordUrl}\n\nIf you have not requested this email then, please ignore it.`;

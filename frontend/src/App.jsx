@@ -83,7 +83,7 @@ const App = () => {
           <Route path='/products/:keyword' element={<AllProduct />} />
           <Route path='/products' element={<AllProduct />} />
           <Route path='/search' element={<Search />} />
-          <Route path='/login' element={<LoginSignUp />} />
+          <Route path='/auth' element={<LoginSignUp />} />
           <Route element={<ProtectedRoute />}>
             <Route path='/account' element={<Profile />} />
             <Route path='/me/update' element={<UpdateProfile />} />

@@ -23,7 +23,7 @@ process.on("uncaughtException", (err) => {
     })
 });
 
-if(process.env.NODE_ENV!=="PRODUCTION"){
+if (process.env.NODE_ENV !== "PRODUCTION") {
     require("dotenv").config({ path: "backend/.env" });
 }
 
@@ -45,10 +45,18 @@ app.use('/api/v1/order', orderRoutes);
 app.use('/api/v1/payment', paymentRoutes);
 
 
-app.use(express.static(path.join(__dirname,"../frontend/dist")));
+if (process.env.NODE_ENV === "production") {
+    const frontendPath = path.join((path.join(__dirname, '..', 'frontend', 'dist')));
+    app.use(express.static(frontendPath));
 
-app.get('*',(req,res)=>{
-    res.sendFile(path.resolve(__dirname,"../frontend/dist/index.html"))
+    app.get("*", (req, res) => {
+        res.sendFile(path.resolve(frontendPath, "index.html"))
+    })
+
+}
+
+app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, "../frontend/dist/index.html"))
 })
 
 // TEST ENDPOINT

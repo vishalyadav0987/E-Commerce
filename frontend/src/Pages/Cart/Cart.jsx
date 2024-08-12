@@ -36,7 +36,7 @@ const Cart = () => {
         if (token) {
             navigate("/shipping");
         } else {
-            navigate("/login?redirect=/shipping");
+            navigate("/auth?redirect=/shipping");
         }
     }
 

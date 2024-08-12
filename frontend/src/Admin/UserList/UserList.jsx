@@ -59,7 +59,7 @@ const UserList = () => {
       field: 'role', headerName: 'Role', minWidth: 100,
       flex: 0.3,
       cellClassName: (params) => {
-        return params.getValue(params.id, "role") === "admin"
+        return (params.row.id, "role") === "admin"
           ? "greenColor"
           : "redColor"
       }
@@ -74,11 +74,11 @@ const UserList = () => {
       renderCell: (params) => {
         return (
           <>
-            <Link to={`/admin/user/${params.getValue(params.id, 'id')}`}>
+            <Link to={`/admin/user/${params.row.id}`}>
               <EditIcon />
             </Link>
             <Button onClick={() => {
-              deleteUserHandler(params.getValue(params.id, 'id'))
+              deleteUserHandler(params.row.id)
             }}><DeleteIcon /></Button>
           </>
         );

@@ -1,10 +1,10 @@
 import React from 'react'
 import './smallSpiner.css'
 
-const smallSpiner = () => {
+const Small = () => {
   return (
     <div className="spinner"></div>
   )
 }
 
-export default smallSpiner
+export default Small

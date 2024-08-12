@@ -69,7 +69,7 @@ const ProductReviews = () => {
             field: 'rating', headerName: 'Rating', type: 'number', minWidth: 50,
             flex: 0.3,
             cellClassName: (params) => {
-                return params.getValue(params.id, "rating") >= 3
+                return (params.row.id, "rating") >= 3
                     ? "greenColor"
                     : "redColor"
             }
@@ -85,7 +85,7 @@ const ProductReviews = () => {
                 return (
                     <>
                         <Button onClick={() => {
-                            deleteReviewHandler(params.getValue(params.id, 'id'))
+                            deleteReviewHandler(params.row.id)
                         }}><DeleteIcon /></Button>
                     </>
                 );

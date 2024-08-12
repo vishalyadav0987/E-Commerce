@@ -1,5 +1,5 @@
-const stripe = require('stripe')(process.env.STRIPE_SECERET_KEY);
 require('dotenv').config()
+const stripe = require('stripe')(process.env.STRIPE_SECERET_KEY);
 
 const processPayment = async (req, res) => {
     try {
@@ -14,7 +14,7 @@ const processPayment = async (req, res) => {
 
         res.json({ success: true, client_secret: myPayment.client_secret })
     } catch (error) {
-        console.log("Erroror in processPayment");
+        console.log("Erroror in processPayment",error.message);
         res.json({ success: false, message: error.message })
     }
 }

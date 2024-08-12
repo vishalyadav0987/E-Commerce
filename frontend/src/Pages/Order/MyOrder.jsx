@@ -23,10 +23,7 @@ const MyOrder = () => {
       headerName: "Status",
       minWidth: 150,
       flex: 0.5,
-      cellClassName: (params) => {
-        return params.getValue(params.id, "status") === "Delivered"
-          ? "greenColor" : "redColor"
-      }
+      cellClassName: (params) => (params.row.status === "Delivered" ? "greenColor" : "redColor")
     },
     { field: "itemQty", headerName: "Item Qty", minWidth: 150, type: "number", flex: 0.3 },
     { field: "amount", headerName: "Amount", minWidth: 270, type: "number", flex: 0.5 },
@@ -37,7 +34,7 @@ const MyOrder = () => {
       flex: 0.4, sortable: false,
       renderCell: (params) => {
         return (
-          <Link to={`/order/${params.getValue(params.id, "id")}`}>
+          <Link to={`/order/${params.row.id}`}>
             <MdRocketLaunch />
           </Link>
         )

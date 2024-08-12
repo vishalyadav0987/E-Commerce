@@ -50,11 +50,7 @@ const OrderList = () => {
         {
             field: 'status', headerName: 'Status', minWidth: 150,
             flex: 0.5,
-            cellClassName: (params) => {
-                return params.getValue(params.id, "status") === "Delivered"
-                    ? "greenColor"
-                    : "redColor"
-            }
+            cellClassName: (params) => (params.row.status === "Delivered" ? "greenColor" : "redColor")
         },
         {
             field: 'itemsQty', headerName: 'Items Oty', type: 'number', minWidth: 150,
@@ -74,11 +70,11 @@ const OrderList = () => {
             renderCell: (params) => {
                 return (
                     <>
-                        <Link to={`/admin/order/${params.getValue(params.id, 'id')}`}>
+                        <Link to={`/admin/order/${params.row.id}`}>
                             <EditIcon />
                         </Link>
                         <Button onClick={() => {
-                            deleteOrderHandler(params.getValue(params.id, 'id'))
+                            deleteOrderHandler(params.row.id)
                         }}><DeleteIcon /></Button>
                     </>
                 );

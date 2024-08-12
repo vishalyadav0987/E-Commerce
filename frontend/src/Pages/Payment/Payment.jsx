@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import './Payment.css'
 import { BsFillCreditCardFill } from "react-icons/bs";
 import { BsCalendarEventFill } from "react-icons/bs";
@@ -13,7 +13,7 @@ import { useAlert } from 'react-alert'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom'
 import { clearError, createOrder } from '../../actions/orderAction';
-
+import Small from '../../Components/smallSpiner/SmallSpiner'
 const Payment = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -25,6 +25,7 @@ const Payment = () => {
     const { user } = useSelector(state => state.user);
     const { shippingInfo, cartItems } = useSelector(state => state.cart);
     const { error } = useSelector(state => state.newOrder);
+    const [loading, setLoading] = useState(false);
 
     const paymentData = {
         amount: Math.round(orderInfo.Total) * 100
@@ -40,6 +41,7 @@ const Payment = () => {
     }
 
     const submitHandler = async (e) => {
+        setLoading(true);
         e.preventDefault();
         // Handle form submission logic here
         payBtn.current.disabled = true;
@@ -94,6 +96,8 @@ const Payment = () => {
         } catch (error) {
             payBtn.current.disabled = false;
             alert.error(error.response.data.message)
+        } finally {
+            setLoading(false)
         }
     };
 
@@ -125,12 +129,14 @@ const Payment = () => {
                         <MdVpnKeyOff />
                         <CardCvcElement className="paymentInput" />
                     </div>
-                    <input
+                    <button
                         type="submit"
-                        value={`Pay - ₹${orderInfo && Math.round(orderInfo.Total)}`}
                         ref={payBtn}
                         className="paymentBtn"
-                    />
+                    >{
+                            loading ? <Small />
+                                : `Pay - ₹${orderInfo && Math.round(orderInfo.Total)}`
+                        }</button>
                 </form>
             </div>
         </>

@@ -82,7 +82,7 @@ const Navbar = () => {
                 <Link to={"/cart"}><FaCartPlus /></Link>
                 {isAuthenticate ?
                     <UserNavOption user={user} /> :
-                    <Link to={"/login"}>
+                    <Link to={"/auth"}>
 
 
                         <FaUserCircle />

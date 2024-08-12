@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import "./SingleOrderDetail.css";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useParams } from "react-router-dom";
-import { Typography } from "@material-ui/core";
+import Typography from "@mui/material/Typography";
 import { singleOrderDetail, clearError } from "../../actions/orderAction";
 import Loader from "../../Components/Loader/Loder";
 import { useAlert } from "react-alert";

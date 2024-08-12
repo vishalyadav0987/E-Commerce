@@ -3,9 +3,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom'
 import { useAlert } from 'react-alert'
 import { MdRocketLaunch } from "react-icons/md";
-import Loader from '../../Components/Loader/Loder'
-import { DataGrid } from '@material-ui/data-grid'
-import Typography from '@material-ui/core/Typography'
+import { DataGrid } from '@mui/x-data-grid';
+import Typography from "@mui/material/Typography";
 import { clearError, getMyOrder } from '../../actions/orderAction'
 import './MyOrder.css'
 

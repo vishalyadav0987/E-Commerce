@@ -1,5 +1,5 @@
 import React from 'react'
-import { Typography, Stepper, StepLabel, Step } from '@material-ui/core';
+import { Typography, Stepper, StepLabel, Step } from '@mui/material';
 import LocalShipping from '@mui/icons-material/LocalShipping';
 import LibraryAddCheck from '@mui/icons-material/LibraryAddCheck';
 import AccountBalance from '@mui/icons-material/AccountBalance';

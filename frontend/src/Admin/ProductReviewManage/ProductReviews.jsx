@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { DataGrid } from '@material-ui/data-grid';
+import { DataGrid } from '@mui/x-data-grid';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useAlert } from 'react-alert';
 import { useDispatch, useSelector } from 'react-redux';
-import EditIcon from '@material-ui/icons/Edit';
-import DeleteIcon from '@material-ui/icons/Delete';
-import { Button } from '@material-ui/core';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { Button } from '@mui/material';
 import SideBar from '../SideBar/SideBar';
 import { DELETE_REVIEW_RESET } from '../../constants/productConstants';
 import { clearError, deleteProductReviews, getAllProductReviews } from '../../actions/productAction';

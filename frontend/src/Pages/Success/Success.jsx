@@ -1,7 +1,7 @@
 import React from 'react'
 import { BsCheckCircleFill } from "react-icons/bs";
 import "./Success.css";
-import { Typography } from "@material-ui/core";
+import Typography from "@mui/material/Typography";
 import { Link } from "react-router-dom";
 
 const Success = () => {

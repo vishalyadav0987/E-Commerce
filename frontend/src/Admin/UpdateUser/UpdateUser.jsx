@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react'
 import SideBar from '../SideBar/SideBar'
 import { useAlert } from 'react-alert';
 import { useDispatch, useSelector } from 'react-redux'
-import MailOutlineIcon from "@material-ui/icons/MailOutline";
-import PersonIcon from "@material-ui/icons/Person";
-import VerifiedUserIcon from "@material-ui/icons/VerifiedUser";
-import { Button } from '@material-ui/core'
+import MailOutlineIcon from '@mui/icons-material/MailOutline';
+import PersonIcon from '@mui/icons-material/Person';
+import VerifiedUserIcon from '@mui/icons-material/VerifiedUser';
+import { Button } from '@mui/material';
 import { useNavigate, useParams } from 'react-router-dom';
 import { clearError, getSingleUserDetails, updateUser } from '../../actions/userAction';
 import { UPDATE_USER_RESET } from '../../constants/userConstants';

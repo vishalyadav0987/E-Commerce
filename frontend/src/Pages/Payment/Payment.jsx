@@ -4,7 +4,7 @@ import { BsFillCreditCardFill } from "react-icons/bs";
 import { BsCalendarEventFill } from "react-icons/bs";
 import { MdVpnKeyOff } from "react-icons/md";
 import CheckOutStep from '../../Components/CheckOutStep/CheckOutStep';
-import { Typography } from '@mui/material';
+import Typography from "@mui/material/Typography";
 import { CardExpiryElement, CardCvcElement, CardNumberElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { useDispatch, useSelector } from 'react-redux'
 import { Elements } from '@stripe/react-stripe-js';

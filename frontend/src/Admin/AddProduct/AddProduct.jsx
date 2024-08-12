@@ -4,12 +4,12 @@ import SideBar from '../SideBar/SideBar'
 import { useAlert } from 'react-alert';
 import { useDispatch, useSelector } from 'react-redux'
 import { addNewProduct, clearError } from '../../actions/productAction'
-import AccountTree from '@material-ui/icons/AccountTree'
-import Description from '@material-ui/icons/Description'
-import Storage from '@material-ui/icons/Storage'
-import Spellcheck from '@material-ui/icons/Spellcheck'
-import AttachMoney from '@material-ui/icons/AttachMoney'
-import { Button } from '@material-ui/core'
+import AccountTree from '@mui/icons-material/AccountTree';
+import Description from '@mui/icons-material/Description';
+import Storage from '@mui/icons-material/Storage';
+import Spellcheck from '@mui/icons-material/Spellcheck';
+import AttachMoney from '@mui/icons-material/AttachMoney';
+import { Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { ADD_NEW_PRODUCT_RESET } from '../../constants/productConstants';
 

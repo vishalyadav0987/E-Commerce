@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { SpeedDial, SpeedDialAction } from '@material-ui/lab';
+import { SpeedDial, SpeedDialAction } from '@mui/material';
 // import Backdrop from '@material-ui/core/Backdrop'
 import { MdDashboard } from "react-icons/md";
 import { IoPerson } from "react-icons/io5";

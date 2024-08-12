@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { clearError, getSingleProducts, newReview } from '../../actions/productAction'
 import { useParams } from 'react-router-dom';
 import Carousel from 'react-material-ui-carousel'
-import ReactStars from 'react-rating-stars-component'
+// import ReactStars from 'react-rating-stars-component'
 import Loader from '../../Components/Loader/Loder'
 import Review from '../../Components/Review/Review';
 import { useAlert } from 'react-alert'
@@ -15,7 +15,7 @@ import {
     DialogContent,
     DialogTitle,
     Button
-} from '@material-ui/core'
+} from '@mui/material';
 import { Rating } from '@mui/material';
 import { NEW_REVIEW_RESET } from '../../constants/productConstants';
 
